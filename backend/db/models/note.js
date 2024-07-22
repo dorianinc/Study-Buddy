@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       docId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
       },
       content: {
         type: DataTypes.STRING,

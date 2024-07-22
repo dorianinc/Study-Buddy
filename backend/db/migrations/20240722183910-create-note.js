@@ -16,7 +16,7 @@ module.exports = {
           type: Sequelize.INTEGER
         },
         docId: {
-          allowNull:true,
+          allowNull:false,
           type: Sequelize.INTEGER
         },
         content: {

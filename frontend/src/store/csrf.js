@@ -1,4 +1,3 @@
-
 import Cookies from 'js-cookie';
 
 export async function csrfFetch(url, options = {}) {
@@ -8,7 +7,7 @@ export async function csrfFetch(url, options = {}) {
   options.headers = options.headers || {};
 
   // if the options.method is not 'GET', then set the "Content-Type" header to
-    // "application/json", and set the "XSRF-TOKEN" header to the value of the 
+    // "application/json", and set the "XSRF-TOKEN" header to the value of the
     // "XSRF-TOKEN" cookie
     if (options.method.toUpperCase() !== "GET") {
       if (options.headers["Content-Type"] === "multipart/form-data") {
@@ -21,7 +20,7 @@ export async function csrfFetch(url, options = {}) {
     }
   // call the default window's fetch with the url and the options passed in
   const res = await window.fetch(url, options);
-  
+
   // if the response status code is 400 or above, then throw an error with the
   // error being the response
   if (res.status >= 400) throw res

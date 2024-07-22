@@ -28,5 +28,6 @@
   "devDependencies": {
     "redux-logger": "^3.0.6",
     "sequelize-cli": "^6.6.2"
-  }
+  },
+  "proxy": "http://localhost:8000"
 }

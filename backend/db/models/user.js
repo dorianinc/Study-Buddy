@@ -5,13 +5,13 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Folder,{
-        foreignKey:'user_id',
+        foreignKey:'userId',
         onDelete:'CASCADE',
         hooks:true
       })
 
       User.hasMany(models.Document,{
-        foreignKey:'author_id',
+        foreignKey:'authorId',
         onDelete:'CASCADE',
         hooks:true
       })

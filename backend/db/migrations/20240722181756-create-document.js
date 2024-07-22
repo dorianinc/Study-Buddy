@@ -12,13 +12,13 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      author_id: {
+      authorId: {
         type: Sequelize.INTEGER
       },
-      folder_id: {
+      folderId: {
         type: Sequelize.INTEGER
       },
-      file_url: {
+      fileIrl: {
         type: Sequelize.STRING
       },
       fileType: {

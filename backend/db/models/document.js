@@ -21,14 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false
     },
-    author_id:{
+    authorId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    folder_id:{
+    folderId:{
       type:DataTypes.INTEGER
     },
-    file_url:{
+    fileUrl:{
       type:DataTypes.STRING,
       allowNull:false
     },

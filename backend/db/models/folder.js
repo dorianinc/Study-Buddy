@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Folder.hasMany(models.Document,{
-        foreignKey:'folder_id',
+        foreignKey:'folderId',
         onDelete:'CASCADE',
         hooks:true
       })
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false
     },
-    user_id:{
+    userId:{
       type:DataTypes.INTEGER,
       allowNull:false
     },

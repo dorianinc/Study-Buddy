@@ -18,7 +18,7 @@ module.exports = {
       folderId: {
         type: Sequelize.INTEGER
       },
-      fileIrl: {
+      fileUrl: {
         type: Sequelize.STRING
       },
       fileType: {

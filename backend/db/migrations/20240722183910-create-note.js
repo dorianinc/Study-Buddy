@@ -10,18 +10,18 @@ module.exports = {
     return queryInterface.createTable(
       "Notes",{
         id: {
-          allNull: false,
+          allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTENGER
+          type: Sequelize.INTEGER
         },
-        doc_id: {
+        docId: {
           allowNull:true,
           type: Sequelize.INTEGER
         },
         content: {
           allowNull: false,
-          type: Sequelize.STRING(1234)
+          type: Sequelize.STRING
         },
         createdAt: {
           allowNull: false,

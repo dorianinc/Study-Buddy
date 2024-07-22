@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       Document.belongsTo(models.Folder)
 
       Document.belongsTo(models.User)
+      Document.hasMany(models.Note,{
+        foreignKey:'docId',
+        onDelete:'CASCADE',
+        hooks:true
+      })
     }
   }
   Document.init({

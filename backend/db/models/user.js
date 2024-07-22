@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         onDelete:'CASCADE',
         hooks:true
       })
+
+      User.hasMany(models.Document,{
+        foreignKey:'author_id',
+        onDelete:'CASCADE',
+        hooks:true
+      })
     }
   }
   User.init(

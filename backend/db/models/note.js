@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // Note.belongsTo(models.Document, {
       //   foreignKey: "docId",
       // });
+      Note.belongsTo(models.Document)
     }
   }
   Note.init(

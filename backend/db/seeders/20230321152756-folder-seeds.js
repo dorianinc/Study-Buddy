@@ -14,7 +14,7 @@ module.exports = {
     for (let i = 0; i < 5; i++) {
       folders.push({
         name: faker.commerce.department(),
-        userId: faker.number.int({ min: 1, max: 10 }),
+        userId: 10,
         category: faker.commerce.productMaterial(),
         createdAt: new Date(),
         updatedAt: new Date(),

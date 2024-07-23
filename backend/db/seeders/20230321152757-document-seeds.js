@@ -14,7 +14,7 @@ module.exports = {
     for (let i = 0; i < 10; i++) {
       documents.push({
         name: faker.commerce.productName(),
-        authorId: faker.number.int({ min: 1, max: 10 }), 
+        authorId: 10, 
         folderId: faker.number.int({ min: 1, max: 5 }),
         fileUrl: faker.internet.url(),
         fileType: faker.system.fileExt(),

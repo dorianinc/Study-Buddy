@@ -36,4 +36,4 @@ export const { logout } = sessionSlice.actions;
 
 export default sessionSlice.reducer
 
-export const selectCurrentUser = (state) => state.auth.user
+export const selectCurrentUser = (state) => state.session.user

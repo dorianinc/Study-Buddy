@@ -6,18 +6,7 @@ const router = express.Router();
 
 // Create a note
 router.post("/", [restoreUser, requireAuth], async (req, res) => {
-  const { user } = req;
-  const image = await ReviewImage.findByPk(req.params.imageId);
-  if (!image) res.status(404).json(doesNotExist("Review Image"));
-  else {
-    const review = await Review.findOne({ where: { id: image.reviewId }, raw: true });
-    if (isAuthorized(user.id, review.userId, res)) {
-      await image.destroy();
-      res.status(200).json({
-        message: "Successfully deleted",
-        statusCode: 200,
-      });
-    }
-  }
+  const docId = await ReviewImage.findByPk(req.query.docId);
+
 });
 module.exports = router;

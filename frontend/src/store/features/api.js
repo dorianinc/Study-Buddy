@@ -36,5 +36,12 @@ export const api = createApi({
   })
 })
 
+export default api;
+
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+} = api;
+
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints

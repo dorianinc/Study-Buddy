@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Note.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       docId: {
         type: DataTypes.INTEGER,
         allowNull: true,

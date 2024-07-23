@@ -6,22 +6,27 @@ if (process.env.NODE_ENV === "production") {
 }
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     return queryInterface.createTable(
-      "Notes",{
+      "Notes",
+      {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
+        },
+        authorId: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
         },
         docId: {
-          allowNull:true,
-          type: Sequelize.INTEGER
+          allowNull: false,
+          type: Sequelize.INTEGER,
         },
         content: {
           allowNull: false,
-          type: Sequelize.STRING
+          type: Sequelize.STRING,
         },
         createdAt: {
           allowNull: false,
@@ -32,14 +37,14 @@ module.exports = {
           allowNull: false,
           type: Sequelize.DATE,
           defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-        },   
+        },
       },
       options
-    )
+    );
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     options.tableName = "Notes";
     return queryInterface.dropTable(options);
-  }
+  },
 };

@@ -7,7 +7,7 @@ const initialState = {
 }
 
 const sessionSlice = createSlice({
-  name: 'auth',
+  name: 'session',
   initialState,
   reducers: {
     logout: (state) => {
@@ -17,7 +17,7 @@ const sessionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      api.endpoints.register.matchFulfilled,
+      api.endpoints.signup.matchFulfilled,
       (state, { payload }) => {
         state.token = payload.token;
         state.user = payload.user;

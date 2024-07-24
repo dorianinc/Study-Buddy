@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useModal } from "../../../context/ModalContext";
 // import * as sessionActions from "../../../store/sessionReducer";
 import "./SignupForm.css";
-import { useRegisterMutation } from "../../../store/features/api";
+import { useSignupMutation } from "../../../store/features/api";
 
 function SignupFormModal() {
   // const dispatch = useDispatch();
@@ -17,31 +17,38 @@ function SignupFormModal() {
   const [buttonClass, setButtonClass] = useState("pink-button disabled");
   const { closeModal } = useModal();
 
-  const [register] = useRegisterMutation();
+  const [signup] = useSignupMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      const user = register({
-        firstName, 
-        lastName, 
-        email, 
-        username, 
-        password
-      }).unwrap()
-      console.log(user);
-        // .then(closeModal)
-        // .catch(async (res) => {
-        //   const data = await res.json();
-        //   if (data && data.errors) {
-        //     setErrors(data.errors);
-        //   }
-        // });
-    }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field",
-    });
+    const user = await signup({
+      firstName, 
+      lastName, 
+      email, 
+      username, 
+      password
+    })
+    console.log("USER", user)
+    // if (password === confirmPassword) {
+    //   setErrors({});
+    //   return register({
+    //     firstName, 
+    //     lastName, 
+    //     email, 
+    //     username, 
+    //     password
+    //   })
+    //     .then(closeModal)
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) {
+    //         setErrors(data.errors);
+    //       }
+    //     });
+    // }
+    // return setErrors({
+    //   confirmPassword: "Confirm Password field must be the same as the Password field",
+    // });
   };
 
   useEffect(() => {

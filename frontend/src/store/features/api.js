@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api', 
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState()).auth.token;
+      const token = (getState()).session.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -17,17 +17,17 @@ export const api = createApi({
     'CurrentUser',
   ],
   endpoints: (builder) => ({
-    register: builder.mutation({
+    signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
-        url: "auth/register",
+        url: "users/",
         method: "POST",
-        body: { email, username, password },
+        body: { firstName, lastName, email, username, password },
       }),
       invalidatesTags: ["CurrentUser"],
     }),
     login: builder.mutation({
       query: ({ credential, password }) => ({
-        url: "auth/login",
+        url: "session/",
         method: "POST",
         body: { credential, password },
       }),
@@ -40,7 +40,7 @@ export default api;
 
 export const {
   useLoginMutation,
-  useRegisterMutation,
+  useSignupMutation,
 } = api;
 
 // Export hooks for usage in functional components, which are

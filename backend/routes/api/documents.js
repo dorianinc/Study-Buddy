@@ -15,6 +15,7 @@ router.post(
   async (req, res) => {
     const { user } = req;
     const { name, fileType } = req.body;
+
     const fileUrl = await singlePublicFileUpload(req.file);
     const folder = await Document.findByPk(req.query.folderId, { raw: true });
 

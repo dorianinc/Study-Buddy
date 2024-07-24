@@ -16,16 +16,16 @@ export const thunkUploadDocument = (document) => async (dispatch) => {
   try {
     const response = await csrfFetch(`/api/documents?folderId=1`, {
       method: "POST",
-      // headers: {
-      //   'Content-Type': "multipart/form-data"
-      // },
-      body: JSON.stringify(document)
+      headers: {
+        'Content-Type': "multipart/form-data"
+      },
+      body: document
     });
 
     if (response.ok) {
       const backendRes = await response.json()
       console.log("IN THUNK OK BLOCK: ", backendRes)
-      dispatch(actionUploadDocument(document))
+      // dispatch(actionUploadDocument(document))
       return backendRes
     }
   } catch (err) {

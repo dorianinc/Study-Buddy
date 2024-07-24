@@ -23,10 +23,10 @@ export const thunkUploadDocument = (document) => async (dispatch) => {
     });
 
     if (response.ok) {
-      const backendRes = await response.json()
-      console.log("IN THUNK OK BLOCK: ", backendRes)
-      // dispatch(actionUploadDocument(document))
-      return backendRes
+      const newDoc = await response.json()
+      console.log("IN THUNK OK BLOCK: ", newDoc)
+      dispatch(actionUploadDocument(newDoc))
+      return newDoc
     }
   } catch (err) {
     const errors = err.json()

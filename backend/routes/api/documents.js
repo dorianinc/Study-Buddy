@@ -28,7 +28,7 @@ router.post(
         authorId: user.id,
         folderId: folder.id,
       });
-      res.status(200).json(newDoc);
+      return res.status(200).json(newDoc);
     }
   }
 );

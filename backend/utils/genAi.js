@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 // ...
 
-export default async function generateRes(instructions,userInput){
+async function generateRes(instructions,userInput){
     // The Gemini 1.5 models are versatile and work with most use cases
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
 
@@ -18,4 +18,7 @@ export default async function generateRes(instructions,userInput){
     const response = await result.response
     const text = response.text()
     return text
+}
+module.exports = {
+    generateRes
 }

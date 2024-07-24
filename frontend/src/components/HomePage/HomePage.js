@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./HomePage.css";
 import { useDispatch } from "react-redux";
-import { csrfFetch } from "../../store/csrf";
+import { thunkUploadDocument } from "../../store/documents";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -14,16 +14,8 @@ function HomePage() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await csrfFetch(`/api/test/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData
-    });
+    dispatch(thunkUploadDocument(formData))
 
-    const data = await res.json();
-    console.log(data)
 
   };
 
@@ -39,7 +31,7 @@ function HomePage() {
           accept=".pdf"
           onChange={(e) => setFile(e.target.files[0])}
         />
-        {console.log("FROM FRONT END", file)}
+        {console.log("UPLOAD FROM FRONT END", file)}
       </div>
       <input type="submit" />
     </form>

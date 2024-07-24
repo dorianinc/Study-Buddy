@@ -25,7 +25,7 @@ app.use(express.json());
 if (!isProduction) {
   // enable cors only in development
   app.use(cors());
-} else {
+}
   // Set the _csrf token and create req.csrfToken method
   app.use(
     csurf({
@@ -36,7 +36,7 @@ if (!isProduction) {
       },
     })
   );
-}
+
 
 // // helmet helps set a variety of headers to better secure your app
 app.use(

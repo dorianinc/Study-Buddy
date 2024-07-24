@@ -10,17 +10,20 @@ function HomePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const pdf = new FormData();
-    pdf.append("filename", file);
-    console.log(pdf.filename);
 
-    const response = await csrfFetch(`/api/test`, {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await csrfFetch(`/api/test/`, {
       method: "POST",
       headers: {
-        'Content-Type': 'multipart/form-data'
+        "Content-Type": "multipart/form-data",
       },
-      body: pdf
+      body: formData
     });
+
+    const data = await res.json();
+    console.log(data)
 
   };
 

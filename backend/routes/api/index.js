@@ -11,9 +11,10 @@ router.use("/users", usersRouter);
 router.use("/notes", notesRouter)
 
 router.post('/test', (req, res) => {
+  console.log("REQ: ", req)
   console.log("FILE ",req.files)
   console.log("BODY ",req.body)
-  // res.json({ requestBody: req.body });
+  res.json({ requestBody: req.body });
 
 })
 

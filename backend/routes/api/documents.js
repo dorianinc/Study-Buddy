@@ -24,7 +24,6 @@ router.post(
     const { name, fileType } = req.body;
 
 
-
     const fileUrl = await singlePublicFileUpload(req.file);
     const folder = await Document.findByPk(req.query.folderId, { raw: true });
 
@@ -37,8 +36,9 @@ router.post(
         summary,
         authorId: user.id,
         folderId: folder.id,
-      })
+
     res.status(200).json(newDoc);
+
     }
   }
 );

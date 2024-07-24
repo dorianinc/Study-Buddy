@@ -55,7 +55,7 @@ function SignupFormModal() {
     } else {
       setButtonClass("pink-button disabled");
     }
-  }, [username, password, confirmPassword]);
+  }, [username, password, confirmPassword, email.length, firstName.length, lastName.length]);
 
   return (
     <>

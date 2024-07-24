@@ -1,10 +1,10 @@
 import React from "react";
 import "./index.css";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { ModalProvider, Modal } from "./context/ModalContext";
 import App from "./App";
+import { ModalProvider, Modal } from "./context/ModalContext";
 
 import { store } from "./store/index";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
@@ -31,9 +31,14 @@ function Root() {
   );
 }
 
-ReactDOM.render(
+// ReactDOM.createRoot(
+//   <React.StrictMode>
+//     <Root />
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Root />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

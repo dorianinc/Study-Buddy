@@ -12,5 +12,4 @@ router.use("/users", usersRouter);
 router.use("/documents", docRouter);
 router.use("/notes", notesRouter);
 
-
 module.exports = router;

@@ -74,6 +74,23 @@ const retrievePrivateFile = (key) => {
   return fileUrl || key;
 };
 
+// --------------------------- DELETE OBJECT ------------------------
+
+const deleteAWSObject = async (fileUrl) => {
+  const Key = fileUrl.split("/")[3];
+  const params = {
+    Bucket: NAME_OF_BUCKET,
+    Key,
+  };
+
+  try {
+    const data = await s3.deleteObject(params).promise();
+    console.log(data);
+  } catch (err) {
+    console.log(err, err.stack);
+  }
+};
+
 // --------------------------- Storage ------------------------
 
 const storage = multer.memoryStorage({
@@ -99,4 +116,5 @@ module.exports = {
   retrievePrivateFile,
   singleMulterUpload,
   multipleMulterUpload,
+  deleteAWSObject
 };

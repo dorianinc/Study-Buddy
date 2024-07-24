@@ -5,6 +5,7 @@ const { Folder, Document } = require("../../db/models");
 const {
   singlePublicFileUpload,
   singleMulterUpload,
+  deleteAWSObject,
 } = require("../../awsS3.js");
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.post(
     const { user } = req;
     const { name, fileType } = req.body;
     const fileUrl = await singlePublicFileUpload(req.file);
-    const folder = await Document.findByPk(req.query.folderId, { raw: true });
+    const folder = await Folder.findByPk(req.query.folderId, { raw: true });
 
     if (!folder) res.status(404).json(doesNotExist("Folder"));
     else {
@@ -31,5 +32,23 @@ router.post(
     }
   }
 );
+
+// Delete a Document
+router.delete("/:docId", [restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
+  const doc = await Document.findByPk(req.params.docId);
+  if (!doc) res.status(404).json(doesNotExist("Document"));
+  else {
+    const fileUrl = doc.fileUrl;
+    if (isAuthorized(user.id, doc.authorId, res)) {
+      await deleteAWSObject(fileUrl);
+      await doc.destroy();
+      res.status(200).json({
+        message: "Successfully deleted document",
+        statusCode: 200,
+      });
+    }
+  }
+});
 
 module.exports = router;

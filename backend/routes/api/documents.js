@@ -1,0 +1,28 @@
+const express = require("express");
+const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
+const { doesNotExist } = require("../../utils/helpers.js");
+const { Folder, Document } = require("../../db/models");
+const { singlePublicFileUpload, singleMulterUpload } = require("../../awsS3.js");
+const router = express.Router();
+
+// Create a Document
+router.post("/", [singleMulterUpload("pdf"), restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
+  const { name, fileType, fileUrl } = req.body;
+  const pdfURL = await singlePublicFileUpload(req.file);
+  console.log("🖥️  pdfURL: ", pdfURL)
+  const folder = await Document.findByPk(req.query.folderId, { raw: true });
+  if (!folder) res.status(404).json(doesNotExist("Folder"));
+  else {
+    const newDoc = await Document.create({
+      name,
+      fileType,
+      fileUrl: pdfURL,
+      authorId: user.id,
+      folderId: folder.id,
+    });
+    res.status(200).json(newDoc);
+  }
+});
+
+module.exports = router;

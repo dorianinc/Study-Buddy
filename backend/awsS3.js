@@ -1,6 +1,6 @@
 const AWS = require("aws-sdk");
 // name of your bucket here
-const NAME_OF_BUCKET = "";
+const NAME_OF_BUCKET = "study-buddy-pdf-files";
 const multer = require("multer");
 
 //  make sure to set environment variables in production for:

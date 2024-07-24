@@ -18,7 +18,8 @@ router.post(
   async (req, res) => {
     // parsing pdf to text and get response from gemini
     const pdfText = await parsePDF(req.file.buffer);
-    const summary = generateRes('summarize this text in 14 sentences',pdfText)
+    if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
+    // const summary = generateRes('summarize this text in 14 sentences',pdfText)
 
     const { user } = req;
     const { name, fileType } = req.body;

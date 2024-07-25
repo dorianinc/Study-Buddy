@@ -9,12 +9,7 @@ const initialState = {
 const sessionSlice = createSlice({
   name: 'session',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.token = null
-      state.user = null
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
       api.endpoints.signup.matchFulfilled,
@@ -35,10 +30,14 @@ const sessionSlice = createSlice({
         state.user = payload.user;
       }
     );
+    builder.addMatcher(
+      api.endpoints.logout.matchFulfilled, (state) => {
+        state.token = null;
+        state.user = null;
+      }
+    )
   }
 })
-
-export const { logout } = sessionSlice.actions;
 
 export default sessionSlice.reducer
 

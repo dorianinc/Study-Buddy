@@ -43,7 +43,12 @@ export const api = createApi({
       query: () => "session/",
       invalidatesTags: ["CurrentUser"]
     }),
-    
+    logout: builder.mutation({
+      query: () => ({
+        url: "session/",
+        method: "DELETE",
+      })
+    })
   })
 })
 
@@ -53,6 +58,7 @@ export const {
   useLoginMutation,
   useSignupMutation,
   useRestoreUserQuery,
+  useLogoutMutation,
 } = api;
 
 // Export hooks for usage in functional components, which are

@@ -6,13 +6,13 @@ import { useRestoreUserQuery } from "./store/features/api";
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const {isLoading, isSuccess, error } = useRestoreUserQuery();
+  const { data: user, isLoading, } = useRestoreUserQuery();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (user) {
       setIsLoaded(true);
     }
-  }, [isLoading, isSuccess, error]); // Update on query state changes
+  }, [user]);
 
   return (
     <div className="app-container">

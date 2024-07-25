@@ -5,7 +5,7 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 import LogoButton from "./LogoButton/LogoButton";
 import "./Navigation.css";
 
-function Navigation({ isLoaded }) {
+function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (

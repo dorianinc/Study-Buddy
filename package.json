@@ -17,7 +17,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "busboy": "^1.6.0",
+    "dotenv": "^16.4.5",
     "js-cookie": "^3.0.1",
+    "pdf.js-extract": "^0.2.1",
+    "pdfjs-dist": "^4.4.168",
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
     "redux": "^4.2.1",
@@ -28,5 +33,6 @@
   "devDependencies": {
     "redux-logger": "^3.0.6",
     "sequelize-cli": "^6.6.2"
-  }
+  },
+  "proxy": "http://localhost:8000"
 }

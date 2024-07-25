@@ -15,7 +15,7 @@ export const store = configureStore({
     if (process.env.NODE_ENV !== 'production') {
       middleware.push(logger)
     }
-    
+
     return middleware;
   }
 })

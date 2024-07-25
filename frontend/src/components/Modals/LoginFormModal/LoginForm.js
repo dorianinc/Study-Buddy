@@ -15,6 +15,7 @@ function LoginFormModal() {
     e.preventDefault();
     setErrors({});
     await login({ credential, password })
+      .unwrap()
       .then(closeModal)
       .catch((error) => setErrors(error.data.errors));
   };
@@ -23,6 +24,7 @@ function LoginFormModal() {
     e.preventDefault();
     return (
       await login({ credential: "demo_user123", password: "password1" })
+        .unwrap()
         .then(closeModal)
         .catch((error) => setErrors(error.data.errors))
     );

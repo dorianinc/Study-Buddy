@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as sessionActions from "../../../store/sessionReducer";
+import { logout } from "../../../store/features/sessionSlice";
 import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
@@ -35,9 +35,9 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
-  const logout = (e) => {
+  const logoutUser = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    dispatch(logout())
     closeMenu();
     history.push("/");
   };
@@ -70,7 +70,7 @@ function ProfileButton({ user }) {
               </Link>
               <hr className="line userModal" />
               <div>
-                <button className="modal-button auth" onClick={logout}>
+                <button className="modal-button auth" onClick={logoutUser}>
                   Log Out
                 </button>
               </div>

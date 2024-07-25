@@ -36,7 +36,7 @@ router.post(
         summary,
         authorId: user.id,
         folderId: folder.id,
-
+    })
     res.status(200).json(newDoc);
 
     }

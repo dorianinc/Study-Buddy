@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./DocumentUpload.css";
 import { useDispatch } from "react-redux";
 import { thunkUploadDocument } from "../../store/documents";
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 function DocumentUpload() {
   const dispatch = useDispatch();
@@ -33,7 +34,8 @@ function DocumentUpload() {
           onChange={(e) => setFile(e.target.files[0])}
         />
       </div>
-      <input type="submit" />
+      <Button colorScheme="blue" size='sm'>Submit</Button>
+      {/* <input type="submit" /> */}
     </form>
   );
 }

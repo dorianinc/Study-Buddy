@@ -21,34 +21,25 @@ function SignupFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await signup({
-      firstName, 
-      lastName, 
-      email, 
-      username, 
-      password
-    })
-    console.log("USER", user)
-    // if (password === confirmPassword) {
-    //   setErrors({});
-    //   return register({
-    //     firstName, 
-    //     lastName, 
-    //     email, 
-    //     username, 
-    //     password
-    //   })
-    //     .then(closeModal)
-    //     .catch(async (res) => {
-    //       const data = await res.json();
-    //       if (data && data.errors) {
-    //         setErrors(data.errors);
-    //       }
-    //     });
-    // }
-    // return setErrors({
-    //   confirmPassword: "Confirm Password field must be the same as the Password field",
-    // });
+    if (password !== confirmPassword) {
+      return setErrors({
+        confirmPassword: "Confirm Password field must be the same as the Password field",
+      });
+    }
+    setErrors({});
+    try {
+      await signup({
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+      })
+      .unwrap()
+      closeModal();
+    } catch (error) {
+      setErrors(error.data.errors); 
+    }
   };
 
   useEffect(() => {
@@ -64,7 +55,7 @@ function SignupFormModal() {
     } else {
       setButtonClass("pink-button disabled");
     }
-  }, [username, password, confirmPassword]);
+  }, [email.length, firstName.length, lastName.length, username, password, confirmPassword]);
 
   return (
     <>

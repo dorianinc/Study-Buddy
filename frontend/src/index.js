@@ -8,15 +8,15 @@ import App from "./App";
 
 import { store } from "./store/index";
 import { 
-  // restoreCSRF,
-  //  csrfFetch 
+  restoreCSRF,
+   csrfFetch 
   } from "./store/csrf";
 // import * as sessionActions from "./store/sessionReducer";
 
 if (process.env.NODE_ENV !== "production") {
-  // restoreCSRF();
+  restoreCSRF();
 
-  // window.csrfFetch = csrfFetch;
+  window.csrfFetch = csrfFetch;
   window.store = store;
   // window.sessionActions = sessionActions;
 }

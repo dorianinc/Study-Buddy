@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import Cookies from 'js-cookie';
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
@@ -9,6 +10,11 @@ export const api = createApi({
       const token = (getState()).session.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+      }
+      // Add CSRF token handling
+      const csrfToken = Cookies.get('XSRF-TOKEN');
+      if (csrfToken) {
+        headers.set('X-XSRF-TOKEN', csrfToken);
       }
       return headers;
     },
@@ -33,6 +39,11 @@ export const api = createApi({
       }),
       invalidatesTags: ["CurrentUser"],
     }),
+    restoreUser: builder.query({
+      query: () => "session/",
+      invalidatesTags: ["CurrentUser"]
+    }),
+    
   })
 })
 
@@ -41,6 +52,7 @@ export default api;
 export const {
   useLoginMutation,
   useSignupMutation,
+  useRestoreUserQuery,
 } = api;
 
 // Export hooks for usage in functional components, which are

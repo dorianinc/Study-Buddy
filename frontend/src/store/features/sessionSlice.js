@@ -29,6 +29,12 @@ const sessionSlice = createSlice({
         state.user = payload.user;
       }
     );
+    builder.addMatcher(
+      api.endpoints.restoreUser.matchFulfilled, (state, { payload }) => {
+        state.token = payload.token;
+        state.user = payload.user;
+      }
+    );
   }
 })
 

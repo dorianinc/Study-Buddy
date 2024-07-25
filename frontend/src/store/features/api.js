@@ -54,6 +54,8 @@ export const api = createApi({
 
 export default api;
 
+// Export hooks for usage in functional components, which are
+// auto-generated based on the defined endpoints
 export const {
   useLoginMutation,
   useSignupMutation,
@@ -61,5 +63,3 @@ export const {
   useLogoutMutation,
 } = api;
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints

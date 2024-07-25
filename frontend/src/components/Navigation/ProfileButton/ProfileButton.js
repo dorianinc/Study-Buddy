@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { logout } from "../../../store/features/sessionSlice";
+
 import { useLogoutMutation } from "../../../store/features/api";
 import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
@@ -9,7 +8,6 @@ import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
-  // const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();

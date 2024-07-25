@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/ModalContext";
-// import * as sessionActions from "../../../store/sessionReducer";
 import "./SignupForm.css";
 import { useSignupMutation } from "../../../store/features/api";
 
 function SignupFormModal() {
-  // const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");

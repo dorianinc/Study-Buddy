@@ -18,7 +18,6 @@ function DocumentUpload() {
     formData.append("theFile", file);
     formData.append("name", "HardCode test1")
     formData.append("fileType", "pdf")
-    console.log("FORM DATA IN COMPONENT: ",formData)
     createDoc(formData)
     // dispatch(thunkUploadDocument(formData))
   };

@@ -32,7 +32,7 @@ app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin",
   })
-  
+
 );
 // Set the _csrf token and create req.csrfToken method
 app.use(

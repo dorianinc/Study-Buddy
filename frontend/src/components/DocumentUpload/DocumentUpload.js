@@ -2,10 +2,12 @@ import { useState } from "react";
 import "./DocumentUpload.css";
 import { useDispatch } from "react-redux";
 import { thunkUploadDocument } from "../../store/documents";
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
+import { useCreateDocMutation } from "../../store/features/api";
 
 function DocumentUpload() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const [ createDoc ] = useCreateDocMutation();
 
   const [file, setFile] = useState(null);
 
@@ -14,10 +16,11 @@ function DocumentUpload() {
 
     const formData = new FormData();
     formData.append("theFile", file);
-    formData.append("name", "HardCode")
+    formData.append("name", "HardCode test1")
     formData.append("fileType", "pdf")
-
-    dispatch(thunkUploadDocument(formData))
+    console.log("FORM DATA IN COMPONENT: ",formData)
+    createDoc(formData)
+    // dispatch(thunkUploadDocument(formData))
   };
 
   return (
@@ -34,7 +37,7 @@ function DocumentUpload() {
           onChange={(e) => setFile(e.target.files[0])}
         />
       </div>
-      <Button colorScheme="blue" size='sm'>Submit</Button>
+      <Button type="submit" colorScheme="blue" size='sm'>Submit</Button>
       {/* <input type="submit" /> */}
     </form>
   );

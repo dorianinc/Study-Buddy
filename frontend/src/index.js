@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ModalProvider, Modal } from "./context/ModalContext";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import { store } from "./store/index";
 import {

@@ -6,6 +6,7 @@ import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
+import { Center, Flex, Box } from "@chakra-ui/react";
 
 function ProfileButton({ user }) {
   const [logout] = useLogoutMutation();
@@ -14,16 +15,16 @@ function ProfileButton({ user }) {
 
   const history = useHistory();
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+  const openMenu = (e) => {
+    e.stopPropagation();
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -45,16 +46,18 @@ function ProfileButton({ user }) {
   const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <div className="userMenu">
-      <div className="userButton">
-        <button onClick={openMenu}>
-          <div className="menuIcon">
+    <Flex className="userMenu" >
+      {/* <Flex className="userButton"> */}
+        <Flex  onClick={openMenu}p={2}>
+          <Box className="menuIcon">
             <i className="fa-solid fa-bars" />
-          </div>
-          <div className="userIcon">
+          </Box>
+          <Box className="userIcon">
             <i className="fas fa-user-circle" />
-          </div>
-        </button>
+          </Box>
+        {/* </Flex> */}
+      </Flex>
+      {showMenu && (
         <div className={dropdown} ref={ulRef}>
           {user ? (
             <div className="userInfo">
@@ -103,8 +106,8 @@ function ProfileButton({ user }) {
             </div>
           )}
         </div>
-      </div>
-    </div>
+      )}
+    </Flex>
   );
 }
 

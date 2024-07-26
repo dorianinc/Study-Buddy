@@ -16,6 +16,7 @@ router.post(
   "/",
   [singleMulterUpload("theFile"), restoreUser, requireAuth],
   async (req, res) => {
+    console.log("REQ IN BACKEND",req.file)
     // parsing pdf to text and get response from gemini
     const pdfText = await parsePDF(req.file.buffer);
     const summary = generateRes('summarize this text in 14 sentences',pdfText)

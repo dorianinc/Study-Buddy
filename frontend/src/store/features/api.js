@@ -1,27 +1,26 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import Cookies from 'js-cookie';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
-  reducerPath: 'api',
+  reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api', 
+    baseUrl: "/api",
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState()).session.token;
+      const token = getState().session.token;
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
+      // console.log("HEADERS", headers)
       // Add CSRF token handling
-      const csrfToken = Cookies.get('XSRF-TOKEN');
+      const csrfToken = Cookies.get("XSRF-TOKEN");
       if (csrfToken) {
-        headers.set('X-XSRF-TOKEN', csrfToken);
+        headers.set("X-XSRF-TOKEN", csrfToken);
       }
       return headers;
     },
   }),
-  tagTypes: [
-    'CurrentUser',
-  ],
+  tagTypes: ["CurrentUser", "Document"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -41,16 +40,28 @@ export const api = createApi({
     }),
     restoreUser: builder.query({
       query: () => "session/",
-      invalidatesTags: ["CurrentUser"]
+      invalidatesTags: ["CurrentUser"],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "session/",
         method: "DELETE",
-      })
-    })
-  })
-})
+      }),
+      invalidatesTags: ["CurrentUser"],
+    }),
+    createDoc: builder.mutation({
+      query: (formData) => ({
+        url: "documents?folderId=1",
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "multipart/form-data;",
+        // },
+        body: formData,
+      }),
+      invalidatesTags: ["Document"],
+    }),
+  }),
+});
 
 export default api;
 
@@ -61,5 +72,5 @@ export const {
   useSignupMutation,
   useRestoreUserQuery,
   useLogoutMutation,
+  useCreateDocMutation,
 } = api;
-

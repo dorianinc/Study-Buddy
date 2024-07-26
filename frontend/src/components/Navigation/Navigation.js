@@ -5,8 +5,8 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 import LogoButton from "./LogoButton/LogoButton";
 import "./Navigation.css";
 
-function Navigation({ isLoaded }) {
-  // const sessionUser = useSelector((state) => state.session.user);
+function Navigation() {
+  const sessionUser = useSelector((state) => state.session.user);
 
   return (
     <div className="nav-bar">
@@ -14,7 +14,8 @@ function Navigation({ isLoaded }) {
         <NavLink exact to="/">
           <LogoButton />
         </NavLink>
-        {isLoaded && <ProfileButton  />}
+        {/* {isLoaded && <ProfileButton user={sessionUser} />} */}
+        <ProfileButton user={sessionUser}/>
       </div>
     </div>
   );

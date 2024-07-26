@@ -7,16 +7,16 @@ import App from "./App";
 import { ModalProvider, Modal } from "./context/ModalContext";
 
 import { store } from "./store/index";
-import { restoreCSRF, csrfFetch } from "./store/csrf";
-import * as sessionActions from "./store/sessionReducer";
-import { ChakraProvider } from "@chakra-ui/react";
+import {
+  restoreCSRF,
+   csrfFetch
+  } from "./store/csrf";
 
 if (process.env.NODE_ENV !== "production") {
   restoreCSRF();
 
   window.csrfFetch = csrfFetch;
   window.store = store;
-  window.sessionActions = sessionActions;
 }
 
 function Root() {

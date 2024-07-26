@@ -47,16 +47,17 @@ router.post("/", validateLogin, async (req, res, next) => {
     username: user.username,
   };
 
-  await setTokenCookie(res, safeUser);
+  const token = await setTokenCookie(res, safeUser);
 
   return res.json({
+    token: token,
     user: safeUser,
   });
 });
 
 // Restore session user
 router.get("/", restoreUser, (req, res) => {
-  const { user } = req;
+  const { user, token } = req;
   if (user) {
     const safeUser = {
       id: user.id,
@@ -66,6 +67,7 @@ router.get("/", restoreUser, (req, res) => {
       username: user.username,
     };
     return res.json({
+      token: token,
       user: safeUser,
     });
   } else return res.json({ user: null });

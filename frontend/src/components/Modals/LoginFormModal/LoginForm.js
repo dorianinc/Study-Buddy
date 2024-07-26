@@ -1,11 +1,10 @@
 import { useState } from "react";
-import * as sessionActions from "../../../store/sessionReducer";
-import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../../store/features/api";
 import { useModal } from "../../../context/ModalContext";
 import "./LoginForm.css";
 
 function LoginFormModal() {
-  const dispatch = useDispatch();
+  const [login] = useLoginMutation();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -14,27 +13,19 @@ function LoginFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    dispatch(sessionActions.login({ credential, password }))
+    await login({ credential, password })
+      .unwrap()
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+      .catch((error) => setErrors(error.data.errors));
   };
 
-  const signInDemo = (e) => {
+  const signInDemo = async (e) => {
     e.preventDefault();
     return (
-      dispatch(sessionActions.login({ credential: "demo_user123", password: "password1" }))
+      await login({ credential: "demo_user123", password: "password1" })
+        .unwrap()
         .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors);
-          }
-        })
+        .catch((error) => setErrors(error.data.errors))
     );
   };
 

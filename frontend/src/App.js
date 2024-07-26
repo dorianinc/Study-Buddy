@@ -1,11 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import DocumentUpload from "./components/DocumentUpload/DocumentUpload";
-import { ChakraProvider } from "@chakra-ui/react";
+import Navigation from "./components/Navigation/Navigation";
+// import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
   return (
-    <ChakraProvider>
       <div className="app-container">
         <div className="content-container">
           <Switch>
@@ -13,9 +13,10 @@ function App() {
               <DocumentUpload />
             </Route>
           </Switch>
+          <Switch>
+          </Switch>
         </div>
       </div>
-    </ChakraProvider>
   );
 }
 

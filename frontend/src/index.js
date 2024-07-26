@@ -9,6 +9,7 @@ import { ModalProvider, Modal } from "./context/ModalContext";
 import { store } from "./store/index";
 import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/sessionReducer";
+import { ChakraProvider } from "@chakra-ui/react";
 
 if (process.env.NODE_ENV !== "production") {
   restoreCSRF();
@@ -23,7 +24,9 @@ function Root() {
     <ModalProvider>
       <Provider store={store}>
         <BrowserRouter>
+        <ChakraProvider>
           <App />
+        </ChakraProvider>
           <Modal />
         </BrowserRouter>
       </Provider>

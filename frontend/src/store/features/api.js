@@ -51,15 +51,20 @@ export const api = createApi({
     }),
     createDoc: builder.mutation({
       query: (formData) => ({
-        url: "documents?folderId=1",
+        //hard coded url for testing purposes
+        url: "documents?folderId=1/",
         method: "POST",
-        // headers: {
-        //   "Content-Type": "multipart/form-data;",
-        // },
         body: formData,
       }),
       invalidatesTags: ["Document"],
     }),
+    deleteDoc: builder.mutation({
+      query: ({ user }) => ({
+        url: "documents/:docId/",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Document"]
+    })
   }),
 });
 
@@ -73,4 +78,5 @@ export const {
   useRestoreUserQuery,
   useLogoutMutation,
   useCreateDocMutation,
+  useDeleteDocMutation
 } = api;

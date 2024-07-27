@@ -6,7 +6,7 @@ import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
-import { Center, Flex, Box } from "@chakra-ui/react";
+import { Center, Flex, Box, Container } from "@chakra-ui/react";
 
 function ProfileButton({ user }) {
   const [logout] = useLogoutMutation();
@@ -48,17 +48,19 @@ function ProfileButton({ user }) {
   return (
     <Flex className="userMenu" >
       {/* <Flex className="userButton"> */}
-        <Flex  onClick={openMenu}p={2}>
-          <Box className="menuIcon">
+        <Flex  onClick={openMenu} position="absolute" right="1rem" top="1rem" border="1px solid gray" borderRadius="5px" pr=".5rem" pl=".5rem" _hover={{
+          cursor: "pointer"
+        }}>
+          <Box className="menuIcon" pr="5px">
             <i className="fa-solid fa-bars" />
           </Box>
-          <Box className="userIcon">
+          <Box className="userIcon" >
             <i className="fas fa-user-circle" />
           </Box>
         {/* </Flex> */}
       </Flex>
       {showMenu && (
-        <div className={dropdown} ref={ulRef}>
+        <Container className={dropdown} ref={ulRef} position="absolute" top="2.6rem" right="1rem" border="1px solid black" borderRadius="5px" w="min-content" bgColor="white">
           {user ? (
             <div className="userInfo">
               <div>
@@ -105,7 +107,7 @@ function ProfileButton({ user }) {
               </div>
             </div>
           )}
-        </div>
+        </Container>
       )}
     </Flex>
   );

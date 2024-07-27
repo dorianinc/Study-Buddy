@@ -1,0 +1,6 @@
+.errors{
+  min-height: 15px;
+  /* max-height: 15px; */
+  font-size: 14px;
+  color: red;
+}

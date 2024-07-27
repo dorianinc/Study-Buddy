@@ -6,7 +6,7 @@ import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
-import { Center, Flex, Box, Container } from "@chakra-ui/react";
+import { Button, ButtonGroup, Flex, Box, Container, Center } from "@chakra-ui/react";
 
 function ProfileButton({ user }) {
   const [logout] = useLogoutMutation();
@@ -82,29 +82,34 @@ function ProfileButton({ user }) {
             </div>
           ) : (
             <div>
+              <ButtonGroup variant="link" colorScheme="black" pb="2px" pt="2px">
+                <Center flexDirection="column">
+
               <div className="login">
                 <ModalButton
                   buttonContent={
-                    <button className="modal-button auth">
+                    <Button className="modal-button auth" >
                       <p>Log In</p>
-                    </button>
+                    </Button>
                   }
                   onButtonClick={closeMenu}
                   modalComponent={<LoginFormModal />}
-                />
+                  />
               </div>
               <div children="signup">
                 <ModalButton
                   className="modal-button auth"
                   buttonContent={
-                    <button className="modal-button auth">
+                    <Button className="modal-button auth">
                       <p>Sign Up</p>
-                    </button>
+                    </Button>
                   }
                   onButtonClick={closeMenu}
                   modalComponent={<SignupFormModal />}
-                />
+                  />
               </div>
+          </Center>
+                  </ButtonGroup>
             </div>
           )}
         </Container>

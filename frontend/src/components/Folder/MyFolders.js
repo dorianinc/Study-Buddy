@@ -1,5 +1,10 @@
 import Folder from "./Folder";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import NewFolderButton from "./NewFolderButton";
+import { 
+    Box, 
+    Grid, 
+    GridItem 
+} from "@chakra-ui/react";
 
 function MyFolders() {
   const folders = [
@@ -19,6 +24,9 @@ function MyFolders() {
     <>
       <Box>
         <Grid templateColumns="repeat(5,1fr)" rowGap={20} p={20}>
+            <GridItem>
+                <NewFolderButton />
+            </GridItem>
           {folders.map((folder) => (
             <GridItem>
               <Folder folder={folder} />

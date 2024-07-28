@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import DocumentUpload from "./components/DocumentUpload/DocumentUpload";
 import Navigation from "./components/Navigation/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
-import Folder from "./components/Folder/Folder";
+import MyFolders from "./components/Folder/MyFolders";
 
 function App() {
   const user = useSelector(state => state.session.user);
@@ -17,7 +17,7 @@ function App() {
         <Switch>
           <Route path="/">
             <DocumentUpload />
-            <Folder />
+            <MyFolders />
           </Route>
         </Switch>
       </div>

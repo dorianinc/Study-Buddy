@@ -5,14 +5,13 @@ import { useCreateFolderMutation } from "../../store/features/api";
 function NewFolderButton() {
   const [createFolder] = useCreateFolderMutation();
 
-  function onButtonClick() {
-    createFolder({ name: "Python", category: "Coding"})
+  function createNewFolder() {
+    createFolder({ name: "History", category: "Social" })
   }
 
   return (
     <>
       <Box
-        onClick={() => onButtonClick()}
         as="button"
         boxShadow="lg"
         rounded="xl"
@@ -24,7 +23,8 @@ function NewFolderButton() {
         _hover={{
           bg: "lightgrey",
         }}
-      >
+        onClick={() => createNewFolder()}
+        >
         <AddIcon boxSize={30} />
       </Box>
     </>

@@ -40,7 +40,7 @@ export const api = createApi({
     }),
     restoreUser: builder.query({
       query: () => "session/",
-      invalidatesTags: ["CurrentUser"],
+      providesTags: ["CurrentUser"],
     }),
     logout: builder.mutation({
       query: () => ({
@@ -67,7 +67,7 @@ export const api = createApi({
     }),
     getFolders: builder.query({
       query: (user) => 'folders/',
-      invalidatesTags: ["Folder"]
+      providesTags: ["Folder"]
     }),
     createFolder: builder.mutation({
       query: ({ user, name, category }) => ({
@@ -75,7 +75,7 @@ export const api = createApi({
         method: "POST",
         body: { name, category }
       }),
-      invalidatesTags: ["Document"]
+      invalidatesTags: ["Folder"]
     }),
   }),
 });

@@ -11,12 +11,12 @@ module.exports = {
     options.tableName = "Documents";
     const documents = [];
 
-    const fileTypes = ['pdf', 'doc', 'docx', 'txt']; // File types allowed
+    const fileTypes = ["pdf", "doc", "docx", "txt"]; // File types allowed
 
     for (let i = 0; i < 10; i++) {
       documents.push({
         name: faker.commerce.productName(),
-        authorId: 1, // Adjust as needed to match valid IDs in your database
+        authorId: 10,
         folderId: faker.number.int({ min: 1, max: 5 }), // Adjust range as needed
         fileUrl: faker.internet.url(),
         fileType: fileTypes[Math.floor(Math.random() * fileTypes.length)],
@@ -29,7 +29,7 @@ module.exports = {
     try {
       await queryInterface.bulkInsert(options, documents, {});
     } catch (error) {
-      console.error('Error while seeding documents:', error);
+      console.error("Error while seeding documents:", error);
       throw error;
     }
   },

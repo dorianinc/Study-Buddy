@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Folder from "./Folder";
 import NewFolderButton from "./NewFolderButton";
 import { 
@@ -5,21 +6,23 @@ import {
     Grid, 
     GridItem 
 } from "@chakra-ui/react";
+import { useGetFoldersQuery } from "../../store/features/api";
 
 function MyFolders() {
-  const folders = [
-    {name: "Math"},
-    {name: "Science"},
-    {name: "English"},
-    {name: "History"},
-    {name: "Shakespeare"},
-    {name: "Javascript"},
-    {name: "Python"},
-    {name: "React"},
-    {name: "CSS"},
-    {name: "Ruby"},
-    {name: "Really really long folder name"},
-  ];
+  const user = useSelector(state => state.session.user);
+  const { data: folders, isLoading, error } = useGetFoldersQuery({ user });
+
+  if (isLoading) {
+    return <div>Loading folders...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching folders: {error.message}</div>;
+  }
+
+  // Data is available here
+  console.log("FOLDERS", folders)
+
   return (
     <>
       <Box>

@@ -29,6 +29,6 @@ module.exports = {
     password: "test_password",
     host: "localhost",
     dialect: "sqlite",
-    logging: false, // Disable logging in test
+    logging: false,
   },
 };

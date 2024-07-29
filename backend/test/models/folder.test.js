@@ -34,7 +34,7 @@ describe("Folder Model", () => {
 
     expect(folder).to.be.an("object");
     expect(folder.name).to.equal("Folder 1");
-    expect(folder.userId).to.equal(userId);
+    expect(folder.userId).to.equal(user.id);
     expect(folder.category).to.equal("Math");
   });
 

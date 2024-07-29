@@ -19,7 +19,6 @@ describe("Document Model", () => {
       username: "johndoe",
       hashedPassword: bcrypt.hashSync("password1", 10),
     });
-    userId = user.id;
   });
 
   beforeEach(async () => {
@@ -30,7 +29,7 @@ describe("Document Model", () => {
   it("01. Should create a document with valid attributes", async () => {
     document = await Document.create({
       name: "Document 1",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file.pdf",
       fileType: "pdf",
       summary: "This is a valid summary for the document.",
@@ -38,7 +37,7 @@ describe("Document Model", () => {
 
     expect(document).to.be.an("object");
     expect(document.name).to.equal("Document 1");
-    expect(document.authorId).to.equal(userId);
+    expect(document.authorId).to.equal(user.id);
     expect(document.fileUrl).to.equal("http://example.com/file.pdf");
     expect(document.fileType).to.equal("pdf");
     expect(document.summary).to.equal(
@@ -49,7 +48,7 @@ describe("Document Model", () => {
   it("02. Should retrieve all documents from a user", async () => {
     await Document.create({
       name: "Document 1",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file16.pdf",
       fileType: "pdf",
       summary: "First document for the user.",
@@ -57,7 +56,7 @@ describe("Document Model", () => {
 
     await Document.create({
       name: "Document 2",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file17.pdf",
       fileType: "pdf",
       summary: "Second document for the user.",
@@ -65,14 +64,14 @@ describe("Document Model", () => {
 
     await Document.create({
       name: "Document 3",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file18.pdf",
       fileType: "pdf",
       summary: "Third document for the user.",
     });
 
     const userDocuments = await Document.findAll({
-      where: { authorId: userId },
+      where: { authorId: user.id },
     });
 
     expect(userDocuments).to.be.an("array").that.has.lengthOf(3);
@@ -88,7 +87,7 @@ describe("Document Model", () => {
   it("03. Should retrieve a document by ID", async () => {
     document = await Document.create({
       name: "Document 2",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file2.pdf",
       fileType: "pdf",
       summary: "Summary for document 2.",
@@ -106,7 +105,7 @@ describe("Document Model", () => {
   it("04. Should update a document by ID", async () => {
     document = await Document.create({
       name: "Document 3",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file3.pdf",
       fileType: "pdf",
       summary: "Original summary.",
@@ -125,7 +124,7 @@ describe("Document Model", () => {
   it("05. Should delete a document by ID", async () => {
     document = await Document.create({
       name: "Document 4",
-      authorId: userId,
+      authorId: user.id,
       fileUrl: "http://example.com/file4.pdf",
       fileType: "pdf",
       summary: "Summary to be deleted.",
@@ -141,7 +140,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: null,
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "pdf",
         summary: "Summary with no name.",
@@ -157,7 +156,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "pdf",
         summary: "Summary with too short name.",
@@ -175,7 +174,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "A".repeat(26),
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "pdf",
         summary: "Summary with too long name.",
@@ -227,7 +226,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "Document 6",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "invalid-url",
         fileType: "pdf",
         summary: "Summary with invalid file URL.",
@@ -245,7 +244,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "Document 7",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: null,
         summary: "Summary with no file type.",
@@ -261,7 +260,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "Document 8",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "exe",
         summary: "Summary with invalid file type.",
@@ -279,7 +278,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "Document 9",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "pdf",
         summary: null,
@@ -295,7 +294,7 @@ describe("Document Model", () => {
     try {
       document = await Document.create({
         name: "Document 10",
-        authorId: userId,
+        authorId: user.id,
         fileUrl: "http://example.com/file.pdf",
         fileType: "pdf",
         summary: "A".repeat(1001),

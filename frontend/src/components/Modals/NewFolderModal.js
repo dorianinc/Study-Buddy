@@ -6,23 +6,30 @@ import {
   Input,
   Button,
   FormHelperText,
+  Box
 } from "@chakra-ui/react";
 import { useCreateFolderMutation } from "../../store/features/api";
 
 function NewFolderModal() {
   const [folderName, setFolderName] = useState('');
   const [category, setCategory] = useState('');
-  const [createFolder, { isLoading }] = useCreateFolderMutation();
+  const [createFolder, { error, isError, isLoading }] = useCreateFolderMutation();
 
   function createNewFolder() {
       createFolder({ name: folderName, category: category });
   }
+
+  if (isError) {
+    console.log("ERROR", error);
+  }
   return (
     <>
-      <form onSubmit={createNewFolder}>
+      <Box as="form" onSubmit={createNewFolder}>
         <FormControl>
           <FormLabel htmlFor="name">Folder name</FormLabel>
-          <Input id="name" placeholder="name" size="lg" value={folderName} onChange={(e) => setFolderName(e.target.value)}/>
+          <Input id="name" placeholder="name" size="lg" value={folderName} 
+          onChange={(e) => setFolderName(e.target.value)}
+          />
           <FormHelperText>
             Enter the name you would like to give the folder
           </FormHelperText>
@@ -43,7 +50,7 @@ function NewFolderModal() {
         >
           Submit
         </Button>
-      </form>
+      </Box>
     </>
   );
 }

@@ -68,7 +68,15 @@ export const api = createApi({
     getFolders: builder.query({
       query: (user) => 'folders/',
       invalidatesTags: ["Folder"]
-    })
+    }),
+    createFolder: builder.mutation({
+      query: ({ user, name, category }) => ({
+        url: "folders/",
+        method: "POST",
+        body: { name, category }
+      }),
+      invalidatesTags: ["Document"]
+    }),
   }),
 });
 
@@ -84,4 +92,5 @@ export const {
   useCreateDocMutation,
   useDeleteDocMutation,
   useGetFoldersQuery,
+  useCreateFolderMutation,
 } = api;

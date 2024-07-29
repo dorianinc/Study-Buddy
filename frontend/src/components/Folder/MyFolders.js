@@ -31,7 +31,7 @@ function MyFolders() {
                 <NewFolderButton />
             </GridItem>
           {folders.map((folder) => (
-            <GridItem>
+            <GridItem key={folder.id}>
               <Folder folder={folder} />
             </GridItem>
           ))}

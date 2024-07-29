@@ -19,22 +19,22 @@ module.exports = {
         },
         firstName: {
           allowNull: false,
-          type: Sequelize.STRING(30),
+          type: Sequelize.STRING(25),
         },
         lastName: {
           allowNull: false,
-          type: Sequelize.STRING(30),
+          type: Sequelize.STRING(25),
         },
         username: {
           allowNull: false,
           unique: true,
-          type: Sequelize.STRING(30),
+          type: Sequelize.STRING(15),
         },
         email: {
           allowNull: false,
           isEmail: true,
           unique: true,
-          type: Sequelize.STRING(256),
+          type: Sequelize.STRING,
         },
         hashedPassword: {
           allowNull: false,

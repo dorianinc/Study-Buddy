@@ -7,7 +7,6 @@ const { sequelize, User, Document } = require("../../db/models");
 sequelize.options.logging = false;
 
 let user;
-let userId;
 let document;
 
 describe("Document Model", () => {
@@ -47,25 +46,7 @@ describe("Document Model", () => {
     );
   });
 
-  it("02. Should retrieve a document by ID", async () => {
-    document = await Document.create({
-      name: "Document 2",
-      authorId: userId,
-      fileUrl: "http://example.com/file2.pdf",
-      fileType: "pdf",
-      summary: "Summary for document 2.",
-    });
-
-    const retrievedDocument = await Document.findByPk(document.id);
-    expect(retrievedDocument).to.be.an("object");
-    expect(retrievedDocument.id).to.equal(document.id);
-    expect(retrievedDocument.name).to.equal("Document 2");
-    expect(retrievedDocument.fileUrl).to.equal("http://example.com/file2.pdf");
-    expect(retrievedDocument.fileType).to.equal("pdf");
-    expect(retrievedDocument.summary).to.equal("Summary for document 2.");
-  });
-
-  it("03. Should retrieve all documents from a user", async () => {
+  it("02. Should retrieve all documents from a user", async () => {
     await Document.create({
       name: "Document 1",
       authorId: userId,
@@ -104,7 +85,25 @@ describe("Document Model", () => {
     ]);
   });
 
-  it("04. Should update a document's attributes", async () => {
+  it("03. Should retrieve a document by ID", async () => {
+    document = await Document.create({
+      name: "Document 2",
+      authorId: userId,
+      fileUrl: "http://example.com/file2.pdf",
+      fileType: "pdf",
+      summary: "Summary for document 2.",
+    });
+
+    const retrievedDocument = await Document.findByPk(document.id);
+    expect(retrievedDocument).to.be.an("object");
+    expect(retrievedDocument.id).to.equal(document.id);
+    expect(retrievedDocument.name).to.equal("Document 2");
+    expect(retrievedDocument.fileUrl).to.equal("http://example.com/file2.pdf");
+    expect(retrievedDocument.fileType).to.equal("pdf");
+    expect(retrievedDocument.summary).to.equal("Summary for document 2.");
+  });
+
+  it("04. Should update a document by ID", async () => {
     document = await Document.create({
       name: "Document 3",
       authorId: userId,
@@ -206,7 +205,25 @@ describe("Document Model", () => {
     }
   });
 
-  it("10. Should not create a document with invalid file URL", async () => {
+  it("10. Should not create a document with invalid authorId", async () => {
+    try {
+      document = await Document.create({
+        name: "Document 5",
+        authorId: "one",
+        fileUrl: "http://example.com/file.pdf",
+        fileType: "pdf",
+        summary: "Summary with no author ID.",
+      });
+    } catch (error) {
+      expect(error.errors[0].message).to.be.eql(
+        "Author ID must be an integer."
+      );
+    } finally {
+      expect(document).to.not.exist;
+    }
+  });
+
+  it("11. Should not create a document with invalid file URL", async () => {
     try {
       document = await Document.create({
         name: "Document 6",
@@ -224,7 +241,7 @@ describe("Document Model", () => {
     }
   });
 
-  it("11. Should not create a document with no file type", async () => {
+  it("12. Should not create a document with no file type", async () => {
     try {
       document = await Document.create({
         name: "Document 7",
@@ -240,7 +257,7 @@ describe("Document Model", () => {
     }
   });
 
-  it("12. Should not create a document with invalid file type", async () => {
+  it("13. Should not create a document with invalid file type", async () => {
     try {
       document = await Document.create({
         name: "Document 8",
@@ -258,7 +275,7 @@ describe("Document Model", () => {
     }
   });
 
-  it("13. Should not create a document with no summary", async () => {
+  it("14. Should not create a document with no summary", async () => {
     try {
       document = await Document.create({
         name: "Document 9",
@@ -274,7 +291,7 @@ describe("Document Model", () => {
     }
   });
 
-  it("14. Should not create a document with too long of a summary", async () => {
+  it("15. Should not create a document with too long of a summary", async () => {
     try {
       document = await Document.create({
         name: "Document 10",

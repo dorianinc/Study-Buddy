@@ -55,7 +55,7 @@ describe("User Model", () => {
     expect(retrievedUser.username).to.equal("janedoe");
   });
 
-  it("03. Should update a user's attributes", async () => {
+  it("03. Should update a user by ID", async () => {
     user = await User.create({
       firstName: "John",
       lastName: "Doe",

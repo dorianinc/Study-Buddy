@@ -2,13 +2,7 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Folder extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       Folder.hasMany(models.Document, {
         foreignKey: "folderId",
         onDelete: "CASCADE",
@@ -23,14 +17,44 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Folder name is required.",
+          },
+          len: {
+            args: [1, 25],
+            msg: "Folder name must be between 1 and 25 characters long.",
+          },
+        },
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "User ID is required.",
+          },
+          isInt: {
+            args: true,
+            msg: "User ID must be an integer.",
+          },
+        },
       },
       category: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Category is required.",
+          },
+          isIn: {
+            args: [["General", "Math", "Science", "History", "Literature"]],
+            msg: "Category must be one of: General, Math, Science, History, Literature.",
+          },
+        },
       },
     },
     {

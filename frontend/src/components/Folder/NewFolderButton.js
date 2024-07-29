@@ -1,13 +1,13 @@
 import { Box } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import { useCreateFolderMutation } from "../../store/features/api";
+// import { useCreateFolderMutation } from "../../store/features/api";
 
 function NewFolderButton() {
-  const [createFolder] = useCreateFolderMutation();
+  // const [createFolder] = useCreateFolderMutation();
 
-  function createNewFolder() {
-    createFolder({ name: "History", category: "Social" })
-  }
+  // function createNewFolder() {
+  //   createFolder({ name: "History", category: "Social" })
+  // }
 
   return (
     <>
@@ -23,7 +23,7 @@ function NewFolderButton() {
         _hover={{
           bg: "lightgrey",
         }}
-        onClick={() => createNewFolder()}
+        // onClick={() => createNewFolder()}
         >
         <AddIcon boxSize={30} />
       </Box>

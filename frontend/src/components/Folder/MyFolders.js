@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import Folder from "./Folder";
 import NewFolderButton from "./NewFolderButton";
+import ModalButton from "../Modals/ModalButton";
+import NewFolderModal from "../Modals/NewFolderModal";
 import { 
     Box, 
     Grid, 
@@ -28,7 +30,14 @@ function MyFolders() {
       <Box>
         <Grid templateColumns="repeat(5,1fr)" rowGap={20} p={20}>
             <GridItem>
-                <NewFolderButton />
+            <ModalButton
+                  className="modal-button auth"
+                  buttonContent={
+                    <NewFolderButton />
+                  }
+                  modalComponent={<NewFolderModal />}
+                  />
+                
             </GridItem>
           {folders.map((folder) => (
             <GridItem key={folder.id}>

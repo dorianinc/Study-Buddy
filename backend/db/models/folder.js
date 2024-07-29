@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Folder extends Model {
     /**
@@ -11,31 +9,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Folder.hasMany(models.Document,{
-        foreignKey:'folderId',
-        onDelete:'CASCADE',
-        hooks:true
-      })
+      Folder.hasMany(models.Document, {
+        foreignKey: "folderId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
 
-      Folder.belongsTo(models.User)
+      Folder.belongsTo(models.User, { foreignKey: "userId" });
     }
   }
-  Folder.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull:false
+  Folder.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
-    userId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
-    category:{
-      type:DataTypes.STRING,
-      allowNull:true
+    {
+      sequelize,
+      modelName: "Folder",
     }
-  }, {
-    sequelize,
-    modelName: 'Folder',
-  });
+  );
   return Folder;
 };

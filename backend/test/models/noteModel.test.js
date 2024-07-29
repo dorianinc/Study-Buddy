@@ -19,7 +19,7 @@ describe("Note Model", () => {
       lastName: "Doe",
       email: "jane.doe@gmail.com",
       username: "janedoe",
-      hashedPassword: bcrypt.hashSync("password1", 10), // Update as necessary
+      hashedPassword: bcrypt.hashSync("password1", 10),
     });
 
     // Create a document

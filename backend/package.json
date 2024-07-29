@@ -10,7 +10,7 @@
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
     "build": "node psql-setup-script.js",
-    "test": "NODE_ENV=test mocha 'test/**/*.js'"
+    "test": "NODE_ENV=test node test/index.js"
   },
   "keywords": [],
   "author": "",
@@ -39,10 +39,11 @@
     "sequelize-cli": "^6.6.0"
   },
   "devDependencies": {
+    "chai": "^4.3.6",
     "dotenv-cli": "^7.4.2",
+    "mocha": "^10.7.0",
     "nodemon": "^2.0.21",
     "sqlite3": "^5.1.6",
-    "chai": "^4.3.6",
-    "mocha": "^10.7.0"
+    "supertest": "^7.0.0"
   }
 }

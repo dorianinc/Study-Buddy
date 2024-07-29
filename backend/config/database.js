@@ -24,11 +24,10 @@ module.exports = {
     },
   },
   test: {
-    database: "test_db",
-    username: "test_user",
-    password: "test_password",
-    host: "localhost",
+    storage: config.dbFile,
     dialect: "sqlite",
-    logging: false,
+    seederStorage: "sequelize",
+    logQueryParameters: true,
+    typeValidation: true,
   },
 };

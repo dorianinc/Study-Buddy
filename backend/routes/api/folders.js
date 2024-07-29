@@ -62,8 +62,10 @@ router.put("/:folderId", [restoreUser, requireAuth], async (req, res) => {
 
 // Delete a Single Note based of id
 router.delete("/:folderId", [restoreUser, requireAuth], async (req, res) => {
+    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
   const { user } = req;
-  const folder = await Folder.findByPk(req.params.folderId);z
+  const folder = await Folder.findByPk(req.params.folderId);
+  console.log("🖥️  folder: ", folder)
 
   if (!folder) res.status(404).json(doesNotExist("Folder"));
   else {

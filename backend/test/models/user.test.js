@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
-const { sequelize, User } = require("../../db/models"); // Ensure correct path
+const { sequelize, User } = require("../../db/models");
 
 // Disable logging for tests
 sequelize.options.logging = false;
@@ -11,16 +11,13 @@ let password;
 
 describe("User Model", () => {
   before(async () => {
-    await sequelize.sync({ force: true }); // Create tables before tests
+    await sequelize.sync({ force: true });
+    password = bcrypt.hashSync("password1", 10);
   });
 
-  after(async () => {
-    await sequelize.close(); // Close connection after tests
-  });
-
-  beforeEach(() => {
+  beforeEach(async () => {
+    await User.truncate({ cascade: true });
     user = null;
-    password = bcrypt.hashSync("password1", 10); // Ensure proper salt rounds
   });
 
   it("01. Should create a user with valid attributes", async () => {

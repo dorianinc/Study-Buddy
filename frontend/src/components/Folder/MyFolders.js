@@ -1,58 +1,58 @@
 import { useSelector } from "react-redux";
-import { Link as ReactRouterLink } from 'react-router-dom';
-import { Link as ChakraLink } from '@chakra-ui/react';
+import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import Folder from "./Folder";
 import NewFolderButton from "./NewFolderButton";
 import ModalButton from "../Modals/ModalButton";
 import NewFolderModal from "../Modals/NewFolderModal";
-import { 
-    Box, 
-    Grid, 
-    GridItem 
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useGetFoldersQuery } from "../../store/features/api";
 
 function MyFolders() {
-  const user = useSelector(state => state.session.user);
+  const user = useSelector((state) => state.session.user);
   const { data: folders, isLoading, error } = useGetFoldersQuery({ user });
 
   if (isLoading) {
     return <div>Loading folders...</div>;
   }
 
-  if (error) {
-    return <div>Error fetching folders: {error.message}</div>;
-  }
-
-  // Data is available here
-  console.log("FOLDERS", folders)
-
-  // function clickFunction(e, folder) {
-  //   e.stopPropagation();
-  //   console.log(`FOLDER ID: ${folder.id}`);  // Assuming folder prop has an 'id' property
-  // }
-
   return (
     <>
       <Box>
         <Grid templateColumns="repeat(5,1fr)" rowGap={20} p={20}>
-            <GridItem>
-            <ModalButton
+          {error ? (
+            <>
+              <div>Error fetching folders: {error.message}</div>
+              <GridItem>
+                <ModalButton
                   className="modal-button auth"
-                  buttonContent={
-                    <NewFolderButton />
-                  }
+                  buttonContent={<NewFolderButton />}
                   modalComponent={<NewFolderModal />}
-                  />
-                
-            </GridItem>
-          {folders.map((folder) => (
-            <ChakraLink as={ReactRouterLink} to={`folders/${folder.id}`} key={folder.id}>
-              <GridItem >
-                <Folder folder={folder} />
+                />
               </GridItem>
-            </ChakraLink>
-          ))}
+            </>
+          ) : (
+            <>
+              <GridItem>
+                <ModalButton
+                  className="modal-button auth"
+                  buttonContent={<NewFolderButton />}
+                  modalComponent={<NewFolderModal />}
+                />
+              </GridItem>
+              <GridItem>
+                {folders.map((folder) => (
+                  <ChakraLink
+                    as={ReactRouterLink}
+                    to={`folders/${folder.id}`}
+                    key={folder.id}
+                  >
+                    <Folder folder={folder} />
+                  </ChakraLink>
+                ))}
+              </GridItem>
+            </>
+          )}
         </Grid>
       </Box>
     </>

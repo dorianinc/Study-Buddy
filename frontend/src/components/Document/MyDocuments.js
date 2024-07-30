@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import DocumentUpload from "../DocumentUpload/DocumentUpload";
 
 // Display all documents related to a specific folder
 function MyDocuments() {
@@ -6,6 +7,7 @@ function MyDocuments() {
     return(
         <>
             <div>This is folder number: {folderId}</div>
+            <DocumentUpload />
         </>
     )
 }

@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import DocumentUpload from "./components/DocumentUpload/DocumentUpload";
 import Navigation from "./components/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
+import DisplayDoc from "./components/displayDoc";
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 

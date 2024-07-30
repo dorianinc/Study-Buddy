@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./DocumentUpload.css";
 import { useDispatch } from "react-redux";
 import { thunkUploadDocument } from "../../store/documents";
+import DisplayDoc from "../displayDoc";
 
 function DocumentUpload() {
   const dispatch = useDispatch();
@@ -20,21 +21,24 @@ function DocumentUpload() {
   };
 
   return (
+    <div>
+      <form onSubmit={handleSubmit} method="post" encType="multipart/form-data" action="/documents">
+        <div>
+          Upload File
+          <label htmlFor="uploaded_file">Choose File to upload</label>
+          <input
+            id="uploaded_file"
+            name="uploaded_file"
+            type="file"
+            accept=".pdf"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+        </div>
+        <input type="submit" />
+      </form>
+      <DisplayDoc pdfUrl={file}/>
 
-    <form onSubmit={handleSubmit} method="post" encType="multipart/form-data" action="/documents">
-      <div>
-        Upload File
-        <label htmlFor="uploaded_file">Choose File to upload</label>
-        <input
-          id="uploaded_file"
-          name="uploaded_file"
-          type="file"
-          accept=".pdf"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-      </div>
-      <input type="submit" />
-    </form>
+    </div>
   );
 }
 

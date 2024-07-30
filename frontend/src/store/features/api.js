@@ -40,7 +40,7 @@ export const api = createApi({
     }),
     restoreUser: builder.query({
       query: () => "session/",
-      invalidatesTags: ["CurrentUser"],
+      providesTags: ["CurrentUser"],
     }),
     logout: builder.mutation({
       query: () => ({
@@ -79,7 +79,19 @@ export const api = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Document"]
-    })
+    }),
+    getFolders: builder.query({
+      query: (user) => 'folders/',
+      providesTags: ["Folder"]
+    }),
+    createFolder: builder.mutation({
+      query: ({ user, name, category }) => ({
+        url: "folders/",
+        method: "POST",
+        body: { name, category }
+      }),
+      invalidatesTags: ["Folder"]
+    }),
   }),
 });
 
@@ -94,6 +106,8 @@ export const {
   useLogoutMutation,
   useCreateDocMutation,
   useDeleteDocMutation,
+  useGetFoldersQuery,
+  useCreateFolderMutation,,
   useGetFoldersMutation,
   useGetOneFolderMutation
 } = api;

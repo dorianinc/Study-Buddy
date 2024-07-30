@@ -4,11 +4,6 @@ const { Model, Validator } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.Folder, {
-        foreignKey: "userId",
-        onDelete: "CASCADE",
-        hooks: true,
-      });
       User.hasMany(models.Document, {
         foreignKey: "authorId",
         onDelete: "CASCADE",
@@ -21,24 +16,60 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
+
   User.init(
     {
       firstName: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "First name is required.",
+          },
+          len: {
+            args: [1, 25],
+            msg: "First name must be between 1 and 25 characters long.",
+          },
+          isAlpha: {
+            args: true,
+            msg: "First name can only contain letters.",
+          },
+        },
       },
       lastName: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Last name is required.",
+          },
+          len: {
+            args: [1, 25],
+            msg: "Last name must be between 1 and 25 characters long.",
+          },
+          isAlpha: {
+            args: true,
+            msg: "Last name can only contain letters.",
+          },
+        },
       },
       username: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [4, 30],
+          notNull: {
+            args: true,
+            msg: "Username is required.",
+          },
+          len: {
+            args: [5, 15],
+            msg: "Username must be between 5 and 15 characters long.",
+          },
           isNotEmail(value) {
             if (Validator.isEmail(value)) {
-              throw new Error("Cannot be an email.");
+              throw new Error("Username cannot be an email address.");
             }
           },
         },
@@ -47,15 +78,30 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [3, 256],
-          isEmail: true,
+          notNull: {
+            args: true,
+            msg: "Email is required.",
+          },
+          isEmail: {
+            args: true,
+            msg: "Must be a valid email address.",
+          },
         },
       },
       hashedPassword: {
         allowNull: false,
         type: DataTypes.STRING.BINARY,
         validate: {
-          len: [60, 60],
+          notNull: {
+            args: true,
+            msg: "Password is required.",
+          },
+          isBcryptHash(value) {
+            const bcryptRegex = /^\$2[aby]\$[0-9]{2}\$[./0-9A-Za-z]{53}$/;
+            if (!bcryptRegex.test(value)) {
+              throw new Error("Password must be encrypted.");
+            }
+          },
         },
       },
     },
@@ -64,7 +110,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
       defaultScope: {
         attributes: {
-          exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
+          exclude: ["hashedPassword", "createdAt", "updatedAt"],
         },
       },
     }

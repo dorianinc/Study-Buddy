@@ -1,4 +1,6 @@
 import { useSelector } from "react-redux";
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ChakraLink } from '@chakra-ui/react';
 import Folder from "./Folder";
 import NewFolderButton from "./NewFolderButton";
 import ModalButton from "../Modals/ModalButton";
@@ -25,6 +27,11 @@ function MyFolders() {
   // Data is available here
   console.log("FOLDERS", folders)
 
+  // function clickFunction(e, folder) {
+  //   e.stopPropagation();
+  //   console.log(`FOLDER ID: ${folder.id}`);  // Assuming folder prop has an 'id' property
+  // }
+
   return (
     <>
       <Box>
@@ -40,9 +47,11 @@ function MyFolders() {
                 
             </GridItem>
           {folders.map((folder) => (
-            <GridItem key={folder.id}>
-              <Folder folder={folder} />
-            </GridItem>
+            <ChakraLink as={ReactRouterLink} to={`folders/${folder.id}`} key={folder.id}>
+              <GridItem >
+                <Folder folder={folder} />
+              </GridItem>
+            </ChakraLink>
           ))}
         </Grid>
       </Box>

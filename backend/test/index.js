@@ -5,7 +5,7 @@ const mocha = new Mocha();
 
 // Add test files here
 const testFiles = [
-  path.join(__dirname, "setup.js"),
+  path.join(__dirname, "buildDB.js"),
   // path.join(__dirname, "models", "userModel.test.js"),
   // path.join(__dirname, "models", "folderModel.test.js"),
   // path.join(__dirname, "models", "documentModel.test.js"),

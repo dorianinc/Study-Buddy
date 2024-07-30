@@ -89,7 +89,7 @@ describe("User Model", () => {
     expect(deletedUser).to.not.exist;
   });
 
-  it("05. Should not create a user with no first name", async () => {
+  it("05. Should not create a user with no first name.", async () => {
     try {
       user = await User.create({
         firstName: null,

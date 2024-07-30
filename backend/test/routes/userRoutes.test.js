@@ -7,14 +7,14 @@ const agent = request.agent(app);
 let xsrfToken;
 
 describe("User Routes", () => {
-  it("Should get CSRF token", async () => {
+  it("01. Should get CSRF token", async () => {
     const response = await agent.get("/api/csrf/restore");
     xsrfToken = response.body["XSRF-TOKEN"];
 
     expect(response.status).to.equal(201);
   });
 
-  it("Should login an existing user", async () => {
+  it("02. Should login an existing user", async () => {
     const data = {
       credential: "demo_user123",
       password: "password1",
@@ -39,7 +39,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(200);
   });
 
-  it("Should sign up a new user", async () => {
+  it("03. Should sign up a new user with valid attributes", async () => {
     const data = {
       firstName: "doug",
       lastName: "Dimmidome",
@@ -61,10 +61,10 @@ describe("User Routes", () => {
     expect(user.lastName).to.equal(data.lastName);
     expect(user.email).to.equal(data.email);
     expect(user.username).to.equal(data.username);
-    expect(response.status).to.equal(200);
+    expect(response.status).to.equal(201);
   });
 
-  it("Should not sign up user when the first name is null", async () => {
+  it("04. Should not sign up user when the first name is null", async () => {
     const data = {
       firstName: null,
       lastName: "Dimmidome",
@@ -88,7 +88,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up user when the first name is an empty string", async () => {
+  it("05. Should not sign up user when the first name is an empty string", async () => {
     const data = {
       firstName: "",
       lastName: "Dimmidome",
@@ -112,7 +112,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up user when the first name is too long", async () => {
+  it("06. Should not sign up user when the first name is too long", async () => {
     const data = {
       firstName: "a".repeat(26),
       lastName: "Dimmidome",
@@ -136,7 +136,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up user when the first name has numbers or special characters", async () => {
+  it("07. Should not sign up user when the first name has numbers or special characters", async () => {
     const data = {
       firstName: "J0hn!",
       lastName: "Dimmidome",
@@ -160,7 +160,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the last name is null", async () => {
+  it("08. Should not sign up a user when the last name is null", async () => {
     const data = {
       firstName: "John",
       lastName: null,
@@ -184,7 +184,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the last name is an empty string", async () => {
+  it("09. Should not sign up a user when the last name is an empty string", async () => {
     const data = {
       firstName: "John",
       lastName: "",
@@ -208,7 +208,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the last name is too long", async () => {
+  it("10. Should not sign up a user when the last name is too long", async () => {
     const data = {
       firstName: "John",
       lastName: "a".repeat(26),
@@ -232,7 +232,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the last name has numbers or special characters", async () => {
+  it("11. Should not sign up a user when the last name has numbers or special characters", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe123!",
@@ -256,7 +256,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the username is null", async () => {
+  it("12. Should not sign up a user when the username is null", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -280,7 +280,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the username is too short", async () => {
+  it("13. Should not sign up a user when the username is too short", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -304,7 +304,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the username is too long", async () => {
+  it("14. Should not sign up a user when the username is too long", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -328,7 +328,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not create a user with email as username", async () => {
+  it("15. Should not create a user with email as username", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -352,7 +352,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the email is null", async () => {
+  it("16. Should not sign up a user when the email is null", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -376,7 +376,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the email is too short", async () => {
+  it("17. Should not sign up a user when the email is too short", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -400,7 +400,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the email is too long", async () => {
+  it("18. Should not sign up a user when the email is too long", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -424,7 +424,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not create a user with invalid email", async () => {
+  it("19. Should not create a user with invalid email", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -446,7 +446,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the password is null", async () => {
+  it("20. Should not sign up a user when the password is null", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -470,7 +470,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the password is too short", async () => {
+  it("21. Should not sign up a user when the password is too short", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -479,7 +479,6 @@ describe("User Routes", () => {
       password: "pass1",
     };
 
-
     const response = await agent
       .post("/api/users")
       .set("Accept", "application/json")
@@ -495,7 +494,7 @@ describe("User Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("Should not sign up a user when the email is too long", async () => {
+  it("22. Should not sign up a user when the email is too long", async () => {
     const data = {
       firstName: "John",
       lastName: "Doe",
@@ -504,7 +503,6 @@ describe("User Routes", () => {
       password: "a".repeat(21),
     };
 
-
     const response = await agent
       .post("/api/users")
       .set("Accept", "application/json")
@@ -519,5 +517,4 @@ describe("User Routes", () => {
     );
     expect(response.status).to.equal(400);
   });
-
 });

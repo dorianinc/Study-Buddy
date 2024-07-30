@@ -3,6 +3,7 @@ const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, Note, User, Document } = require("../../db/models");
 
+// Disable logging for tests
 sequelize.options.logging = false;
 
 let user;

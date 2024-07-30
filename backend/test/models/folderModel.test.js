@@ -3,6 +3,7 @@ const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, Folder, User } = require("../../db/models");
 
+// Disable logging for tests
 sequelize.options.logging = false;
 
 let user;
@@ -74,20 +75,28 @@ describe("Folder Model", () => {
   });
 
   it("04. Should update a folder by ID", async () => {
-    folder = await Folder.create({
+    const originalData = {
       name: "Folder 4",
       userId: user.id,
       category: "Literature",
-    });
+    };
+    const updatedData = {
+      name: "Folder 4",
+      category: "Literature",
+    };
+    folder = await Folder.create(originalData);
 
-    folder.name = "Updated Folder 4";
-    folder.category = "Science";
+    folder.name = updatedData.name;
+    folder.category = updatedData.category;
     await folder.save();
 
     const updatedFolder = await Folder.findByPk(folder.id);
+
     expect(updatedFolder).to.be.an("object");
-    expect(updatedFolder.name).to.equal("Updated Folder 4");
-    expect(updatedFolder.category).to.equal("Science");
+    expect(updatedFolder.name).to.not.equal(originalData.name);
+    expect(updatedFolder.category).to.not.equal(originalData.category);
+    expect(updatedFolder.name).to.equal(updatedData.name);
+    expect(updatedFolder.category).to.equal(updatedData.category);
   });
 
   it("05. Should delete a folder by ID", async () => {

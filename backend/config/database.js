@@ -24,7 +24,7 @@ module.exports = {
     },
   },
   test: {
-    storage: config.dbFile,
+    storage: config.dbTestFile,
     dialect: "sqlite",
     seederStorage: "sequelize",
     logQueryParameters: true,

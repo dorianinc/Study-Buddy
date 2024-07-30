@@ -21,7 +21,7 @@ router.post("/", [restoreUser, requireAuth], async (req, res) => {
 });
 
 // Get all folders of specific user
-router.get("/", async (req, res) => {
+router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const folders = await Folder.findAll({
     where: {
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single folder based of id
-router.get("/:folderId", async (req, res) => {
+router.get("/:folderId", [restoreUser, requireAuth], async (req, res) => {
   const folder = await Folder.findByPk(req.params.folderId, { raw: true });
   if (!folder) res.status(404).json(doesNotExist("Folder"));
   else res.status(200).json(folder);

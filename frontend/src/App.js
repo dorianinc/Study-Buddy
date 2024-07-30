@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
 import MyFolders from "./components/Folder/MyFolders";
 import MyDocuments from "./components/Document/MyDocuments";
+import Note from "./components/Note/Note";
 
 function App() {
   const user = useSelector(state => state.session.user);
@@ -19,6 +20,7 @@ function App() {
             <MyDocuments />
           </Route>
           <Route path="/">
+            <Note />
             <MyFolders />
           </Route>
         </Switch>

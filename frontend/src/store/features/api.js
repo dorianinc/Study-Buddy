@@ -20,7 +20,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["CurrentUser", "Document"],
+  tagTypes: ["CurrentUser", "Document", "Folder"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -49,6 +49,21 @@ export const api = createApi({
       }),
       invalidatesTags: ["CurrentUser"],
     }),
+    //Folders
+    getFolders: builder.mutation({
+      query: () => ({
+        url: "folders/",
+        method: "GET"
+      }),
+      providesTags: ["Folder"]
+    }),
+    getOneFolder: builder.mutation({
+      query: (folderId) => ({
+        url: `folders/${folderId}`
+      }),
+      providesTags: ["Folder"]
+    }),
+    //Documents
     createDoc: builder.mutation({
       query: (formData) => ({
         //hard coded url for testing purposes
@@ -78,5 +93,7 @@ export const {
   useRestoreUserQuery,
   useLogoutMutation,
   useCreateDocMutation,
-  useDeleteDocMutation
+  useDeleteDocMutation,
+  useGetFoldersMutation,
+  useGetOneFolderMutation
 } = api;

@@ -1,11 +1,11 @@
 const express = require("express");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { doesNotExist } = require("../../utils/helpers.js");
-const { Folder } = require("../../db/models");
+const { Folder, Document } = require("../../db/models");
 
 const router = express.Router();
 
-// Create a folder 
+// Create a folder
 router.post("/", [restoreUser, requireAuth], async (req, res) => {
   console.log("creating folder");
   const { user } = req;
@@ -24,6 +24,7 @@ router.post("/", [restoreUser, requireAuth], async (req, res) => {
 // Get all folders of specific user
 router.get("/", async (req, res) => {
   const { user } = req;
+  console.log(user," USER HERE BACKEND")
   const folders = await Folder.findAll({
     where: {
       userId: user.id,
@@ -38,8 +39,16 @@ router.get("/", async (req, res) => {
 // Get a single folder based of id
 router.get("/:folderId", async (req, res) => {
   const folder = await Folder.findByPk(req.params.folderId, { raw: true });
+  const documents = await Document.findAll({
+    where: {
+      folderId: req.params.folderId
+    }
+  })
   if (!folder) res.status(404).json(doesNotExist("Folder"));
-  else res.status(200).json(folder);
+  else {
+    folder.documents = documents;
+    res.status(200).json(folder);
+  }
 });
 
 // Update a single folder based of id

@@ -1,14 +1,11 @@
 import { useState } from "react";
 import "./DocumentUpload.css";
-import { useDispatch } from "react-redux";
-import { thunkUploadDocument } from "../../store/documents";
 import { Button } from '@chakra-ui/react'
 import { useCreateDocMutation } from "../../store/features/api";
 
 function DocumentUpload() {
-  // const dispatch = useDispatch();
   const [ createDoc ] = useCreateDocMutation();
-
+  // call use whatever mutation to populate store with the curr user's folders
   const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -19,7 +16,6 @@ function DocumentUpload() {
     formData.append("name", "HardCode test1")
     formData.append("fileType", "pdf")
     createDoc(formData)
-    // dispatch(thunkUploadDocument(formData))
   };
 
   return (
@@ -37,7 +33,6 @@ function DocumentUpload() {
         />
       </div>
       <Button type="submit" colorScheme="blue" size='sm'>Submit</Button>
-      {/* <input type="submit" /> */}
     </form>
   );
 }

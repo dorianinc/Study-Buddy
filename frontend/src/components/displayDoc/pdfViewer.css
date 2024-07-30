@@ -1,0 +1,39 @@
+#pdf-viewer{
+    width:78%;
+    height:700px;
+}
+
+.testing{
+    display:inline-block;
+    background-color: rgba(241, 114, 114, 0.502);
+    width:max-content;
+    box-sizing: border-box !important;
+}
+
+.react-pdf__Outline{
+    background-color: rgb(195, 196, 196);
+    font-size: small;
+    width: 90%;
+    padding:15px;
+    min-width: 190px;
+
+}
+
+.react-pdf__Outline > ul{
+    list-style-type: none;
+    padding:0px;
+}
+
+.react-pdf__Document > ul:hover{
+    background-color: rgb(150, 153, 153);
+}
+
+.react-pdf__Document{
+    display: flex;
+    width:85%;
+    margin:auto;
+}
+
+.content-table{
+    width:fit-content;
+}

@@ -2,13 +2,10 @@ import { useState } from "react";
 import "./DocumentUpload.css";
 import { useDispatch } from "react-redux";
 import { thunkUploadDocument } from "../../store/documents";
-import { Button } from '@chakra-ui/react'
-import { useCreateDocMutation } from "../../store/features/api";
 import DisplayDoc from "../displayDoc";
 
 function DocumentUpload() {
-  // const dispatch = useDispatch();
-  const [ createDoc ] = useCreateDocMutation();
+  const dispatch = useDispatch();
 
   const [file, setFile] = useState(null);
 
@@ -17,10 +14,10 @@ function DocumentUpload() {
 
     const formData = new FormData();
     formData.append("theFile", file);
-    formData.append("name", "HardCode test1")
+    formData.append("name", "HardCode")
     formData.append("fileType", "pdf")
-    createDoc(formData)
-    // dispatch(thunkUploadDocument(formData))
+
+    dispatch(thunkUploadDocument(formData))
   };
 
   return (
@@ -37,8 +34,7 @@ function DocumentUpload() {
             onChange={(e) => setFile(e.target.files[0])}
           />
         </div>
-        <Button type="submit" colorScheme="blue" size='sm'>Submit</Button>
-      {/* <input type="submit" /> */}
+        <input type="submit" />
       </form>
       <DisplayDoc pdfUrl={file}/>
 

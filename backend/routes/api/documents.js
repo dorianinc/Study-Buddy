@@ -23,7 +23,6 @@ router.post(
 
     const { user } = req;
     const { name, fileType } = req.body;
-
     const fileUrl = await singlePublicFileUpload(req.file);
     const folder = await Folder.findByPk(req.query.folderId, { raw: true });
 

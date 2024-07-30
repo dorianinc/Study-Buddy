@@ -70,13 +70,60 @@ const validateLogin = [
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage("Please provide a valid email or username."),
+
   check("password")
     .exists({ checkFalsy: true })
     .withMessage("Please provide a password."),
+
+  handleValidationErrors,
+];
+
+// validator for when a user is trying to create a new folder 
+const validateFolder = [
+  check("name")
+    .exists({ checkFalsy: true })
+    .withMessage("Folder name is required.")
+    .isLength({ min: 1, max: 20 })
+    .withMessage("Folder name must be between 1 and 20 characters long."),
+
+    check("category")
+    .exists({ checkFalsy: true })
+    .withMessage("Folder category is required.")
+    .isIn(['General', 'Math', 'Science', "History", "Literature"])
+    .withMessage("Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."),
+  handleValidationErrors,
+];
+
+// validator for when a user is trying to create a new document
+const validateDocument = [
+  check("name")
+    .exists({ checkFalsy: true })
+    .withMessage("Document name is required.")
+    .isLength({ min: 1, max: 25 })
+    .withMessage("Document name must be between 1 and 25 characters long."),
+
+  check("file")
+    .exists({ checkFalsy: true })
+    .withMessage("File is required.")
+    .custom((value, { req }) => {
+      if (!req.file || !req.file.mimetype) {
+        throw new Error("File is required.");
+      }
+      const allowedExtensions = ['pdf'];
+      const fileExtension = req.file.originalname.split('.').pop().toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        throw new Error(`File type must be one of ${allowedExtensions.join(', ')}.`);
+      }
+
+      return true;
+    }),
+
   handleValidationErrors,
 ];
 
 module.exports = {
   validateSignup,
   validateLogin,
+  validateFolder,
+  validateDocument
 };

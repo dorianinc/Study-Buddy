@@ -81,8 +81,8 @@ describe("Folder Model", () => {
       category: "Literature",
     };
     const updatedData = {
-      name: "Folder 4",
-      category: "Literature",
+      name: "Folder 5",
+      category: "Math",
     };
     folder = await Folder.create(originalData);
 

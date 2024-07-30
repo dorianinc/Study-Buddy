@@ -1,12 +1,13 @@
 const express = require("express");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { doesNotExist } = require("../../utils/helpers.js");
+const { validateFolder } = require("../../utils/validation.js");
 const { Folder } = require("../../db/models");
 
 const router = express.Router();
 
-// Create a folder 
-router.post("/", [restoreUser, requireAuth], async (req, res) => {
+// Create a folder
+router.post("/", [restoreUser, requireAuth, validateFolder], async (req, res) => {
   const { user } = req;
   const data = { userId: user.id };
 

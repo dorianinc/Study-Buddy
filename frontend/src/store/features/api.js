@@ -107,7 +107,7 @@ export const {
   useCreateDocMutation,
   useDeleteDocMutation,
   useGetFoldersQuery,
-  useCreateFolderMutation,,
+  useCreateFolderMutation,
   useGetFoldersMutation,
   useGetOneFolderMutation
 } = api;

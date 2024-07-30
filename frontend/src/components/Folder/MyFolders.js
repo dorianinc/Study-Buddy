@@ -40,17 +40,17 @@ function MyFolders() {
                   modalComponent={<NewFolderModal />}
                 />
               </GridItem>
-              <GridItem>
-                {folders.map((folder) => (
-                  <ChakraLink
-                    as={ReactRouterLink}
-                    to={`folders/${folder.id}`}
-                    key={folder.id}
-                  >
+              {folders.map((folder) => (
+                <ChakraLink
+                  as={ReactRouterLink}
+                  to={`folders/${folder.id}`}
+                  key={folder.id}
+                >
+                  <GridItem>
                     <Folder folder={folder} />
-                  </ChakraLink>
-                ))}
-              </GridItem>
+                  </GridItem>
+                </ChakraLink>
+              ))}
             </>
           )}
         </Grid>

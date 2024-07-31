@@ -53,13 +53,13 @@ describe("Note Model", () => {
   });
 
   it("02. Should retrieve all notes for a user", async () => {
-    const note1 = await Note.create({
+    await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Note 1",
     });
 
-    const note2 = await Note.create({
+    await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Note 2",

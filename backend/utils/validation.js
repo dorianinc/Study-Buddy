@@ -78,7 +78,7 @@ const validateLogin = [
   handleValidationErrors,
 ];
 
-// validator for when a user is trying to create a new folder 
+// validator for when a user is trying to create a new folder
 const validateFolder = [
   check("name")
     .exists({ checkFalsy: true })
@@ -86,11 +86,13 @@ const validateFolder = [
     .isLength({ min: 1, max: 20 })
     .withMessage("Folder name must be between 1 and 20 characters long."),
 
-    check("category")
+  check("category")
     .exists({ checkFalsy: true })
     .withMessage("Folder category is required.")
-    .isIn(['General', 'Math', 'Science', "History", "Literature"])
-    .withMessage("Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."),
+    .isIn(["General", "Math", "Science", "History", "Literature"])
+    .withMessage(
+      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+    ),
   handleValidationErrors,
 ];
 
@@ -102,22 +104,34 @@ const validateDocument = [
     .isLength({ min: 1, max: 25 })
     .withMessage("Document name must be between 1 and 25 characters long."),
 
-  check("file")
-    .exists({ checkFalsy: true })
-    .withMessage("File is required.")
+  check("theFile")
     .custom((value, { req }) => {
       if (!req.file || !req.file.mimetype) {
         throw new Error("File is required.");
       }
-      const allowedExtensions = ['pdf'];
-      const fileExtension = req.file.originalname.split('.').pop().toLowerCase();
+      const allowedExtensions = ["pdf"];
+      const fileExtension = req.file.originalname
+        .split(".")
+        .pop()
+        .toLowerCase();
       if (!allowedExtensions.includes(fileExtension)) {
-        throw new Error(`File type must be one of ${allowedExtensions.join(', ')}.`);
+        throw new Error(`File type must be pdf.`);
       }
 
       return true;
-    }),
+    })
+    .exists({ checkFalsy: true })
+    .withMessage("File is required."),
 
+  handleValidationErrors,
+];
+
+const validateNote = [
+  check("content")
+    .exists({ checkFalsy: true })
+    .withMessage("Content name is required.")
+    .isLength({ min: 1, max: 1000 })
+    .withMessage("Content must be between 1 and 1000 characters long."),
   handleValidationErrors,
 ];
 
@@ -125,5 +139,6 @@ module.exports = {
   validateSignup,
   validateLogin,
   validateFolder,
-  validateDocument
+  validateDocument,
+  validateNote
 };

@@ -2,6 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, User, Document } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 // Disable logging for tests
 sequelize.options.logging = false;
@@ -22,8 +23,8 @@ describe("Document Model", () => {
   });
 
   beforeEach(async () => {
-    await Document.truncate({ cascade: true });
     document = null;
+    await seedDatabase();
   });
 
   it("01. Should create a document with valid attributes", async () => {
@@ -266,9 +267,7 @@ describe("Document Model", () => {
         summary: "Summary with invalid file type.",
       });
     } catch (error) {
-      expect(error.errors[0].message).to.be.eql(
-        "File type must be one of 'pdf', 'doc', 'docx', or 'txt'."
-      );
+      expect(error.errors[0].message).to.be.eql("File type must be pdf.");
     } finally {
       expect(document).to.not.exist;
     }

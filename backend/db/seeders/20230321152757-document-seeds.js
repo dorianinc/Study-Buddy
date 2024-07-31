@@ -8,15 +8,27 @@ if (process.env.NODE_ENV === "production") {
 
 const documentSeeds = () => {
   const documents = [];
-  const fileTypes = ["pdf", "doc", "docx", "txt"];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     documents.push({
       name: faker.commerce.productName(),
       authorId: 10,
-      folderId: faker.number.int({ min: 1, max: 5 }),
+      folderId: 1,
       fileUrl: faker.internet.url(),
-      fileType: fileTypes[Math.floor(Math.random() * fileTypes.length)],
+      fileType: "pdf",
+      summary: faker.lorem.paragraph(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+
+  for (let i = 0; i < 5; i++) {
+    documents.push({
+      name: faker.commerce.productName(),
+      authorId: 10,
+      folderId: faker.number.int({ min: 2, max: 5 }),
+      fileUrl: faker.internet.url(),
+      fileType: "pdf",
       summary: faker.lorem.paragraph(),
       createdAt: new Date(),
       updatedAt: new Date(),

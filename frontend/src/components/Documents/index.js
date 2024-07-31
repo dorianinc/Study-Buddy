@@ -1,2 +1,2 @@
-import Documents from "./Documents";
-export default Documents;
+import Document from "./OneDocument";
+export default Document;

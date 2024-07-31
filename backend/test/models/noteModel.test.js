@@ -2,6 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, Note, User, Document } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 // Disable logging for tests
 sequelize.options.logging = false;
@@ -34,8 +35,8 @@ describe("Note Model", () => {
   });
 
   beforeEach(async () => {
-    await Note.truncate({ cascade: true });
     note = null;
+    await seedDatabase();
   });
 
   it("01. Should create a note with valid attributes", async () => {
@@ -52,13 +53,13 @@ describe("Note Model", () => {
   });
 
   it("02. Should retrieve all notes for a user", async () => {
-    const note1 = await Note.create({
+    await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Note 1",
     });
 
-    const note2 = await Note.create({
+    await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Note 2",
@@ -66,12 +67,12 @@ describe("Note Model", () => {
 
     const notes = await Note.findAll();
 
-    expect(notes).to.be.an("array").that.has.lengthOf(2);
-    expect(notes[0].content).to.be.oneOf(["Note 1", "Note 2"]);
-    expect(notes[1].content).to.be.oneOf(["Note 1", "Note 2"]);
+    expect(notes).to.be.an("array").that.has.lengthOf(12);
+    expect(notes[10].content).to.be.oneOf(["Note 1", "Note 2"]);
+    expect(notes[11].content).to.be.oneOf(["Note 1", "Note 2"]);
   });
 
-  it("09. Should retrieve a note by ID", async () => {
+  it("03. Should retrieve a note by ID", async () => {
     note = await Note.create({
       authorId: user.id,
       docId: document.id,
@@ -85,7 +86,7 @@ describe("Note Model", () => {
     expect(foundNote.content).to.equal("Specific Note");
   });
 
-  it("03. Should update a note by ID", async () => {
+  it("04. Should update a note by ID", async () => {
     note = await Note.create({
       authorId: user.id,
       docId: document.id,
@@ -100,7 +101,7 @@ describe("Note Model", () => {
     expect(updatedNote.content).to.equal("Updated Content");
   });
 
-  it("04. Should delete a note by ID", async () => {
+  it("05. Should delete a note by ID", async () => {
     note = await Note.create({
       authorId: user.id,
       docId: document.id,
@@ -114,7 +115,7 @@ describe("Note Model", () => {
     expect(deletedNote).to.be.null;
   });
 
-  it("05. Should not create a note with no authorId", async () => {
+  it("06. Should not create a note with no authorId", async () => {
     try {
       note = await Note.create({
         authorId: null,
@@ -128,7 +129,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("06. Should not create a note with non-integer authorId", async () => {
+  it("07. Should not create a note with non-integer authorId", async () => {
     try {
       note = await Note.create({
         authorId: "string",
@@ -144,7 +145,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("07. Should not create a note with no docId", async () => {
+  it("08. Should not create a note with no docId", async () => {
     try {
       note = await Note.create({
         authorId: user.id,
@@ -158,7 +159,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("08. Should not create a note with non-integer docId", async () => {
+  it("09. Should not create a note with non-integer docId", async () => {
     try {
       note = await Note.create({
         authorId: user.id,
@@ -174,7 +175,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("09. Should not create a note with no content", async () => {
+  it("10. Should not create a note with no content", async () => {
     try {
       note = await Note.create({
         authorId: user.id,
@@ -188,7 +189,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("10. Should not create a note with content that is too short", async () => {
+  it("11. Should not create a note with content that is too short", async () => {
     try {
       note = await Note.create({
         authorId: user.id,
@@ -204,7 +205,7 @@ describe("Note Model", () => {
     }
   });
 
-  it("11. Should not create a note with content that is too long", async () => {
+  it("12. Should not create a note with content that is too long", async () => {
     try {
       note = await Note.create({
         authorId: user.id,

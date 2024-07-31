@@ -3,6 +3,7 @@ const expect = chai.expect;
 const request = require("supertest");
 const app = require("../../app");
 const { Folder } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 const agent = request.agent(app);
 let user;
@@ -28,12 +29,11 @@ describe("Folder Routes", () => {
   });
 
   beforeEach(async () => {
-    await Folder.truncate({ cascade: true });
+    await seedDatabase();
   });
 
-  it("Should create a folder with valid attributes", async () => {
-    const data = { name: "New Folder", category: "General" };
-
+  it("01. Should create a folder with valid attributes", async () => {
+    const data = { name: "New Folderrr", category: "General" };
     const response = await agent
       .post("/api/folders")
       .set("Accept", "application/json")
@@ -48,16 +48,7 @@ describe("Folder Routes", () => {
     expect(response.status).to.equal(201);
   });
 
-  it("Should create and retrieve folders with all valid categories for a user", async () => {
-    const data = [
-      { name: "New Folder 1", category: "General", userId: user.id },
-      { name: "New Folder 2", category: "Math", userId: user.id },
-      { name: "New Folder 3", category: "Science", userId: user.id },
-      { name: "New Folder 4", category: "History", userId: user.id },
-      { name: "New Folder 5", category: "Literature", userId: user.id },
-    ];
-    await Folder.bulkCreate(data);
-
+  it("02. Should retrieve all folders for a user", async () => {
     const response = await agent
       .get("/api/folders")
       .set("XSRF-Token", xsrfToken);
@@ -68,7 +59,7 @@ describe("Folder Routes", () => {
     expect(response.status).to.equal(200);
   });
 
-  it("Should retrieve a folder by ID", async () => {
+  it("03. Should retrieve a folder by ID", async () => {
     const data = { name: "New Folder 1", category: "General", userId: user.id };
     const newFolder = await Folder.create(data);
 
@@ -82,7 +73,7 @@ describe("Folder Routes", () => {
     expect(response.status).to.equal(200);
   });
 
-  it("Should update a folder by ID", async () => {
+  it("04. Should update a folder by ID", async () => {
     const originalData = {
       name: "New Folder 1",
       category: "General",
@@ -107,7 +98,7 @@ describe("Folder Routes", () => {
     expect(response.status).to.equal(200);
   });
 
-  it("Should delete a folder by ID", async () => {
+  it("05. Should delete a folder by ID", async () => {
     const data = { name: "New Folder 1", category: "General", userId: user.id };
     const folder = await Folder.create(data);
 
@@ -120,5 +111,95 @@ describe("Folder Routes", () => {
     const deletedFolder = await Folder.findByPk(folder.id);
     expect(deletedFolder).to.not.exist;
     expect(response.status).to.equal(200);
+  });
+
+  it("06. Should not create a folder when the name is null", async () => {
+    const data = { name: null, category: "General" };
+
+    const response = await agent
+      .post("/api/folders")
+      .set("Accept", "application/json")
+      .set("XSRF-Token", xsrfToken)
+      .send(data);
+
+    const { folder, errors } = response.body;
+
+    expect(folder).to.not.exist;
+    expect(Object.values(errors)[0]).to.equal(
+      "Folder name must be between 1 and 20 characters long."
+    );
+    expect(response.status).to.equal(400);
+  });
+
+  it("07. Should not create a folder when folder name is an empty string", async () => {
+    const data = { name: "", category: "General" };
+
+    const response = await agent
+      .post("/api/folders")
+      .set("Accept", "application/json")
+      .set("XSRF-Token", xsrfToken)
+      .send(data);
+
+    const { folder, errors } = response.body;
+
+    expect(folder).to.not.exist;
+    expect(Object.values(errors)[0]).to.equal(
+      "Folder name must be between 1 and 20 characters long."
+    );
+    expect(response.status).to.equal(400);
+  });
+
+  it("08. Should not create a folder when folder name is too long", async () => {
+    const data = { name: "a".repeat(21), category: "General" };
+
+    const response = await agent
+      .post("/api/folders")
+      .set("Accept", "application/json")
+      .set("XSRF-Token", xsrfToken)
+      .send(data);
+
+    const { folder, errors } = response.body;
+
+    expect(folder).to.not.exist;
+    expect(Object.values(errors)[0]).to.equal(
+      "Folder name must be between 1 and 20 characters long."
+    );
+    expect(response.status).to.equal(400);
+  });
+
+  it("09. Should not create a folder when category is null", async () => {
+    const data = { name: "Folder 1", category: null };
+
+    const response = await agent
+      .post("/api/folders")
+      .set("Accept", "application/json")
+      .set("XSRF-Token", xsrfToken)
+      .send(data);
+
+    const { folder, errors } = response.body;
+
+    expect(folder).to.not.exist;
+    expect(Object.values(errors)[0]).to.equal(
+      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+    );
+    expect(response.status).to.equal(400);
+  });
+
+  it("10. Should not create a folder with invalid category", async () => {
+    const data = { name: "Folder 1", category: null };
+
+    const response = await agent
+      .post("/api/folders")
+      .set("Accept", "application/json")
+      .set("XSRF-Token", xsrfToken)
+      .send(data);
+
+    const { folder, errors } = response.body;
+
+    expect(folder).to.not.exist;
+    expect(Object.values(errors)[0]).to.equal(
+      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+    );
+    expect(response.status).to.equal(400);
   });
 });

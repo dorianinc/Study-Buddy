@@ -2,6 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, Folder, User } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 // Disable logging for tests
 sequelize.options.logging = false;
@@ -22,8 +23,8 @@ describe("Folder Model", () => {
   });
 
   beforeEach(async () => {
-    await Folder.truncate({ cascade: true });
     folder = null;
+    await seedDatabase();
   });
 
   it("01. Should create a folder with valid attributes", async () => {
@@ -81,8 +82,8 @@ describe("Folder Model", () => {
       category: "Literature",
     };
     const updatedData = {
-      name: "Folder 4",
-      category: "Literature",
+      name: "Folder 5",
+      category: "Math",
     };
     folder = await Folder.create(originalData);
 

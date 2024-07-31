@@ -2,6 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, User } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 // Disable logging for tests
 sequelize.options.logging = false;
@@ -16,8 +17,8 @@ describe("User Model", () => {
   });
 
   beforeEach(async () => {
-    await User.truncate({ cascade: true });
     user = null;
+    await seedDatabase();
   });
 
   it("01. Should create a user with valid attributes", async () => {

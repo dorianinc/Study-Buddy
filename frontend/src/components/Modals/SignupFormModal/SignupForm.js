@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useModal } from "../../../context/ModalContext";
 import "./SignupForm.css";
 import { useSignupMutation } from "../../../store/features/api";
+import { VStack, Container } from "@chakra-ui/react";
 
 function SignupFormModal() {
   const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ function SignupFormModal() {
       .unwrap()
       closeModal();
     } catch (error) {
-      setErrors(error.data.errors); 
+      setErrors(error.data.errors);
     }
   };
 
@@ -55,10 +56,11 @@ function SignupFormModal() {
   }, [username, password, confirmPassword, email.length, firstName.length, lastName.length]);
 
   return (
-    <>
-      <div className="signup-container">
+
+      <Container className="signup-container">
         <h1 className="header">Sign Up</h1>
         <form className="signUpForm" onSubmit={handleSubmit}>
+            <VStack>
           <label>
             <input
               type="text"
@@ -66,7 +68,7 @@ function SignupFormModal() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.email && <p className="errors">{errors.email}</p>}
           <label>
@@ -76,7 +78,7 @@ function SignupFormModal() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.username && <p className="errors">{errors.username}</p>}
           <label>
@@ -86,7 +88,7 @@ function SignupFormModal() {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.firstName && <p className="errors">{errors.firstName}</p>}
           <label>
@@ -96,7 +98,7 @@ function SignupFormModal() {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.lastName && <p className="errors">{errors.lastName}</p>}
           <label>
@@ -106,7 +108,7 @@ function SignupFormModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.password && <p className="errors">{errors.password}</p>}
           <label>
@@ -116,18 +118,18 @@ function SignupFormModal() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="input-field"
-            />
+              />
           </label>
           {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
           <button
             className={buttonClass}
             type="submit"
-          >
+            >
             Sign Up
           </button>
+            </VStack>
         </form>
-      </div>
-    </>
+      </Container>
   );
 }
 

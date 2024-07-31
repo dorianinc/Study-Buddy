@@ -4,20 +4,21 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import LogoButton from "./LogoButton/LogoButton";
 import "./Navigation.css";
+import { Flex, Divider } from "@chakra-ui/react";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <div className="nav-bar">
-      <div className="nav-bar-content">
+    // <Flex className="nav-bar">
+      <Flex justify="space-between" className="nav-bar-content" >
         <NavLink exact to="/">
           <LogoButton />
         </NavLink>
         {/* {isLoaded && <ProfileButton user={sessionUser} />} */}
-        <ProfileButton user={sessionUser}/>
-      </div>
-    </div>
+        <ProfileButton user={sessionUser} />
+      </Flex>
+    // </Flex>
   );
 }
 

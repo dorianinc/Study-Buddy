@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import DocumentUpload from "./components/DocumentUpload/DocumentUpload";
-import Navigation from "./components/Navigation";
+import { useSelector } from "react-redux";
+import Navigation from "./components/Navigation/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
+import MyFolders from "./components/Folder/MyFolders";
+import MyDocuments from "./components/Document/MyDocuments";
+
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const { data: user, isLoading, } = useRestoreUserQuery();
-
-  useEffect(() => {
-    if (user) {
-      setIsLoaded(true);
-    }
-  }, [user]);
+  const user = useSelector(state => state.session.user);
+  const { isLoading } = useRestoreUserQuery();
 
   return (
     <div className="app-container">
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
+      <Navigation />
+      {user && (
       <div className="content-container">
         <Switch>
+          <Route exact path="/folders/:folderId">
+            <MyDocuments />
+          </Route>
           <Route path="/">
-            <DocumentUpload />
+            <MyFolders />
           </Route>
         </Switch>
       </div>

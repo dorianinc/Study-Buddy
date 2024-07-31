@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api', 
+    baseUrl: '/api',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState()).session.token;
       if (token) {
@@ -19,9 +19,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: [
-    'CurrentUser',
-  ],
+  tagTypes: ["CurrentUser", "Document", "Folder"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -41,16 +39,45 @@ export const api = createApi({
     }),
     restoreUser: builder.query({
       query: () => "session/",
-      invalidatesTags: ["CurrentUser"]
+      providesTags: ["CurrentUser"],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "session/",
         method: "DELETE",
-      })
-    })
-  })
-})
+      }),
+      invalidatesTags: ["CurrentUser"],
+    }),
+    createDoc: builder.mutation({
+      query: (formData) => ({
+        //hard coded url for testing purposes
+        url: "documents?folderId=1/",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["Document"],
+    }),
+    deleteDoc: builder.mutation({
+      query: ({ user }) => ({
+        url: "documents/:docId/",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Document"]
+    }),
+    getFolders: builder.query({
+      query: (user) => 'folders/',
+      providesTags: ["Folder"]
+    }),
+    createFolder: builder.mutation({
+      query: ({ user, name, category }) => ({
+        url: "folders/",
+        method: "POST",
+        body: { name, category }
+      }),
+      invalidatesTags: ["Folder"]
+    }),
+  }),
+});
 
 export default api;
 
@@ -61,5 +88,8 @@ export const {
   useSignupMutation,
   useRestoreUserQuery,
   useLogoutMutation,
+  useCreateDocMutation,
+  useDeleteDocMutation,
+  useGetFoldersQuery,
+  useCreateFolderMutation,
 } = api;
-

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import DocumentUpload from "./components/DocumentUpload/DocumentUpload";
 import Navigation from "./components/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
+import MyFolders from "./components/Folder/MyFolders";
+import MyDocuments from "./components/Document/MyDocuments";
 import DisplayDoc from "./components/displayDoc";
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,8 +22,11 @@ function App() {
       {isLoaded && (
       <div className="content-container">
         <Switch>
+          <Route exact path="/folders/:folderId">
+            <MyDocuments />
+          </Route>
           <Route path="/">
-            <DocumentUpload />
+            <MyFolders />
           </Route>
         </Switch>
       </div>

@@ -77,15 +77,14 @@ const retrievePrivateFile = (key) => {
 // --------------------------- DELETE OBJECT ------------------------
 
 const deleteAWSObject = async (fileUrl) => {
-  const Key = fileUrl.split("/")[3];
+  const key = fileUrl.split("/")[3];
   const params = {
     Bucket: NAME_OF_BUCKET,
-    Key,
+    key,
   };
 
   try {
-    const data = await s3.deleteObject(params).promise();
-    console.log(data);
+    await s3.deleteObject(params).promise();
   } catch (err) {
     console.log(err, err.stack);
   }

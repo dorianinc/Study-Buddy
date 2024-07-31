@@ -7,7 +7,6 @@ const router = express.Router();
 
 // Create a folder
 router.post("/", [restoreUser, requireAuth], async (req, res) => {
-  console.log("creating folder");
   const { user } = req;
   const data = { userId: user.id };
 
@@ -22,7 +21,7 @@ router.post("/", [restoreUser, requireAuth], async (req, res) => {
 });
 
 // Get all folders of specific user
-router.get("/", async (req, res) => {
+router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   console.log(user," USER HERE BACKEND")
   const folders = await Folder.findAll({
@@ -37,7 +36,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single folder based of id
-router.get("/:folderId", async (req, res) => {
+router.get("/:folderId", [restoreUser, requireAuth], async (req, res) => {
   const folder = await Folder.findByPk(req.params.folderId, { raw: true });
   const documents = await Document.findAll({
     where: {
@@ -71,10 +70,8 @@ router.put("/:folderId", [restoreUser, requireAuth], async (req, res) => {
 
 // Delete a Single Note based of id
 router.delete("/:folderId", [restoreUser, requireAuth], async (req, res) => {
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
   const { user } = req;
   const folder = await Folder.findByPk(req.params.folderId);
-  console.log("🖥️  folder: ", folder)
 
   if (!folder) res.status(404).json(doesNotExist("Folder"));
   else {

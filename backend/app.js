@@ -12,10 +12,14 @@ const { ValidationError } = require("sequelize");
 
 const { environment } = require("./config");
 const isProduction = environment === "production";
+const isTesting = environment === "test";
 
 const app = express();
 
-app.use(morgan("dev"));
+// morgan logs HTTP requests, hide during testing
+if (process.env.NODE_ENV !== "test") {
+  app.use(morgan("dev"));
+}
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -32,7 +36,6 @@ app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin",
   })
-
 );
 // Set the _csrf token and create req.csrfToken method
 app.use(
@@ -74,14 +77,15 @@ app.use((err, _req, _res, next) => {
 });
 
 // Error formatter
+
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
+  if (!isTesting) console.error(err);
   res.json({
     title: err.title || "Server Error",
     message: err.message,
     errors: err.errors,
-    stack: isProduction ? null : err.stack,
+    stack: isProduction || isTesting ? null : err.stack,
   });
 });
 

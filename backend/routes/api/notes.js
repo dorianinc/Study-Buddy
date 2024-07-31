@@ -7,7 +7,6 @@ const router = express.Router();
 
 // Create a note
 router.post("/", [restoreUser, requireAuth], async (req, res) => {
-  console.log("creating notes");
   const { user } = req;
   const { content } = req.body;
   const doc = await Document.findByPk(req.query.docId, { raw: true });

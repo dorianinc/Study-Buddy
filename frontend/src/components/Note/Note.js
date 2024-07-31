@@ -10,8 +10,15 @@ import {
   Button,
   useDisclosure,
   Input,
+  Editable,
+  EditableInput,
+  EditableTextarea,
+  EditablePreview,
+  Text,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
+
+// TODO: Make individual note components into Editables and reorderable
 
 function Note() {
   const document = {
@@ -21,15 +28,16 @@ function Note() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
+  const navigationHeight = 50;
+  let middleHeight = window.innerHeight / 2 - navigationHeight;
   useEffect(() => {
     const handleResize = () => {
       // height of Navigation component
-      const navigationHeight = 50;
       const middleHeight = window.innerHeight / 2 - navigationHeight;
       btnRef.current.style.bottom = `${middleHeight}px`;
     };
     window.addEventListener("resize", handleResize);
-
+    
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -46,6 +54,7 @@ function Note() {
         fontSize="20px"
         position="fixed"
         right="50px"
+        bottom={middleHeight}
         onClick={onOpen}
       >
         Notes
@@ -65,6 +74,15 @@ function Note() {
           <DrawerBody>
             <Input placeholder="Type here..." />
           </DrawerBody>
+
+          <Editable defaultValue=''>
+        <EditablePreview />
+        <EditableTextarea />
+      </Editable>
+
+      {/* <Text as='blockquote'>
+        I am text
+      </Text> */}
 
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>

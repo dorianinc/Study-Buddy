@@ -90,7 +90,7 @@ function MyNotes() {
                 <br />
               </div>
             )) : 
-            <div>{error.message}</div>
+            <div>{error?.message}</div>
             }
 
           <DrawerFooter>

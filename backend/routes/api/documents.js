@@ -25,7 +25,8 @@ router.post(
     const { name, fileType } = req.body;
 
     const fileUrl = await singlePublicFileUpload(req.file);
-    const folder = await Folder.findByPk(req.query.folderId, { raw: true });
+    const folderId = parseInt(req.query.folderId);
+    const folder = await Folder.findByPk(folderId, { raw: true });
 
     if (!folder) res.status(404).json(doesNotExist("Folder"));
     else {

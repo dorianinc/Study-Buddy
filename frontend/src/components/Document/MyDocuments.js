@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import NewDocModal from "../Modals/NewDocModal";
 import DocumentUpload from "../DocumentUpload/DocumentUpload";
 import { useGetOneFolderMutation } from "../../store/features/api";
 import { useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import Document from "../Documents";
 import NewDocButton from "./newDocumentBtn";
+import ModalButton from "../Modals/ModalButton";
 
 // Display all documents related to a specific folder
 function MyDocuments() {
@@ -24,19 +26,22 @@ function MyDocuments() {
 
   return (
     <Box>
-    <h1>Documents Page</h1>
+      <h1>Documents Page</h1>
       <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20}>
-        
-        <NewDocButton />
-        <DocumentUpload />
+        <ModalButton
+        buttonContent={<NewDocButton/>}
+        modalComponent={<NewDocModal />}
+        />
         {documents &&
           documents?.map((doc) => (
             <ChakraLink
-            as={ReactRouterLink}
-            exact to={`folders/${folderId}/documents/${doc.id}`}
-            key={doc.id}>
+              as={ReactRouterLink}
+              exact
+              to={`folders/${folderId}/documents/${doc.id}`}
+              key={doc.id}
+            >
               <GridItem>
-                <Document document={doc}/>
+                <Document document={doc} />
               </GridItem>
             </ChakraLink>
           ))}

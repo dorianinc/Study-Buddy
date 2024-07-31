@@ -22,10 +22,10 @@ router.post(
     const summary = await generateRes("summarize this text in 14 sentences", pdfText);
 
     const { user } = req;
-    const { name, fileType } = req.body;
+    const { name, fileType, folderId } = req.body;
 
     const fileUrl = await singlePublicFileUpload(req.file);
-    const folderId = parseInt(req.query.folderId);
+
     const folder = await Folder.findByPk(folderId, { raw: true });
 
     if (!folder) res.status(404).json(doesNotExist("Folder"));

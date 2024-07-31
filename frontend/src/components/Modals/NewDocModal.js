@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useCreateDocMutation } from "../../store/features/api";
 
-function NewDocModal() {
+function NewDocModal({ folderId }) {
   const [docName, setDocName] = useState("");
   //currently setting file type to pdf, but leaving like this in case we want user to be able to upload diff type
   const [fileType, setFileType] = useState("pdf");
@@ -34,6 +34,7 @@ function NewDocModal() {
     formData.append("theFile", file);
     formData.append("name", docName);
     formData.append("fileType", fileType);
+    formData.append("folderId", folderId)
     createDoc(formData);
   };
 
@@ -69,8 +70,8 @@ function NewDocModal() {
             accept=".pdf"
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <Box color='red' >
-            {errors.file }
+          <Box color='red'>
+            {errors.file}
           </Box>
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isLoading} type="submit">

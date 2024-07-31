@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
-import DocumentUpload from "../DocumentUpload/DocumentUpload";
+import DocumentUpload from "../DocumentPageTest/DocumentPageTest";
 import { useGetOneFolderMutation } from "../../store/features/api";
 import { useSelector } from "react-redux";
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
@@ -30,14 +30,13 @@ function MyDocuments() {
       <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20}>
         <ModalButton
         buttonContent={<NewDocButton/>}
-        modalComponent={<NewDocModal />}
+        modalComponent={<NewDocModal folderId={folderId}/>}
         />
         {documents &&
           documents?.map((doc) => (
             <ChakraLink
               as={ReactRouterLink}
-              exact
-              to={`folders/${folderId}/documents/${doc.id}`}
+              to={`/folders/${folderId}/${doc.id}`}
               key={doc.id}
             >
               <GridItem>

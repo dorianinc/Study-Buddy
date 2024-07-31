@@ -65,13 +65,13 @@ export const api = createApi({
     }),
     //Documents
     createDoc: builder.mutation({
-      query: (formData) => ({
+      query: (formData, id) => ({
         //hard coded url for testing purposes
-        url: "documents?folderId=1/",
+        url: `documents/`,
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Document"],
+      providesTags: ["Document"],
     }),
     deleteDoc: builder.mutation({
       query: ({ user }) => ({

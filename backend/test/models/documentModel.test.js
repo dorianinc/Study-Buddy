@@ -1,6 +1,5 @@
 const chai = require("chai");
 const expect = chai.expect;
-const bcrypt = require("bcryptjs");
 const { sequelize, User, Document } = require("../../db/models");
 const { seedDatabase } = require("../seedDB");
 
@@ -8,27 +7,18 @@ const { seedDatabase } = require("../seedDB");
 sequelize.options.logging = false;
 
 let user;
-let document;
 
 describe("Document Model", () => {
   before(async () => {
-    await sequelize.sync({ force: true });
-    user = await User.create({
-      firstName: "John",
-      lastName: "Doe",
-      email: "user@gmail.com",
-      username: "johndoe",
-      hashedPassword: bcrypt.hashSync("password1", 10),
-    });
+    user = await User.findByPk(10);
   });
 
   beforeEach(async () => {
-    document = null;
     await seedDatabase();
   });
 
   it("01. Should create a document with valid attributes", async () => {
-    document = await Document.create({
+    let document = await Document.create({
       name: "Document 1",
       authorId: user.id,
       fileUrl: "http://example.com/file.pdf",
@@ -47,46 +37,15 @@ describe("Document Model", () => {
   });
 
   it("02. Should retrieve all documents from a user", async () => {
-    await Document.create({
-      name: "Document 1",
-      authorId: user.id,
-      fileUrl: "http://example.com/file16.pdf",
-      fileType: "pdf",
-      summary: "First document for the user.",
-    });
-
-    await Document.create({
-      name: "Document 2",
-      authorId: user.id,
-      fileUrl: "http://example.com/file17.pdf",
-      fileType: "pdf",
-      summary: "Second document for the user.",
-    });
-
-    await Document.create({
-      name: "Document 3",
-      authorId: user.id,
-      fileUrl: "http://example.com/file18.pdf",
-      fileType: "pdf",
-      summary: "Third document for the user.",
-    });
-
     const userDocuments = await Document.findAll({
       where: { authorId: user.id },
     });
 
-    expect(userDocuments).to.be.an("array").that.has.lengthOf(3);
-
-    const documentNames = userDocuments.map((doc) => doc.name);
-    expect(documentNames).to.include.members([
-      "Document 1",
-      "Document 2",
-      "Document 3",
-    ]);
+    expect(userDocuments).to.be.an("array").that.has.lengthOf(10);
   });
 
   it("03. Should retrieve a document by ID", async () => {
-    document = await Document.create({
+    let document = await Document.create({
       name: "Document 2",
       authorId: user.id,
       fileUrl: "http://example.com/file2.pdf",
@@ -104,7 +63,7 @@ describe("Document Model", () => {
   });
 
   it("04. Should update a document by ID", async () => {
-    document = await Document.create({
+    let document = await Document.create({
       name: "Document 3",
       authorId: user.id,
       fileUrl: "http://example.com/file3.pdf",
@@ -123,7 +82,7 @@ describe("Document Model", () => {
   });
 
   it("05. Should delete a document by ID", async () => {
-    document = await Document.create({
+    let document = await Document.create({
       name: "Document 4",
       authorId: user.id,
       fileUrl: "http://example.com/file4.pdf",
@@ -134,10 +93,12 @@ describe("Document Model", () => {
     await Document.destroy({ where: { id: document.id } });
 
     const deletedDocument = await Document.findByPk(document.id);
+
     expect(deletedDocument).to.not.exist;
   });
 
   it("06. Should not create a document with no name", async () => {
+    let document;
     try {
       document = await Document.create({
         name: null,
@@ -154,6 +115,7 @@ describe("Document Model", () => {
   });
 
   it("07. Should not create a document with too short of a name", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "",
@@ -172,6 +134,7 @@ describe("Document Model", () => {
   });
 
   it("08. Should not create a document with too long of a name", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "A".repeat(26),
@@ -190,6 +153,7 @@ describe("Document Model", () => {
   });
 
   it("09. Should not create a document with no authorId", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 5",
@@ -206,6 +170,7 @@ describe("Document Model", () => {
   });
 
   it("10. Should not create a document with invalid authorId", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 5",
@@ -224,6 +189,7 @@ describe("Document Model", () => {
   });
 
   it("11. Should not create a document with invalid file URL", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 6",
@@ -242,6 +208,7 @@ describe("Document Model", () => {
   });
 
   it("12. Should not create a document with no file type", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 7",
@@ -258,6 +225,7 @@ describe("Document Model", () => {
   });
 
   it("13. Should not create a document with invalid file type", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 8",
@@ -274,6 +242,7 @@ describe("Document Model", () => {
   });
 
   it("14. Should not create a document with no summary", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 9",
@@ -290,6 +259,7 @@ describe("Document Model", () => {
   });
 
   it("15. Should not create a document with too long of a summary", async () => {
+    let document;
     try {
       document = await Document.create({
         name: "Document 10",

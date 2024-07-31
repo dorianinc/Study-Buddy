@@ -1,14 +1,16 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { validateSignup } = require("../../utils/validation");
-const { setTokenCookie} = require("../../utils/auth");
+const { setTokenCookie } = require("../../utils/auth");
 const { transactionHandler } = require("../../utils/transaction.js");
 const { User } = require("../../db/models");
 
 const router = express.Router();
+let middleware = [];
 
 // Sign up
-router.post("/", [validateSignup, transactionHandler], async (req, res) => {
+middleware = [validateSignup, transactionHandler];
+router.post("/", middleware, async (req, res) => {
   const { email, firstName, lastName, password, username } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   const user = await User.create({

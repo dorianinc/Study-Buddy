@@ -20,7 +20,7 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 // TODO: Make individual note components into Editables and reorderable
 
-function Note() {
+function MyNotes() {
   const document = {
     name: "Math homework",
   };
@@ -95,4 +95,4 @@ function Note() {
     </>
   );
 }
-export default Note;
+export default MyNotes;

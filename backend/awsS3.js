@@ -1,11 +1,7 @@
 const path = require("path");
 const multer = require("multer");
-const {
-  S3Client,
-  PutObjectCommand,
-  DeleteObjectCommand,
-} = require("@aws-sdk/client-s3");
-
+const { Upload } = require("@aws-sdk/lib-storage");
+const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const bucket = process.env.S3_BUCKET;
 const region = process.env.S3_REGION;
 const s3client = new S3Client({
@@ -27,11 +23,15 @@ const uploadAWSFile = async (file) => {
   };
 
   try {
-    const command = new PutObjectCommand(params);
-    await s3client.send(command);
-    return `https://${bucket}.s3.${region}.amazonaws.com/${Key}`;
+    const upload = new Upload({
+      client: s3client,
+      params,
+    });
+    const response = await upload.done();
+    return response.Location;
   } catch (err) {
-    console.error(err);
+    console.error("Error uploading file:", err);
+    throw err;
   }
 };
 
@@ -49,6 +49,7 @@ const deleteAWSFile = async (fileUrl) => {
     await s3client.send(command);
   } catch (err) {
     console.log("Error", err);
+    throw err;
   }
 };
 

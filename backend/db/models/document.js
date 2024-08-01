@@ -77,8 +77,8 @@ module.exports = (sequelize, DataTypes) => {
             msg: "File type is required.",
           },
           isIn: {
-            args: [['pdf', 'doc', 'docx', 'txt']], // Adjust the file types as needed
-            msg: "File type must be one of 'pdf', 'doc', 'docx', or 'txt'.",
+            args: [["pdf"]], // Adjust the file types as needed
+            msg: "File type must be pdf.",
           },
         },
       },

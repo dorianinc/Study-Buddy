@@ -15,7 +15,7 @@ const router = express.Router();
 let middleware = [];
 
 // Create a Document
-middleware = [ restoreUser, requireAuth, validateDocument, transactionHandler];
+middleware = [restoreUser, requireAuth, validateDocument, transactionHandler];
 router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) => {
   // parsing pdf to text and get response from gemini
   const pdfText = await parsePDF(req.file.buffer);
@@ -46,8 +46,6 @@ router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) 
 // Get all Documents for a specific user
 middleware = [restoreUser, requireAuth];
 router.get("/", middleware, async (req, res) => {
-// Get all Documents for a specific user
-router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const docs = await Document.findAll({
     where: { authorId: user.id },

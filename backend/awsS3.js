@@ -56,7 +56,7 @@ const deleteAWSFile = async (fileUrl) => {
 // --------------------------- Storage ------------------------
 
 const storage = multer.memoryStorage({
-  destination: function (req, file, callback) {
+  destination: function (_req, _file, callback) {
     callback(null, "");
   },
 });

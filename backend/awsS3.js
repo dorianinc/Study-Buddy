@@ -30,7 +30,7 @@ const uploadAWSFile = async (file) => {
     const response = await upload.done();
     return response.Location;
   } catch (err) {
-    console.error("Error uploading file:", err);
+    console.error("Error: ", err);
     throw err;
   }
 };
@@ -48,7 +48,7 @@ const deleteAWSFile = async (fileUrl) => {
     const command = new DeleteObjectCommand(params);
     await s3client.send(command);
   } catch (err) {
-    console.log("Error", err);
+    console.log("Error: ", err);
     throw err;
   }
 };

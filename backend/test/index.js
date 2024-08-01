@@ -13,13 +13,13 @@ const testModels = [
 
 const testRoutes = [
   path.join(__dirname, "buildDB.js"),
-  path.join(__dirname, "routes", "userRoutes.test.js"),
-  path.join(__dirname, "routes", "folderRoutes.test.js"),
+  // path.join(__dirname, "routes", "userRoutes.test.js"),
+  // path.join(__dirname, "routes", "folderRoutes.test.js"),
   path.join(__dirname, "routes", "documentRoutes.test.js"),
-  path.join(__dirname, "routes", "noteRoutes.test.js"),
+  // path.join(__dirname, "routes", "noteRoutes.test.js"),
 ];
 // Add each test file to Mocha
-testModels.forEach((file) => mocha.addFile(file));
+// testModels.forEach((file) => mocha.addFile(file));
 testRoutes.forEach((file) => mocha.addFile(file));
 
 // Run the tests

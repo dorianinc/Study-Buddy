@@ -31,7 +31,8 @@ router.post("/", middleware, async (req, res) => {
         statusCode: 403,
       });
     }
-  });
+  }
+});
 
 // Get all Notes of specific document
 middleware = [restoreUser, requireAuth];
@@ -62,36 +63,35 @@ router.put("/:noteId", middleware, async (req, res) => {
   const { user } = req;
   const note = await Note.findByPk(req.params.noteId);
 
-    if (!note) res.status(404).json(doesNotExist("Note"));
-    else {
-      if (isAuthorized(user.id, note.authorId, res)) {
-        for (property in req.body) {
-          let value = req.body[property];
-          note[property] = value;
-        }
-        await note.save();
-        res.status(200).json(note);
+  if (!note) res.status(404).json(doesNotExist("Note"));
+  else {
+    if (isAuthorized(user.id, note.authorId, res)) {
+      for (property in req.body) {
+        let value = req.body[property];
+        note[property] = value;
       }
+      await note.save();
+      res.status(200).json(note);
     }
-  
-  });
+  }
+});
 
 // Delete a Single Note based of id
 middleware = [restoreUser, requireAuth, transactionHandler];
 router.delete("/:noteId", middleware, async (req, res) => {
   const { user } = req;
   const note = await Note.findByPk(req.params.noteId);
-  
-    if (!note) res.status(404).json(doesNotExist("Note"));
-    else {
-      if (isAuthorized(user.id, note.authorId, res)) {
-        await note.destroy();
-        res.status(200).json({
-          message: "Successfully deleted",
-          statusCode: 200,
-        });
-      }
+
+  if (!note) res.status(404).json(doesNotExist("Note"));
+  else {
+    if (isAuthorized(user.id, note.authorId, res)) {
+      await note.destroy();
+      res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200,
+      });
     }
-  });
+  }
+});
 
 module.exports = router;

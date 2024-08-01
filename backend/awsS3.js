@@ -1,38 +1,54 @@
-const AWS = require("aws-sdk");
-const NAME_OF_BUCKET = "study-buddy-pdf-files";
+const path = require("path");
 const multer = require("multer");
+const {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 
-const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+const bucket = process.env.S3_BUCKET;
+const region = process.env.S3_REGION;
+const s3client = new S3Client({
+  apiVersion: "2006-03-01",
+  region,
+});
 
 // --------------------------- Public UPLOAD ------------------------
 
 const uploadAWSFile = async (file) => {
   const { originalname, mimetype, buffer } = await file;
-  const path = require("path");
   const Key = new Date().getTime().toString() + path.extname(originalname);
-  const uploadParams = {
-    Bucket: NAME_OF_BUCKET,
+  const params = {
+    Bucket: bucket,
     Key,
     Body: buffer,
     ACL: "public-read",
+    ContentType: mimetype,
   };
-  const result = await s3.upload(uploadParams).promise();
 
-  return result.Location;
+  try {
+    const command = new PutObjectCommand(params);
+    await s3client.send(command);
+    return `https://${bucket}.s3.${region}.amazonaws.com/${Key}`;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // --------------------------- DELETE OBJECT ------------------------
 
 const deleteAWSFile = async (fileUrl) => {
-  const key = fileUrl.split("/")[3];
+  const key = fileUrl.split("/").pop();
   const params = {
-    Bucket: NAME_OF_BUCKET,
-    key,
+    Bucket: bucket,
+    Key: key,
   };
+
   try {
-    await s3.deleteObject(params).promise();
+    const command = new DeleteObjectCommand(params);
+    await s3client.send(command);
   } catch (err) {
-    console.log(err, err.stack);
+    console.log("Error", err);
   }
 };
 
@@ -49,8 +65,8 @@ const handleMulterFile = (nameOfKey) => {
 };
 
 module.exports = {
-  s3,
+  s3client,
   handleMulterFile,
   uploadAWSFile,
-  deleteAWSFile
+  deleteAWSFile,
 };

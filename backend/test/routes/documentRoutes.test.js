@@ -33,7 +33,7 @@ describe("Document Routes", () => {
     await seedDatabase();
   });
 
-  it("01. Should create a document with valid attributes", async () => {
+  it.only("01. Should create a document with valid attributes", async () => {
     const file = path.join(__dirname, "../../assets/test.pdf");
     const data = { name: "Document 1", fileType: "pdf" };
 

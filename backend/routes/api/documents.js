@@ -1,4 +1,4 @@
-// External Dependencies
+
 const express = require("express");
 const { generateRes } = require("../../utils/genAi.js");
 const { parsePDF } = require("../../utils/pdfParser.js");
@@ -46,6 +46,8 @@ router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) 
 // Get all Documents for a specific user
 middleware = [restoreUser, requireAuth];
 router.get("/", middleware, async (req, res) => {
+// Get all Documents for a specific user
+router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const docs = await Document.findAll({
     where: { authorId: user.id },
@@ -86,6 +88,7 @@ router.put("/:docId", middleware, async (req, res) => {
       res.status(200).json(doc);
     }
   }
+  
 });
 
 // Delete a Document
@@ -93,6 +96,7 @@ middleware = [restoreUser, requireAuth]
 router.delete("/:docId", middleware, async (req, res) => {
   const { user } = req;
   const doc = await Document.findByPk(req.params.docId);
+  
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else {
     const fileUrl = doc.fileUrl;
@@ -105,6 +109,7 @@ router.delete("/:docId", middleware, async (req, res) => {
       });
     }
   }
+  
 });
 
 module.exports = router;

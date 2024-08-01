@@ -26,6 +26,7 @@ function App() {
             <MyDocuments />
           </Route>
           <Route path="/">
+            <DisplayDoc/>
             <MyFolders />
           </Route>
         </Switch>

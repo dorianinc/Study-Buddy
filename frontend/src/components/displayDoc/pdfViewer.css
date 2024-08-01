@@ -30,10 +30,25 @@
 
 .react-pdf__Document{
     display: flex;
-    width:85%;
+    width:fit-content;
     margin:auto;
+    position:relative;
 }
 
+.textLayer{
+    pointer-events: none;
+}
+
+.note-toggle{
+    position:absolute;
+}
 .content-table{
     width:fit-content;
 }
+
+span{
+    pointer-events: auto;
+}
+/* .note-toggle{
+    display: none;
+} */

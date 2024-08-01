@@ -48,7 +48,7 @@ const deleteAWSFile = async (fileUrl) => {
     const command = new DeleteObjectCommand(params);
     await s3client.send(command);
   } catch (err) {
-    console.log("Error: ", err);
+    console.error("Error: ", err);
     throw err;
   }
 };

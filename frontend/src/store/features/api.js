@@ -92,4 +92,5 @@ export const {
   useDeleteDocMutation,
   useGetFoldersQuery,
   useCreateFolderMutation,
+  useGenerateAiResMutation,
 } = api;

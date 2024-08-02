@@ -14,10 +14,11 @@ import {
     PopoverAnchor,
     useDisclosure,
     Button,
-    Icon
+    Icon,
+    Textarea
 } from '@chakra-ui/react'
 import { MdSpeakerNotes } from "react-icons/md";
-
+import Cookies from 'js-cookie';
 import { Outline, pdfjs } from 'react-pdf';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { Document, Page } from 'react-pdf';
@@ -29,6 +30,7 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import NotePopup from '../NotePopup';
 import { TagLeftIcon } from '@chakra-ui/react';
+import { useGenerateAiResMutation } from '../../store/features/api';
 
 require('./pdfViewer.css')
 
@@ -53,6 +55,9 @@ function PdfViewer() {
     const [endY, setEndY] = useState()
     const canvasRef = useRef()
 
+    const [AINote,setAINote] = useState('')
+    const [note,setNote] = useState('')
+
     // useEffect(()=>{
     //     if(!doneLoading) setDoneLoading(true)
 
@@ -63,7 +68,7 @@ function PdfViewer() {
         startY.current = e.offsetY
 
     })
-    console.log(divRef.current)
+
     // canvasRef.current?.addEventListener('mousedown',(e)=>{
     //     console.log('etnered')
     //     console.log(canvasRef.current,e)
@@ -71,18 +76,21 @@ function PdfViewer() {
     divRef.current?.addEventListener('mouseup', async (e) => {
         // console.log(e)
         e.stopPropagation()
-        const { left, top } = await e.target.style
-        console.log('this is left', left, top)
-        const leftoffSet = left ? (parseInt(left.slice(left.indexOf('*') + 1, left.length - 3)) + e.offsetX) + 'px' : ''
-        const topoffSet = top ? top.slice(top.indexOf('*') + 1, top.length - 3) + 'px' : ''
-        // setEndX(leftoffSet)
-        // setEndY(topoffSet)
-        // setIsHighLight(true)
+        e.preventDefault()
+        // const { left, top } = await e.target.style
+        // console.log('this is left', left, top)
+        // const leftoffSet = left ? (parseInt(left.slice(left.indexOf('*') + 1, left.length - 3)) + e.offsetX) + 'px' : ''
+        // const topoffSet = top ? top.slice(top.indexOf('*') + 1, top.length - 3) + 'px' : ''
+        // // setEndX(leftoffSet)
+        // // setEndY(topoffSet)
+        // // setIsHighLight(true)
 
-        setNoteBoxCoord({offsetX:e.pageX,offsetY:e.pageY})
+        // setNoteBoxCoord({offsetX:e.pageX,offsetY:e.pageY})
         // highlighting(startX.current,startY.current,endX,endY)
+        const text = window.getSelection().toString()
+        setSelectedText(text)
     })
-    console.log(noteBoxCoord)
+
 
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf._pdfInfo.numPages);
@@ -125,7 +133,7 @@ function PdfViewer() {
         //     })
         // }
     }
-
+    console.log('this is note',note)
     function prev() {
         if (pageNumber > 1) setPageNumber(prev => prev - 1)
     }
@@ -137,6 +145,20 @@ function PdfViewer() {
         setPageNumber(itemPageNumber);
     }
 
+    async function AIgenerate(){
+
+            const response  = await fetch('/api/gemini',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'XSRF-Token':`${Cookies.get('XSRF-TOKEN')}`
+                },
+                body:JSON.stringify({'prompt':selectedText})
+
+            })
+            const {AIResponse} = await response.json()
+            setNote(AIResponse)
+    }
     return (
         <div>{pdfUrl &&
             <div className='doc-container'
@@ -179,9 +201,18 @@ function PdfViewer() {
                             >
                                 <PopoverContent>
                                     <PopoverHeader>testing</PopoverHeader>
+                                    <Button
+                                        onClick={AIgenerate}
+                                    >Create Note</Button>
                                     <PopoverBody>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                        eiusmod tempor incididunt ut labore et dolore.
+                                        <form>
+                                        <Textarea
+                                            placeholder='Add your notes or generate note from assistant'
+                                            value = {AINote? AINote: note}
+                                            onChange={(e)=>setNote(e.target.value)}
+                                        />
+                                        <Button type="submit" disabled={!note}>Save Note</Button>
+                                        </form>
                                     </PopoverBody>
                                 </PopoverContent>
                             </Popover>

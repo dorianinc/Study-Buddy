@@ -1,32 +1,33 @@
-const { generateRes } = require("../../utils/genAi.js");
-const { parsePDF } = require("../../utils/pdfParser.js");
 
 const express = require("express");
+const { generateRes } = require("../../utils/genAi.js");
+const { parsePDF } = require("../../utils/pdfParser.js");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { doesNotExist } = require("../../utils/helpers.js");
+const { transactionHandler } = require("../../utils/transaction.js");
+const { validateDocument } = require("../../utils/validation.js");
 const { Folder, Document, Note } = require("../../db/models");
-const {
-  singlePublicFileUpload,
-  singleMulterUpload,
-  deleteAWSObject,
-} = require("../../awsS3.js");
+const { handleMulterFile, uploadAWSFile, deleteAWSFile } = require("../../awsS3.js");
+const { environment } = require("../../config");
+const isTesting = environment === "test";
+
 const router = express.Router();
+let middleware = [];
 
 // Create a Document
-router.post(
-  "/",
-  [singleMulterUpload("theFile"), restoreUser, requireAuth],
-  async (req, res) => {
-    // parsing pdf to text and get response from gemini
-    const pdfText = await parsePDF(req.file.buffer);
-    if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
-    const summary = generateRes("summarize this text in 14 sentences", pdfText);
+middleware = [restoreUser, requireAuth, validateDocument, transactionHandler];
+router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) => {
+  // parsing pdf to text and get response from gemini
+  const pdfText = await parsePDF(req.file.buffer);
+  const summary = await generateRes(
+    "summarize this text in 14 sentences",
+    pdfText
+  );
 
-    const { user } = req;
-    const { name, fileType } = req.body;
-
-    const fileUrl = await singlePublicFileUpload(req.file);
-    const folder = await Folder.findByPk(req.query.folderId, { raw: true });
+  const { user } = req;
+  const { name, fileType } = req.body;
+  const fileUrl = await uploadAWSFile(req.file);
+  const folder = await Folder.findByPk(req.query.folderId, { raw: true });
 
     if (!folder) res.status(404).json(doesNotExist("Folder"));
     else {
@@ -37,24 +38,23 @@ router.post(
         summary,
         authorId: user.id,
         folderId: folder.id,
-
-
-      })
+      });
       res.status(200).json(newDoc);
     }
   }
 );
 
-
 // Delete a Document
-router.delete("/:docId", [restoreUser, requireAuth], async (req, res) => {
+middleware = [restoreUser, requireAuth]
+router.delete("/:docId", middleware, async (req, res) => {
   const { user } = req;
   const doc = await Document.findByPk(req.params.docId);
+  
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else {
     const fileUrl = doc.fileUrl;
     if (isAuthorized(user.id, doc.authorId, res)) {
-      await deleteAWSObject(fileUrl);
+      if (!isTesting) await deleteAWSFile(fileUrl);
       await doc.destroy();
       res.status(200).json({
         message: "Successfully deleted document",
@@ -62,6 +62,7 @@ router.delete("/:docId", [restoreUser, requireAuth], async (req, res) => {
       });
     }
   }
+  
 });
 
 module.exports = router;

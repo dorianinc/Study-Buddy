@@ -9,10 +9,20 @@ if (process.env.NODE_ENV === "production") {
 const noteSeeds = () => {
   const notes = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     notes.push({
       authorId: 10,
-      docId: faker.number.int({ min: 1, max: 10 }),
+      docId: 1,
+      content: faker.lorem.paragraph(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+  }
+
+  for (let i = 0; i < 5; i++) {
+    notes.push({
+      authorId: 10,
+      docId: faker.number.int({ min: 2, max: 10 }),
       content: faker.lorem.paragraph(),
       createdAt: new Date(),
       updatedAt: new Date(),

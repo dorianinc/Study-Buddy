@@ -34,7 +34,7 @@ router.get("/", middleware, async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  if (!folders.length) res.status(404).json(doesNotExist("Folders"));
+  if (!folders) res.status(404).json(doesNotExist("Folders"));
   else res.status(200).json(folders);
 });
 

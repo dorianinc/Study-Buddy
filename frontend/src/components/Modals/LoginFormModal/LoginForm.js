@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useLoginMutation } from "../../../store/features/api";
 import { useModal } from "../../../context/ModalContext";
 import "./LoginForm.css";
-import { Text, Input, VStack ,Stack, Container, Center, Flex } from "@chakra-ui/react";
 
 function LoginFormModal() {
   const [login] = useLoginMutation();
@@ -31,50 +30,40 @@ function LoginFormModal() {
   };
 
   return (
-    <Container className="login-modal" w="15rem">
+    <div className="login-modal">
       <h1 className="header">Log In</h1>
       <form className="login-form" onSubmit={handleSubmit}>
-        <Center >
-        <VStack direction="column">
         <label>
-          <Input
-            border="1px solid lightgray"
-            borderRadius="5px"
+          <input
             type="text"
             placeholder="Username or Email"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             className="input-field"
-
-            />
+          />
           {errors.credential && <p className="errors">{errors.credential}</p>}
         </label>
-
         <label>
-          <Input
-            border="1px solid lightgray"
-            borderRadius="5px"
+          <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="input-field"
-            />
+          />
           {errors.password && <p className="errors">{errors.password}</p>}
           {errors.login && <p className="errors">{errors.login}</p>}
         </label>
-        <Stack className="button-group">
+        <div className="button-group">
           <button className="pink-button" type="submit">
             Log In
           </button>
           <button className="demo-button" onClick={(e) => signInDemo(e)}>
             Demo User
           </button>
-        </Stack>
-            </VStack>
-            </Center>
+        </div>
       </form>
-    </Container>
+    </div>
   );
 }
 

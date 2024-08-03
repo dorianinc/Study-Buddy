@@ -19,7 +19,8 @@ middleware = [restoreUser, requireAuth, validateDocument, transactionHandler];
 router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) => {
   // parsing pdf to text and get response from gemini
   const pdfText = await parsePDF(req.file.buffer);
-  const summary = await generateRes(
+    if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
+  const summary = generateRes(
     "summarize this text in 14 sentences",
     pdfText
   );
@@ -86,7 +87,7 @@ router.put("/:docId", middleware, async (req, res) => {
       res.status(200).json(doc);
     }
   }
-  
+
 });
 
 // Delete a Document
@@ -94,7 +95,7 @@ middleware = [restoreUser, requireAuth]
 router.delete("/:docId", middleware, async (req, res) => {
   const { user } = req;
   const doc = await Document.findByPk(req.params.docId);
-  
+
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else {
     const fileUrl = doc.fileUrl;
@@ -107,7 +108,7 @@ router.delete("/:docId", middleware, async (req, res) => {
       });
     }
   }
-  
+
 });
 
 module.exports = router;

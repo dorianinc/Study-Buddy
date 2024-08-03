@@ -65,9 +65,9 @@ export const api = createApi({
     }),
     //Documents
     createDoc: builder.mutation({
-      query: (formData, id) => ({
+      query: ({formData, folderId}) => ({
         //hard coded url for testing purposes
-        url: `documents/`,
+        url: `documents/?folderId=${folderId}`,
         method: "POST",
         body: formData,
       }),

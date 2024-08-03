@@ -107,7 +107,7 @@ const validateDocument = [
   check("theFile")
     .custom((value, { req }) => {
       if (!req.file || !req.file.mimetype) {
-        throw new Error("File is required.");
+        throw new Error("Filedasda is required.");
       }
       const allowedExtensions = ["pdf"];
       const fileExtension = req.file.originalname
@@ -119,9 +119,7 @@ const validateDocument = [
       }
 
       return true;
-    })
-    .exists({ checkFalsy: true })
-    .withMessage("File is required."),
+    }),
 
   handleValidationErrors,
 ];

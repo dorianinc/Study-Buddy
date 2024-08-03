@@ -34,8 +34,7 @@ function NewDocModal({ folderId }) {
     formData.append("theFile", file);
     formData.append("name", docName);
     formData.append("fileType", fileType);
-    formData.append("folderId", folderId)
-    createDoc(formData);
+    createDoc({formData, folderId});
   };
 
   if (isError) {

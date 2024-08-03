@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../store/features/api";
 import ModalButton from "../../Modals/ModalButton";
@@ -8,12 +8,13 @@ import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
 import {
   Button,
-  ButtonGroup,
-  Flex,
-  // Box,
-  Container,
-  Center,
+  Box,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
@@ -52,95 +53,57 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
-  const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
+  // const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <Flex>
-      <Flex
-        className="my-box"
+    <Menu autoSelect={false}>
+      <MenuButton
+        as={Button}
+        rounded={"full"}
+        pt="1.5rem"
+        pb="1.5rem"
         justifyContent="space-between"
-        gap={3}
         align="center"
         border="1px solid lightgrey"
-        borderRadius="50px"
-        pt=".5rem"
-        pr="1rem"
-        pb=".5rem"
-        pl="1rem"
-        onClick={openMenu}
         _hover={{
           cursor: "pointer",
-          boxShadow: 'xl'
+          boxShadow: "xl",
         }}
-      >
-        <HamburgerIcon boxSize={5} />
-        <Avatar
-          name={user ? `${user.firstName} ${user.lastName}` : ""}
-          size="sm"
-        />
-      </Flex>
+        onClick={openMenu}
+        leftIcon={<HamburgerIcon boxSize={5} />}
+        rightIcon={
+          <Avatar
+            name={user ? `${user.firstName} ${user.lastName}` : ""}
+            size="sm"
+          />
+        }
+      ></MenuButton>
       {showMenu && (
-        <Container
-          className={dropdown}
-          ref={ulRef}
-          position="absolute"
-          top="2.6rem"
-          right="1rem"
-          border="1px solid black"
-          borderRadius="5px"
-          w="min-content"
-          bgColor="white"
-        >
+        <MenuList ref={ulRef} borderRadius={"15px"}>
           {user ? (
-            <div>
-              <div>
-                <p>Hello, {user.firstName}</p>
-              </div>
-              <div>
-                <p>{user.email}</p>
-              </div>
-
-              <Link to="/options" onClick={closeMenu}>
-                <button>Options</button>
-              </Link>
-              <hr />
-              <div>
-                <button onClick={logoutUser}>Log Out</button>
-              </div>
-            </div>
+            <>
+              <Box p={2}>Hello, {user.firstName}</Box>
+              <Box p={2}>{user.email}</Box>
+              <MenuDivider />
+              <MenuItem onClick={logoutUser}>Log Out</MenuItem>
+            </>
           ) : (
-            <div>
-              <ButtonGroup variant="link" colorScheme="black" pb="2px" pt="2px">
-                <Center flexDirection="column">
-                  <div>
-                    <ModalButton
-                      buttonContent={
-                        <Button>
-                          <p>Log In</p>
-                        </Button>
-                      }
-                      onButtonClick={closeMenu}
-                      modalComponent={<LoginFormModal />}
-                    />
-                  </div>
-                  <div children="signup">
-                    <ModalButton
-                      buttonContent={
-                        <Button>
-                          <p>Sign Up</p>
-                        </Button>
-                      }
-                      onButtonClick={closeMenu}
-                      modalComponent={<SignupFormModal />}
-                    />
-                  </div>
-                </Center>
-              </ButtonGroup>
-            </div>
+            <>
+              <ModalButton
+                buttonContent={<MenuItem>Log In</MenuItem>}
+                onButtonClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+              <ModalButton
+                buttonContent={<MenuItem>Sign Up</MenuItem>}
+                onButtonClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
+            </>
           )}
-        </Container>
+        </MenuList>
       )}
-    </Flex>
+    </Menu>
   );
 }
 

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import LogoButton from "./LogoButton/LogoButton";
 import "./Navigation.css";
-import { Flex, Divider } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);

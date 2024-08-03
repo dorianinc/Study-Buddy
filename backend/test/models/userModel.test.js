@@ -2,26 +2,24 @@ const chai = require("chai");
 const expect = chai.expect;
 const bcrypt = require("bcryptjs");
 const { sequelize, User } = require("../../db/models");
+const { seedDatabase } = require("../seedDB");
 
 // Disable logging for tests
 sequelize.options.logging = false;
 
-let user;
-let password;
+const password = bcrypt.hashSync("password1", 10);
 
 describe("User Model", () => {
   before(async () => {
     await sequelize.sync({ force: true });
-    password = bcrypt.hashSync("password1", 10);
   });
 
   beforeEach(async () => {
-    await User.truncate({ cascade: true });
-    user = null;
+    await seedDatabase();
   });
 
   it("01. Should create a user with valid attributes", async () => {
-    user = await User.create({
+    let user = await User.create({
       firstName: "John",
       lastName: "Doe",
       email: "user@gmail.com",
@@ -38,7 +36,7 @@ describe("User Model", () => {
   });
 
   it("02. Should retrieve a user by ID", async () => {
-    user = await User.create({
+    let user = await User.create({
       firstName: "Jane",
       lastName: "Doe",
       email: "jane@gmail.com",
@@ -56,7 +54,7 @@ describe("User Model", () => {
   });
 
   it("03. Should update a user by ID", async () => {
-    user = await User.create({
+    let user = await User.create({
       firstName: "John",
       lastName: "Doe",
       email: "user@gmail.com",
@@ -75,7 +73,7 @@ describe("User Model", () => {
   });
 
   it("04. Should delete a user by ID", async () => {
-    user = await User.create({
+    let user = await User.create({
       firstName: "John",
       lastName: "Doe",
       email: "user@gmail.com",
@@ -90,6 +88,7 @@ describe("User Model", () => {
   });
 
   it("05. Should not create a user with no first name.", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: null,
@@ -106,6 +105,7 @@ describe("User Model", () => {
   });
 
   it("06. Should not create a user with too short of a first name", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "",
@@ -124,6 +124,7 @@ describe("User Model", () => {
   });
 
   it("07. Should not create a user with too long of a first name", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "Maximilianaquintanilladore",
@@ -142,6 +143,7 @@ describe("User Model", () => {
   });
 
   it("08. Should not create a user with no last name", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -158,6 +160,7 @@ describe("User Model", () => {
   });
 
   it("09. Should not create a user with too short of a last name", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -176,6 +179,7 @@ describe("User Model", () => {
   });
 
   it("10. Should not create a user with too long of a last name", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -194,6 +198,7 @@ describe("User Model", () => {
   });
 
   it("11. Should not create a user with no username", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -210,6 +215,7 @@ describe("User Model", () => {
   });
 
   it("12. Should not create a user with email as username", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -228,6 +234,7 @@ describe("User Model", () => {
   });
 
   it("13. Should not create a user with too short of a username", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -246,6 +253,7 @@ describe("User Model", () => {
   });
 
   it("14. Should not create a user with too long of a username", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -264,6 +272,7 @@ describe("User Model", () => {
   });
 
   it("15. Should not create a user with no email", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -280,6 +289,7 @@ describe("User Model", () => {
   });
 
   it("16. Should not create a user with invalid email", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -298,6 +308,7 @@ describe("User Model", () => {
   });
 
   it("17. Should not create a user with no password", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",
@@ -314,6 +325,7 @@ describe("User Model", () => {
   });
 
   it("18. Should not create a user with a non-encrypted password", async () => {
+    let user;
     try {
       user = await User.create({
         firstName: "John",

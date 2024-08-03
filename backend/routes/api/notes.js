@@ -2,11 +2,15 @@ const express = require("express");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { doesNotExist } = require("../../utils/helpers.js");
 const { Document, Note } = require("../../db/models");
+const { validateNote } = require("../../utils/validation.js");
+const { transactionHandler } = require("../../utils/transaction.js");
 
 const router = express.Router();
+let middleware = [];
 
 // Create a note
-router.post("/", [restoreUser, requireAuth], async (req, res) => {
+middleware = [restoreUser, requireAuth, validateNote, transactionHandler];
+router.post("/", middleware, async (req, res) => {
   const { user } = req;
   const { content } = req.body;
   const doc = await Document.findByPk(req.query.docId, { raw: true });
@@ -18,6 +22,7 @@ router.post("/", [restoreUser, requireAuth], async (req, res) => {
       const newNote = await Note.create({
         content,
         docId: doc.id,
+        authorId: user.id,
       });
       res.status(200).json(newNote);
     } else {
@@ -29,8 +34,9 @@ router.post("/", [restoreUser, requireAuth], async (req, res) => {
   }
 });
 
-// Get all Notes of Specific Document
-router.get("/", async (req, res) => {
+// Get all Notes of specific document
+middleware = [restoreUser, requireAuth];
+router.get("/", middleware, async (req, res) => {
   const notes = await Note.findAll({
     where: {
       docId: req.query.docId,
@@ -42,8 +48,8 @@ router.get("/", async (req, res) => {
   else res.status(200).json(notes);
 });
 
-// Get a Single Note based of id
-router.get("/:noteId", async (req, res) => {
+// Get a single Note based off id
+router.get("/:noteId", [restoreUser, requireAuth], async (req, res) => {
   const note = await Note.findByPk(req.params.noteId, { raw: true });
 
   // check to see if note exists before creating note
@@ -51,8 +57,9 @@ router.get("/:noteId", async (req, res) => {
   else res.status(200).json(note);
 });
 
-// Update a Single Note based of id
-router.put("/:noteId", [restoreUser, requireAuth], async (req, res) => {
+// Update a single Note based off id
+middleware = [restoreUser, requireAuth, validateNote, transactionHandler];
+router.put("/:noteId", middleware, async (req, res) => {
   const { user } = req;
   const note = await Note.findByPk(req.params.noteId);
 
@@ -70,7 +77,8 @@ router.put("/:noteId", [restoreUser, requireAuth], async (req, res) => {
 });
 
 // Delete a Single Note based of id
-router.delete("/:noteId", [restoreUser, requireAuth], async (req, res) => {
+middleware = [restoreUser, requireAuth, transactionHandler];
+router.delete("/:noteId", middleware, async (req, res) => {
   const { user } = req;
   const note = await Note.findByPk(req.params.noteId);
 

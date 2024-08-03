@@ -2,11 +2,16 @@ const chai = require("chai");
 const expect = chai.expect;
 const request = require("supertest");
 const app = require("../../app");
+const { seedDatabase } = require("../seedDB");
 
 const agent = request.agent(app);
 let xsrfToken;
 
 describe("User Routes", () => {
+  beforeEach(async () => {
+    await seedDatabase();
+  });
+
   it("01. Should get CSRF token", async () => {
     const response = await agent.get("/api/csrf/restore");
     xsrfToken = response.body["XSRF-TOKEN"];

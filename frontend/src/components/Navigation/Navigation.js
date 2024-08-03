@@ -11,7 +11,7 @@ function Navigation() {
 
   return (
     // <Flex className="nav-bar">
-      <Flex justify="space-between" className="nav-bar-content" >
+      <Flex justify="space-between" className="nav-bar-content" p={10}>
         <NavLink exact to="/">
           <LogoButton />
         </NavLink>

@@ -7,7 +7,7 @@ const { transactionHandler } = require("../../utils/transaction.js");
 
 const router = express.Router();
 
-const router = express.Router();
+// const router = express.Router();
 
 // Create a folder
 router.post(

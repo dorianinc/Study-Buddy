@@ -1,119 +1,73 @@
-const AWS = require("aws-sdk");
-// name of your bucket here
-const NAME_OF_BUCKET = "study-buddy-pdf-files";
+const path = require("path");
 const multer = require("multer");
-
-//  make sure to set environment variables in production for:
-//  AWS_ACCESS_KEY_ID
-//  AWS_SECRET_ACCESS_KEY
-//  and aws will automatically use those environment variables
-
-const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+const { Upload } = require("@aws-sdk/lib-storage");
+const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const bucket = process.env.S3_BUCKET;
+const region = process.env.S3_REGION;
+const s3client = new S3Client({
+  apiVersion: "2006-03-01",
+  region,
+});
 
 // --------------------------- Public UPLOAD ------------------------
 
-const singlePublicFileUpload = async (file) => {
+const uploadAWSFile = async (file) => {
   const { originalname, mimetype, buffer } = await file;
-  const path = require("path");
-  // name of the file in your S3 bucket will be the date in ms plus the extension name
   const Key = new Date().getTime().toString() + path.extname(originalname);
-  const uploadParams = {
-    Bucket: NAME_OF_BUCKET,
+  const params = {
+    Bucket: bucket,
     Key,
     Body: buffer,
     ACL: "public-read",
+    ContentType: mimetype,
   };
-  const result = await s3.upload(uploadParams).promise();
 
-  // save the name of the file in your bucket as the key in your database to retrieve for later
-  return result.Location;
-};
-
-const multiplePublicFileUpload = async (files) => {
-  return await Promise.all(
-    files.map((file) => {
-      return singlePublicFileUpload(file);
-    })
-  );
-};
-
-// --------------------------- Prviate UPLOAD ------------------------
-
-const singlePrivateFileUpload = async (file) => {
-  const { originalname, mimetype, buffer } = await file;
-  const path = require("path");
-  // name of the file in your S3 bucket will be the date in ms plus the extension name
-  const Key = new Date().getTime().toString() + path.extname(originalname);
-  const uploadParams = {
-    Bucket: NAME_OF_BUCKET,
-    Key,
-    Body: buffer,
-  };
-  const result = await s3.upload(uploadParams).promise();
-
-  // save the name of the file in your bucket as the key in your database to retrieve for later
-  return result.Key;
-};
-
-const multiplePrivateFileUpload = async (files) => {
-  return await Promise.all(
-    files.map((file) => {
-      return singlePrivateFileUpload(file);
-    })
-  );
-};
-
-const retrievePrivateFile = (key) => {
-  let fileUrl;
-  if (key) {
-    fileUrl = s3.getSignedUrl("getObject", {
-      Bucket: NAME_OF_BUCKET,
-      Key: key,
+  try {
+    const upload = new Upload({
+      client: s3client,
+      params,
     });
+    const response = await upload.done();
+    return response.Location;
+  } catch (err) {
+    console.error("Error: ", err);
+    throw err;
   }
-  return fileUrl || key;
 };
 
 // --------------------------- DELETE OBJECT ------------------------
 
-const deleteAWSObject = async (fileUrl) => {
-  const key = fileUrl.split("/")[3];
+const deleteAWSFile = async (fileUrl) => {
+  const key = fileUrl.split("/").pop();
   const params = {
-    Bucket: NAME_OF_BUCKET,
-    key,
+    Bucket: bucket,
+    Key: key,
   };
 
   try {
-    await s3.deleteObject(params).promise();
+    const command = new DeleteObjectCommand(params);
+    await s3client.send(command);
   } catch (err) {
-    console.log(err, err.stack);
+    console.error("Error: ", err);
+    throw err;
   }
 };
 
 // --------------------------- Storage ------------------------
 
 const storage = multer.memoryStorage({
-  destination: function (req, file, callback) {
+  destination: function (_req, _file, callback) {
     callback(null, "");
   },
 });
 
-const singleMulterUpload = (nameOfKey) => {
+const handleMulterFile = (nameOfKey) => {
   return multer({ storage: storage }).single(nameOfKey);
 };
 
-const multipleMulterUpload = (nameOfKey) => {
-  return multer({ storage: storage }).array(nameOfKey);
-};
-
 module.exports = {
-  s3,
-  singlePublicFileUpload,
-  multiplePublicFileUpload,
-  singlePrivateFileUpload,
-  multiplePrivateFileUpload,
-  retrievePrivateFile,
-  singleMulterUpload,
-  multipleMulterUpload,
-  deleteAWSObject
+  s3client,
+  handleMulterFile,
+  uploadAWSFile,
+  deleteAWSFile,
 };

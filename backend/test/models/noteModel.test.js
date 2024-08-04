@@ -1,6 +1,5 @@
 const chai = require("chai");
 const expect = chai.expect;
-const bcrypt = require("bcryptjs");
 const { sequelize, Note, User, Document } = require("../../db/models");
 const { seedDatabase } = require("../seedDB");
 
@@ -9,38 +8,19 @@ sequelize.options.logging = false;
 
 let user;
 let document;
-let note;
 
 describe("Note Model", () => {
   before(async () => {
-    await sequelize.sync({ force: true });
-
-    // Create a user
-    user = await User.create({
-      firstName: "Jane",
-      lastName: "Doe",
-      email: "jane.doe@gmail.com",
-      username: "janedoe",
-      hashedPassword: bcrypt.hashSync("password1", 10),
-    });
-
-    // Create a document
-    document = await Document.create({
-      name: "Document 1",
-      authorId: user.id,
-      fileUrl: "http://example.com/file.pdf",
-      fileType: "pdf",
-      summary: "This is a valid summary for the document.",
-    });
+    user = await User.findByPk(10);
+    document = await Document.findByPk(1);
   });
 
   beforeEach(async () => {
-    note = null;
     await seedDatabase();
   });
 
   it("01. Should create a note with valid attributes", async () => {
-    note = await Note.create({
+    const note = await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "This is a note.",
@@ -73,7 +53,7 @@ describe("Note Model", () => {
   });
 
   it("03. Should retrieve a note by ID", async () => {
-    note = await Note.create({
+    const note = await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Specific Note",
@@ -87,7 +67,7 @@ describe("Note Model", () => {
   });
 
   it("04. Should update a note by ID", async () => {
-    note = await Note.create({
+    const note = await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Old Content",
@@ -102,7 +82,7 @@ describe("Note Model", () => {
   });
 
   it("05. Should delete a note by ID", async () => {
-    note = await Note.create({
+    const note = await Note.create({
       authorId: user.id,
       docId: document.id,
       content: "Delete Me",
@@ -116,6 +96,7 @@ describe("Note Model", () => {
   });
 
   it("06. Should not create a note with no authorId", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: null,
@@ -123,13 +104,14 @@ describe("Note Model", () => {
         content: "This is a note.",
       });
     } catch (error) {
-      expect(error.errors[0].message).to.be.eql("Author ID is required.");
+      expect(error.errors[0].message).to.be.equal("Author ID is required.");
     } finally {
       expect(note).to.not.exist;
     }
   });
 
   it("07. Should not create a note with non-integer authorId", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: "string",
@@ -137,7 +119,7 @@ describe("Note Model", () => {
         content: "This is a note.",
       });
     } catch (error) {
-      expect(error.errors[0].message).to.be.eql(
+      expect(error.errors[0].message).to.be.equal(
         "Author ID must be an integer."
       );
     } finally {
@@ -146,6 +128,7 @@ describe("Note Model", () => {
   });
 
   it("08. Should not create a note with no docId", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: user.id,
@@ -153,13 +136,14 @@ describe("Note Model", () => {
         content: "This is a note.",
       });
     } catch (error) {
-      expect(error.errors[0].message).to.be.eql("Document ID is required.");
+      expect(error.errors[0].message).to.be.equal("Document ID is required.");
     } finally {
       expect(note).to.not.exist;
     }
   });
 
   it("09. Should not create a note with non-integer docId", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: user.id,
@@ -167,7 +151,7 @@ describe("Note Model", () => {
         content: "This is a note.",
       });
     } catch (error) {
-      expect(error.errors[0].message).to.be.eql(
+      expect(error.errors[0].message).to.be.equal(
         "Document ID must be an integer."
       );
     } finally {
@@ -176,6 +160,7 @@ describe("Note Model", () => {
   });
 
   it("10. Should not create a note with no content", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: user.id,
@@ -190,6 +175,7 @@ describe("Note Model", () => {
   });
 
   it("11. Should not create a note with content that is too short", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: user.id,
@@ -206,6 +192,7 @@ describe("Note Model", () => {
   });
 
   it("12. Should not create a note with content that is too long", async () => {
+    let note;
     try {
       note = await Note.create({
         authorId: user.id,

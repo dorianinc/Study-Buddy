@@ -3,7 +3,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const request = require("supertest");
 const app = require("../../app");
-const { sequelize, Document, Folder } = require("../../db/models");
+const { Document } = require("../../db/models");
 const { seedDatabase } = require("../seedDB");
 
 const agent = request.agent(app);
@@ -53,6 +53,7 @@ describe("Document Routes", () => {
     expect(document.fileType).to.equal(data.fileType);
     expect(document.authorId).to.equal(user.id);
     expect(document.folderId).to.equal(1);
+    expect(document.fileUrl).to.exist;
     expect(document.summary).to.exist;
   });
 

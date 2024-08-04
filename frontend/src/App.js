@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation";
 import { useRestoreUserQuery } from "./store/features/api";
 import MyFolders from "./components/Folder/MyFolders";
 import MyDocuments from "./components/Document/MyDocuments";
+import MyNotes from "./components/Note/MyNotes";
 import DocumentPageTest from "./components/DocumentPageTest/DocumentPageTest";
 import { useSelector } from "react-redux";
 import DisplayDoc from "./components/displayDoc/DisplayDoc";
@@ -26,6 +27,7 @@ function App() {
               <MyDocuments />
             </Route>
             <Route path="/">
+              <MyNotes />
               <MyFolders />
             </Route>
           </Switch>

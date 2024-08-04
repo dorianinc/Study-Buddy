@@ -14,14 +14,16 @@ function Navigation() {
       borderBottom={"1px solid lightgrey"}
       boxShadow={"sm"}
       p={5}
-      bg={'blue.300'}
+      bg={"blue.300"}
     >
-        <NavLink exact to="/">
-      <Flex direction={'row'} align={'center'}>
+      <NavLink exact to="/">
+        <Flex direction={"row"} align={"center"} gap={2}>
           <LogoButton />
-          <Text fontFamily={'logo'} fontSize={30} color={'white'}>Study Buddy</Text>
-      </Flex>
-        </NavLink>
+          <Text fontFamily={"logo"} fontSize={30} color={"white"}>
+            Study Buddy
+          </Text>
+        </Flex>
+      </NavLink>
       <ProfileButton user={sessionUser} />
     </Flex>
   );

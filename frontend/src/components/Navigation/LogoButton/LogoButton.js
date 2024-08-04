@@ -3,9 +3,8 @@ import "./LogoButton.css"
 
 function LogoButton() {
     return (
-      <Box  className="logoContainer" p={1}>
-          <Image boxSize="40px" className ="logo" alt="potato"  src="/images/logos/papercliplogo.png"/>
-          {/* <p className="title">Potato</p> */}
+      <Box>
+          <Image boxSize="40px" className ="logo" alt="potato" src="/images/logos/paper-clip-svgrepo-com.svg"/>
       </Box>
     );
   }

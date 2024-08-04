@@ -20,7 +20,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["CurrentUser", "Document", "Folder"],
+  tagTypes: ["CurrentUser", "Document", "Folder", "Note"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -92,6 +92,10 @@ export const api = createApi({
       }),
       invalidatesTags: ["Folder"]
     }),
+    getNotes: builder.query({
+      query: (docId) => `/notes?docId=${docId}`,
+      providesTags: ["Note"]
+    }),
   }),
 });
 
@@ -108,6 +112,7 @@ export const {
   useDeleteDocMutation,
   useGetFoldersQuery,
   useCreateFolderMutation,
+  useGetNotesQuery,
   useGetFoldersMutation,
   useGetOneFolderMutation
 } = api;

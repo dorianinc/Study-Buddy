@@ -5,7 +5,7 @@ import { useRestoreUserQuery } from "./store/features/api";
 import MyFolders from "./components/Folder/MyFolders";
 import MyDocuments from "./components/Document/MyDocuments";
 import MyNotes from "./components/Note/MyNotes";
-import DocumentPageTest from "./components/DocumentPageTest/DocumentPageTest";
+import PdfViewer from "./components/DocumentPage/pdfViewer";
 
 function App() {
   const user = useSelector((state) => state.session.user);
@@ -18,7 +18,7 @@ function App() {
         <div className="content-container">
           <Switch>
             <Route exact path="/folders/:folderId/:documentId">
-              <DocumentPageTest />
+              <PdfViewer />
             </Route>
             <Route exact path="/folders/:folderId">
               <MyDocuments />

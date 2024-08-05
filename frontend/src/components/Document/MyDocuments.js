@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
-import DocumentUpload from "../DocumentPageTest/DocumentPageTest";
-import { useGetOneFolderMutation } from "../../store/features/api";
-import { useSelector } from "react-redux";
+import { useGetOneFolderQuery } from "../../store/features/api";
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
@@ -13,37 +11,30 @@ import ModalButton from "../Modals/ModalButton";
 
 // Display all documents related to a specific folder
 function MyDocuments() {
-  const [getOneFolder] = useGetOneFolderMutation();
   const { folderId } = useParams();
-  const folder = useSelector((state) => state.folder[folderId]);
-  const documents = folder?.documents;
+  const { data: folder, isLoading } = useGetOneFolderQuery(folderId);
 
-  useEffect(() => {
-    getOneFolder(folderId);
-  }, [getOneFolder]);
-
-  if (!folder || !documents) return;
+  if (isLoading) return <div>"Loading Documents..."</div>;
 
   return (
     <Box>
       <h1>Documents Page</h1>
       <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20}>
         <ModalButton
-        buttonContent={<NewDocButton/>}
-        modalComponent={<NewDocModal folderId={folderId}/>}
+          buttonContent={<NewDocButton />}
+          modalComponent={<NewDocModal folderId={folderId} />}
         />
-        {documents &&
-          documents?.map((doc) => (
-            <ChakraLink
-              as={ReactRouterLink}
-              to={`/folders/${folderId}/${doc.id}`}
-              key={doc.id}
-            >
-              <GridItem>
-                <Document document={doc} />
-              </GridItem>
-            </ChakraLink>
-          ))}
+        {folder.documents.map((doc) => (
+          <ChakraLink
+            as={ReactRouterLink}
+            to={`/folders/${folderId}/${doc.id}`}
+            key={doc.id}
+          >
+            <GridItem>
+              <Document document={doc} />
+            </GridItem>
+          </ChakraLink>
+        ))}
       </Grid>
     </Box>
   );

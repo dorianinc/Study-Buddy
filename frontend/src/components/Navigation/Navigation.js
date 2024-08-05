@@ -3,22 +3,29 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton/ProfileButton";
 import LogoButton from "./LogoButton/LogoButton";
-import "./Navigation.css";
-import { Flex, Divider } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    // <Flex className="nav-bar">
-      <Flex justify="space-between" className="nav-bar-content" >
-        <NavLink exact to="/">
+    <Flex
+      justify="space-between"
+      borderBottom={"1px solid lightgrey"}
+      boxShadow={"sm"}
+      p={5}
+      bg={"blue.300"}
+    >
+      <NavLink exact to="/">
+        <Flex direction={"row"} align={"center"} gap={2}>
           <LogoButton />
-        </NavLink>
-        {/* {isLoaded && <ProfileButton user={sessionUser} />} */}
-        <ProfileButton user={sessionUser} />
-      </Flex>
-    // </Flex>
+          <Text fontFamily={"logo"} fontSize={30} color={"white"}>
+            Study Buddy
+          </Text>
+        </Flex>
+      </NavLink>
+      <ProfileButton user={sessionUser} />
+    </Flex>
   );
 }
 

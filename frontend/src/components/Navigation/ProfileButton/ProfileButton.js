@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../store/features/api";
 import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
-import { Button, ButtonGroup, Flex, Box, Container, Center } from "@chakra-ui/react";
+import {
+  Button,
+  Box,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 function ProfileButton({ user }) {
   const [logout] = useLogoutMutation();
@@ -43,78 +53,57 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
-  const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
+  // const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <Flex className="userMenu" >
-      {/* <Flex className="userButton"> */}
-        <Flex  onClick={openMenu} position="absolute" right="1rem" top="1rem" border="1px solid gray" borderRadius="5px" pr=".5rem" pl=".5rem" _hover={{
-          cursor: "pointer"
-        }}>
-          <Box className="menuIcon" pr="5px">
-            <i className="fa-solid fa-bars" />
-          </Box>
-          <Box className="userIcon" >
-            <i className="fas fa-user-circle" />
-          </Box>
-        {/* </Flex> */}
-      </Flex>
+    <Menu autoSelect={false}>
+      <MenuButton
+        as={Button}
+        rounded={"full"}
+        pt="1.5rem"
+        pb="1.5rem"
+        justifyContent="space-between"
+        align="center"
+        border="1px solid lightgrey"
+        _hover={{
+          cursor: "pointer",
+          boxShadow: "xl",
+        }}
+        onClick={openMenu}
+        leftIcon={<HamburgerIcon boxSize={5} />}
+        rightIcon={
+          <Avatar
+            name={user ? `${user.firstName} ${user.lastName}` : ""}
+            size="sm"
+          />
+        }
+      ></MenuButton>
       {showMenu && (
-        <Container className={dropdown} ref={ulRef} position="absolute" top="2.6rem" right="1rem" border="1px solid black" borderRadius="5px" w="min-content" bgColor="white">
+        <MenuList ref={ulRef} borderRadius={"15px"}>
           {user ? (
-            <div className="userInfo">
-              <div>
-                <p id="firstName">Hello, {user.firstName}</p>
-              </div>
-              <div>
-                <p id="email">{user.email}</p>
-              </div>
-              <hr className="line userMenu" />
-              <Link to="/options" onClick={closeMenu}>
-                <button className="modal-button auth">Options</button>
-              </Link>
-              <hr className="line userModal" />
-              <div>
-                <button className="modal-button auth" onClick={logoutUser}>
-                  Log Out
-                </button>
-              </div>
-            </div>
+            <>
+              <Box p={2}>Hello, {user.firstName}</Box>
+              <Box p={2}>{user.email}</Box>
+              <MenuDivider />
+              <MenuItem onClick={logoutUser}>Log Out</MenuItem>
+            </>
           ) : (
-            <div>
-              <ButtonGroup variant="link" colorScheme="black" pb="2px" pt="2px">
-                <Center flexDirection="column">
-
-              <div className="login">
-                <ModalButton
-                  buttonContent={
-                    <Button className="modal-button auth" >
-                      <p>Log In</p>
-                    </Button>
-                  }
-                  onButtonClick={closeMenu}
-                  modalComponent={<LoginFormModal />}
-                  />
-              </div>
-              <div children="signup">
-                <ModalButton
-                  className="modal-button auth"
-                  buttonContent={
-                    <Button className="modal-button auth">
-                      <p>Sign Up</p>
-                    </Button>
-                  }
-                  onButtonClick={closeMenu}
-                  modalComponent={<SignupFormModal />}
-                  />
-              </div>
-          </Center>
-                  </ButtonGroup>
-            </div>
+            <>
+              <ModalButton
+                buttonContent={<MenuItem>Log In</MenuItem>}
+                onButtonClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+              <ModalButton
+                buttonContent={<MenuItem>Sign Up</MenuItem>}
+                onButtonClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
+            </>
           )}
-        </Container>
+        </MenuList>
       )}
-    </Flex>
+    </Menu>
   );
 }
 

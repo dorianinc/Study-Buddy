@@ -119,9 +119,9 @@ const validateDocument = [
       }
 
       return true;
-    })
-    .exists({ checkFalsy: true })
-    .withMessage("File is required."),
+    }),
+    // .exists({ checkFalsy: true })
+    // .withMessage("File is required."),
 
   handleValidationErrors,
 ];

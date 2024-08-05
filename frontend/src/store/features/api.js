@@ -50,35 +50,11 @@ export const api = createApi({
       invalidatesTags: ["CurrentUser"],
     }),
     //Folders
-    getFolders: builder.mutation({
-      query: () => ({
-        url: "folders/",
-        method: "GET"
-      }),
-      providesTags: ["Folder"]
-    }),
     getOneFolder: builder.mutation({
       query: (folderId) => ({
         url: `folders/${folderId}`
       }),
       providesTags: ["Folder"]
-    }),
-    //Documents
-    createDoc: builder.mutation({
-      query: (formData, id) => ({
-        //hard coded url for testing purposes
-        url: `documents/`,
-        method: "POST",
-        body: formData,
-      }),
-      providesTags: ["Document"],
-    }),
-    deleteDoc: builder.mutation({
-      query: ({ user }) => ({
-        url: "documents/:docId/",
-        method: "DELETE",
-      }),
-      invalidatesTags: ["Document"]
     }),
     getFolders: builder.query({
       query: (user) => 'folders/',
@@ -91,6 +67,22 @@ export const api = createApi({
         body: { name, category }
       }),
       invalidatesTags: ["Folder"]
+    }),
+    //Documents
+    createDoc: builder.mutation({
+      query: ({ formData, folderId }) => ({
+        url: `documents/?folderId=${folderId}`,
+        method: "POST",
+        body: formData,
+      }),
+      providesTags: ["Document"],
+    }),
+    deleteDoc: builder.mutation({
+      query: ({ user }) => ({
+        url: "documents/:docId/",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Document"]
     }),
     getNotes: builder.query({
       query: (docId) => `/notes?docId=${docId}`,
@@ -113,6 +105,5 @@ export const {
   useGetFoldersQuery,
   useCreateFolderMutation,
   useGetNotesQuery,
-  useGetFoldersMutation,
   useGetOneFolderMutation
 } = api;

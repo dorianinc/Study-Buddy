@@ -13,7 +13,6 @@ import {
   restoreCSRF,
    csrfFetch
   } from "./store/csrf";
-import { ChakraProvider } from "@chakra-ui/react";
 
 if (process.env.NODE_ENV !== "production") {
   restoreCSRF();

@@ -2,12 +2,10 @@ import "./LogoButton.css"
 
 function LogoButton() {
     return (
-      <div className="logoContainer">
-          <img className ="logo" alt="potato"  src="/images/logos/potato.jpeg"/>
-          <p className="title">Potato</p>
-      </div>
+      <Box>
+          <Image boxSize="40px" className ="logo" alt="potato" src="/images/logos/paper-clip-svgrepo-com.svg"/>
+      </Box>
     );
   }
-  
+
   export default LogoButton;
-  

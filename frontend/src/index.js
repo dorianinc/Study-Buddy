@@ -5,6 +5,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { ModalProvider, Modal } from "./context/ModalContext";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme";
 
 import { store } from "./store/index";
 import {
@@ -25,9 +27,9 @@ function Root() {
     <ModalProvider>
       <Provider store={store}>
         <BrowserRouter>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
+          <ChakraProvider theme={theme}>
+            <App />
+          </ChakraProvider>
           <Modal />
         </BrowserRouter>
       </Provider>

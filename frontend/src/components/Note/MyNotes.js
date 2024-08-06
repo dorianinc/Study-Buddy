@@ -84,12 +84,12 @@ function MyNotes() {
 
           {isSuccess ?
             notes.map((note) => (
-              <div>
+              <div key={note.id}>
                 <div>{note.content}</div>
                 <hr />
                 <br />
               </div>
-            )) : 
+            )) :
             <div>{error?.message}</div>
             }
 

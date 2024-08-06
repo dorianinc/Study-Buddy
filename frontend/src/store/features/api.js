@@ -95,6 +95,32 @@ export const api = createApi({
       query: (docId) => `/notes?docId=${docId}`,
       providesTags: ["Note"]
     }),
+    getOneNote: builder.query({
+      query: (noteId) => `/notes/${noteId}`,
+      providesTags:["Note"]
+    }),
+    createNote: builder.mutation({
+      query: ({user,content,docId})=>({
+        url:`/notes?docId=${docId}`,
+        method:'POST',
+        body:{content}
+      }),
+      invalidatesTags:['Note']
+    }),
+    deleteNote: builder.mutation({
+      query: ({user,noteId})=>({
+        url: `/notes/${noteId}`,
+        method:'DELETE',
+      }),
+      invalidatesTags:["Note"]
+    }),
+    editNote : builder.mutation({
+      query: ({user,noteId,content})=>({
+        url:`/notes/${noteId}`,
+        method:'PUT',
+        body:{content}
+      })
+    })
   }),
 });
 
@@ -113,5 +139,9 @@ export const {
   useCreateFolderMutation,
   useGetNotesQuery,
   useGetFoldersMutation,
-  useGetOneFolderMutation
+  useGetOneFolderMutation,
+  useCreateNoteMutation,
+  useDeleteNoteMutation,
+  useEditNoteMutation,
+  useGetOneNoteQuery
 } = api;

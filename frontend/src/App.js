@@ -17,6 +17,7 @@ function App() {
     <div className="app-container">
       <Navigation />
       <DisplayDoc/>
+      {/* <MyNotes/> */}
       {user && (
         <div className="content-container">
           <Switch>

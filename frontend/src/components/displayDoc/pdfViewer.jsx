@@ -8,11 +8,7 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverBody,
-    PopoverFooter,
-    PopoverArrow,
-    PopoverCloseButton,
-    PopoverAnchor,
-    useDisclosure,
+    Text,
     Button,
     Icon,
     Textarea
@@ -28,6 +24,8 @@ import pdfUrl from './self-service-course-4-project-kiva-robot-remote-control.pd
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import { useCreateNoteMutation } from '../../store/features/api';
+import { useSelector } from 'react-redux';
 
 
 require('./pdfViewer.css')
@@ -38,6 +36,9 @@ const options = {
     standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts`,
 };
 function PdfViewer() {
+    const user = useSelector(state=>state.session.user)
+    const [noteError,setNoteError] = useState(false)
+    const [createNote] = useCreateNoteMutation()
     // const { isOpen, onToggle, onClose } = useDisclosure()
     const [numPages, setNumPages] = useState();
     const [pageNumber, setPageNumber] = useState(1);
@@ -71,7 +72,9 @@ function PdfViewer() {
     //     console.log('etnered')
     //     console.log(canvasRef.current,e)
     // })
-
+    useEffect(()=>{
+        if(note.length) setNoteError(false)
+    },[note])
 
     divRef.current?.addEventListener('mouseup', async (e) => {
         // console.log(e)
@@ -96,7 +99,7 @@ function PdfViewer() {
 
     function onDocumentLoadSuccess(pdf) {
         setNumPages(pdf._pdfInfo.numPages);
-        // setDoneLoading(true);
+
     }
 
 
@@ -161,6 +164,16 @@ function PdfViewer() {
         const { AIResponse } = await response.json()
         setNote(AIResponse)
     }
+
+    async function createNewNote(e){
+        e.preventDefault()
+        console.log('entered createing notes') // hardcoding doc ID for testig
+        if(!note.length) setNoteError(true)
+        else{
+            const docID = 1
+            await createNote({user,note,docID})
+        }
+    }
     return (
         <div>{pdfUrl &&
             <div className='doc-container'
@@ -215,13 +228,19 @@ function PdfViewer() {
                                     onClick={AIgenerate}
                                 >Create Note</Button>
                                 <PopoverBody>
-                                    <form>
+                                    <form
+                                        onSubmit={(e)=>{createNewNote(e)}}
+                                    >
                                         <Textarea
                                             placeholder='Add your notes or generate note from assistant'
                                             // value={AINote ? AINote : note}
                                             onChange={(e) => setNote(e.target.value)}
                                         />
-                                        <Button type="submit" disabled={!note}>Save Note</Button>
+                                        {noteError && <Text fontSize='sm' color='red'> Please add note </Text>}
+                                        <Button
+                                            type="submit"
+                                            disabled={!noteError}
+                                        >Save Note</Button>
                                     </form>
                                 </PopoverBody>
                             </PopoverContent>

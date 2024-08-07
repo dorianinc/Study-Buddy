@@ -89,6 +89,7 @@ router.delete("/:noteId", middleware, async (req, res) => {
       res.status(200).json({
         message: "Successfully deleted",
         statusCode: 200,
+        noteId: note.id // added noteId to update redux store with note id
       });
     }
   }

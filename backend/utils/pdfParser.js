@@ -16,7 +16,7 @@ async function parsePDF(buffer){
                 }
             }
             return textStr
-        })
+        }).catch(e=>e)
 
     return testing1
 

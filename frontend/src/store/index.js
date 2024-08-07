@@ -5,13 +5,15 @@ import folderSliceReducer from "./features/folderSlice";
 import documentSliceReducer from "./features/documentSlice";
 import { api } from "./features/api";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import noteSliceReducer from "./features/noteSlice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     session: sessionSliceReducer,
     folder: folderSliceReducer,
-    document: documentSliceReducer
+    document: documentSliceReducer,
+    note: noteSliceReducer
   },
   middleware: (getDefaultMiddleware) => {
     const middleware = getDefaultMiddleware().concat(api.middleware);

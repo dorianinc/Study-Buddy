@@ -4,6 +4,7 @@ const usersRouter = require("./users.js");
 const folderRouter = require("./folders.js")
 const docRouter = require("./documents.js")
 const notesRouter = require("./notes.js")
+const geminiAI = require('./geminiAi.js')
 const { restoreUser } = require("../../utils/auth.js");
 
 router.use(restoreUser);
@@ -13,5 +14,6 @@ router.use("/users", usersRouter);
 router.use("/folders", folderRouter)
 router.use("/documents", docRouter);
 router.use("/notes", notesRouter);
+router.use("/gemini",geminiAI);
 
 module.exports = router;

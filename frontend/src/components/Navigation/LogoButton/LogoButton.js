@@ -1,6 +1,5 @@
-import { Box, Image } from "@chakra-ui/react";
 import "./LogoButton.css"
-
+import { Box,Image } from "@chakra-ui/react";
 function LogoButton() {
     return (
       <Box>

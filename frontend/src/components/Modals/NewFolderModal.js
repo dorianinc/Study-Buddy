@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormErrorMessage,
   FormLabel,
@@ -9,15 +9,15 @@ import {
   Box,
   Select,
 } from "@chakra-ui/react";
+import { useModal } from "../../context/ModalContext";
 import { useCreateFolderMutation } from "../../store/features/api";
 
 function NewFolderModal() {
   const [folderName, setFolderName] = useState("");
   const [category, setCategory] = useState("");
-  const [formErrors, setFormErrors] = useState({});
-  const [createFolder, { error, isError, isLoading }] =
-    useCreateFolderMutation();
-
+  const [errors, setErrors] = useState({});
+  const [createFolder, { error, isError, isLoading }] = useCreateFolderMutation();
+  const { closeModal } = useModal();
   function createNewFolder(e) {
     e.preventDefault();
     const errs = {};
@@ -30,10 +30,11 @@ function NewFolderModal() {
     if (!category) errs.category = "Category is required";
 
     if (Object.values(errs).length) {
-      setFormErrors(errs);
-      return formErrors;
+      setErrors(errs);
+      return errors;
     } else {
       createFolder({ name: folderName, category: category });
+      closeModal()
     }
   }
 
@@ -45,14 +46,11 @@ function NewFolderModal() {
     <>
       <Box
         as="form"
-        onSubmit={createNewFolder}
         method="post"
-        display="flex"
-        flexDirection="column"
-        alignContent="center"
+        onSubmit={createNewFolder}
       >
-        {/* <FormControl onSubmit={createNewFolder}> */}
-          <FormLabel htmlFor="name">Folder name</FormLabel>
+        <FormControl display='flex' flexDirection='column'>
+          <FormLabel htmlFor="name" >Folder name</FormLabel>
           <Input
             id="name"
             placeholder="name"
@@ -60,14 +58,8 @@ function NewFolderModal() {
             value={folderName}
             onChange={(e) => setFolderName(e.target.value)}
           />
-          {/* <FormHelperText>
-            Enter the name you would like to give the folder
-          </FormHelperText> */}
-          <FormErrorMessage>
-            {formErrors.folderName && formErrors.folderName}
-          </FormErrorMessage>
-
-          <FormLabel>Category</FormLabel>
+          <Box color='red' minH='12px' maxH='12px' fontSize='14px'>{errors.folderName}</Box>
+          <FormLabel mt={5}>Category</FormLabel>
           <Select
             placeholder="Select an option"
             variant="outline"
@@ -79,16 +71,11 @@ function NewFolderModal() {
             <option>History</option>
             <option>Literature</option>
           </Select>
-          {/* <FormHelperText>Select a category for your folder</FormHelperText> */}
-          {/* <FormLabel htmlFor="name">Category</FormLabel>
-          <Input id="category" placeholder="category" value={category} onChange={(e) => setCategory(e.target.value)}/> */}
-          <FormErrorMessage>
-            {/* {errors.name && errors.name.message} */}
-          </FormErrorMessage>
-          <Button mt={4} colorScheme="teal" isLoading={isLoading} type="submit">
+          <Box color='red' minH='12px' maxH='12px' fontSize='14px'>{errors.category}</Box>
+          <Button mt={5} colorScheme="teal" isLoading={isLoading} type="submit">
             Create Folder
           </Button>
-        {/* </FormControl> */}
+        </FormControl>
       </Box>
     </>
   );

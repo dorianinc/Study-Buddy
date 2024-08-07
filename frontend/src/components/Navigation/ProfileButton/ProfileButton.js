@@ -25,9 +25,9 @@ function ProfileButton({ user }) {
 
   const history = useHistory();
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
+  const openMenu = (e) => {
+    e.stopPropagation();
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {

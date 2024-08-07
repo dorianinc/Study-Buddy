@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProfileButton from "./ProfileButton/ProfileButton";
-import LogoButton from "./LogoButton/LogoButton";
+import ProfileButton from "./ProfileButton";
+import LogoButton from "./LogoButton";
 import { Flex, Text } from "@chakra-ui/react";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
+
 
   return (
     <Flex
@@ -16,7 +17,7 @@ function Navigation() {
       p={5}
       bg={"blue.300"}
     >
-      <NavLink exact to="/">
+      <NavLink  to="/">
         <Flex direction={"row"} align={"center"} gap={2}>
           <LogoButton />
           <Text fontFamily={"logo"} fontSize={30} color={"white"}>

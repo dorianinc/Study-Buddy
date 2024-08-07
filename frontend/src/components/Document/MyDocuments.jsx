@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
-import DocumentUpload from "../DocumentPageTest/DocumentPageTest";
 import { useGetOneFolderMutation } from "../../store/features/api";
 import { useSelector } from "react-redux";
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";

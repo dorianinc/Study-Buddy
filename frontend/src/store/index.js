@@ -3,9 +3,9 @@ import logger from "redux-logger";
 import sessionSliceReducer from "./features/sessionSlice";
 import folderSliceReducer from "./features/folderSlice";
 import documentSliceReducer from "./features/documentSlice";
+import noteSliceReducer from "./features/noteSlice";
 import { api } from "./features/api";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import noteSliceReducer from "./features/noteSlice";
 
 export const store = configureStore({
   reducer: {

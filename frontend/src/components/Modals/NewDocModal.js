@@ -7,6 +7,7 @@ import {
   Button,
   FormHelperText,
   Box,
+  Container,
 } from "@chakra-ui/react";
 import { useCreateDocMutation } from "../../store/features/api";
 
@@ -23,8 +24,9 @@ function NewDocModal({ folderId }) {
 
     const errs = {};
 
-    if (!docName) errs.docName = "Please include a name for the document"
-    if (!file) errs.file = "Please upload a pdf file"
+    if (!docName) errs.docName = "Document name is required";
+    if (docName.length > 25) errs.docName = "Name cannot exceed 25 characters";
+    if (!file) errs.file = "Please upload a pdf file";
     if (Object.values(errs).length) {
       setErrors(errs);
       return errors;
@@ -34,13 +36,13 @@ function NewDocModal({ folderId }) {
     formData.append("theFile", file);
     formData.append("name", docName);
     formData.append("fileType", fileType);
-    // formData.append("folderId", folderId)
     createDoc({ formData, folderId });
   };
 
   if (isError) {
     console.log("ERROR", error);
   }
+
   return (
     <>
       <Box
@@ -49,8 +51,9 @@ function NewDocModal({ folderId }) {
         method="post"
         encType="multipart/form-data"
         action="/documents"
+        width="220px"
       >
-        <FormControl>
+        <FormControl display="flex" flexDirection="column">
           <FormLabel htmlFor="name">Document name</FormLabel>
           <Input
             id="name"
@@ -59,24 +62,32 @@ function NewDocModal({ folderId }) {
             value={docName}
             onChange={(e) => setDocName(e.target.value)}
           />
-          <FormLabel htmlFor="uploaded_file">Upload a File</FormLabel>
-          <Box color='red' >
-            {errors.docName }
-          </Box>
+          <Container
+            className="form-errors"
+          >
+            {errors.docName}
+          </Container>
+          <FormLabel mt={5} htmlFor="uploaded_file">
+            Upload a File
+          </FormLabel>
           <Input
+            margin={1}
             id="uploaded_file"
             name="uploaded_file"
             type="file"
             accept=".pdf"
             onChange={(e) => setFile(e.target.files[0])}
           />
-          <Box color='red'>
+          <FormHelperText>Select a pdf file to upload</FormHelperText>
+          <Container
+            className="form-errors"
+          >
             {errors.file}
-          </Box>
+          </Container>
+          <button type="submit" className="submitBtn">
+            Submit
+          </button>
         </FormControl>
-        <Button mt={4} colorScheme="teal" isLoading={isLoading} type="submit">
-          Submit
-        </Button>
       </Box>
     </>
   );

@@ -18,6 +18,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const Root = () => {
+
+  // keeps this random error prompt from popping up when we resize the the pdf viewer
   useEffect(() => {
     const handleError = (e) => {
       if (

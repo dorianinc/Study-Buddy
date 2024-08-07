@@ -9,10 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
 
 import { store } from "./store/index";
-import {
-  restoreCSRF,
-   csrfFetch
-  } from "./store/csrf";
+import { restoreCSRF, csrfFetch } from "./store/csrf";
 
 if (process.env.NODE_ENV !== "production") {
   restoreCSRF();

@@ -6,7 +6,7 @@ const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { doesNotExist } = require("../../utils/helpers.js");
 const { transactionHandler } = require("../../utils/transaction.js");
 const { validateDocument } = require("../../utils/validation.js");
-const { Folder, Document, Note } = require("../../db/models");
+const { Folder, Document, Note,Highlight } = require("../../db/models");
 const { handleMulterFile, uploadAWSFile, deleteAWSFile } = require("../../awsS3.js");
 const { environment } = require("../../config");
 const isTesting = environment === "test";
@@ -63,9 +63,12 @@ router.get("/", middleware, async (req, res) => {
 // Get a single Document based off id
 middleware = [restoreUser, requireAuth];
 router.get("/:docId", middleware, async (req, res) => {
-  const doc = await Document.findByPk(req.params.docId, { raw: true });
+  console.log('this is docid',req.params.docId)
+  const doc = await Document.findByPk(req.params.docId,{
+    include:{model:Highlight}
+  });
 
-  // check to see if note exists before creating note
+  // check to see if note exists before creating notes
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else res.status(200).json(doc);
 });

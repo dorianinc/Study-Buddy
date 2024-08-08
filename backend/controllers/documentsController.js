@@ -55,8 +55,9 @@ const getDocuments = async (req, res) => {
 // Get a single Document based off id
 const getSingleDocument = async (req, res) => {
   const doc = await Document.findByPk(req.params.docId, { raw: true });
-  const annotations = await getAnnotations(null, null, doc.id)
-  doc.annotations = annotations
+  const annotations = await getAnnotations(null, null, doc.id);
+  doc.annotations = annotations;
+  
   // check to see if note exists before creating note
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else res.status(200).json(doc);

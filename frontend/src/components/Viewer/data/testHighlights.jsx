@@ -41,7 +41,7 @@ export const testHighlights = {
     },
     {
       id: "7523977432979492",
-      comment: null,
+      comment: "potato",
       content: {
         type: "text",
         text: " Frequently used instruments to evaluate code quality are code smells, i.e., indicators of low code quality which may impact maintainability ",
@@ -89,6 +89,7 @@ export const testHighlights = {
     },
     {
       type: "text",
+      comment: "cheese",
       content: {
         text: "We examined a total of 604 repositories (299 JS, 305 TS) with over 16M lines of code.",
       },

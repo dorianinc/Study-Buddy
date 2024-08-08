@@ -44,6 +44,7 @@ const getAnnotations = async (req, res, docId = null) => {
     user = { req };
     docId = req.query.docId;
   }
+
   const annotations = await Annotation.findAll({
     where: { docId },
     raw: true,

@@ -21,11 +21,11 @@ router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) 
   // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
     if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
-  const summary = generateRes(
+  const summary = await generateRes(
     "summarize this text in 14 sentences",
     pdfText
   );
-
+  console.log("SUMMARY: ", summary, "TYPE: ", typeof summary)
   const { user } = req;
   const { name, fileType } = req.body;
   const fileUrl = await uploadAWSFile(req.file);

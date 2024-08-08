@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
-import Document from "../Documents";
+import Document from "../DocumentIcon/DocumentIcon";
 import NewDocButton from "./newDocumentBtn";
 import ModalButton from "../Modals/ModalButton";
 
@@ -26,23 +26,29 @@ function MyDocuments() {
   return (
     <Box>
       <h1>Documents Page</h1>
-      <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20}>
-        <ModalButton
-        buttonContent={<NewDocButton/>}
-        modalComponent={<NewDocModal folderId={folderId}/>}
-        />
-        {documents &&
-          documents?.map((doc) => (
-            <ChakraLink
-              as={ReactRouterLink}
-              to={`/folders/${folderId}/${doc.id}`}
-              key={doc.id}
-            >
-              <GridItem>
+      <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20} border='1px solid green' alignItems='center'>
+        <GridItem w='fit-content'>
+          <ModalButton
+            buttonContent={<NewDocButton />}
+            modalComponent={<NewDocModal folderId={folderId} />}
+          />
+        </GridItem>
+        {documents.length ?
+          (documents?.map((doc) => (
+            <GridItem
+              key={doc.id} display='flex' w='fit-content' justifyContent='center' pt={0}>
+              <ChakraLink
+                as={ReactRouterLink}
+                to={`/folders/${folderId}/${doc.id}`}
+
+              >
                 <Document document={doc} />
-              </GridItem>
-            </ChakraLink>
-          ))}
+              </ChakraLink>
+            </GridItem>
+          ))) :
+          <>
+            <h1>No documents have been uploaded. Click on the plus button to get started!</h1>
+          </>}
       </Grid>
     </Box>
   );

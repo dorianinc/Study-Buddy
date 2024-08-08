@@ -85,7 +85,7 @@ function NewDocModal({ folderId }) {
             {errors.file}
           </Container>
           <button type="submit" className="submitBtn">
-            Submit
+            Upload Document
           </button>
         </FormControl>
       </Box>

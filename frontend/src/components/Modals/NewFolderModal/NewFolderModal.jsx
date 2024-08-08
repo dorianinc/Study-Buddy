@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FormErrorMessage,
   FormLabel,
@@ -7,20 +7,19 @@ import {
   Button,
   FormHelperText,
   Box,
-  Select,
-  Container,
+  Container
 } from "@chakra-ui/react";
 import { useModal } from "../../../context/ModalContext";
 import { useCreateFolderMutation } from "../../../store/features/api";
-import "./NewFolderModal.css";
+import './NewFolderModal.css'
 
 function NewFolderModal() {
   const [folderName, setFolderName] = useState("");
   const [category, setCategory] = useState("");
   const [errors, setErrors] = useState({});
-  const [createFolder, { error, isError, isLoading }] =
-    useCreateFolderMutation();
+  const [createFolder, { error, isError, isLoading }] = useCreateFolderMutation();
   const { closeModal } = useModal();
+
   function createNewFolder(e) {
     e.preventDefault();
     const errs = {};
@@ -47,7 +46,6 @@ function NewFolderModal() {
   if (isError) {
     console.log("ERROR", error);
   }
-
   return (
     <>
       <Box as="form" method="post" onSubmit={createNewFolder} width="220px">
@@ -58,6 +56,8 @@ function NewFolderModal() {
               id="name"
               placeholder="name"
               size="lg"
+              border="1px solid lightgray"
+              borderRadius="5px"
               value={folderName}
               onChange={(e) => setFolderName(e.target.value)}
             />

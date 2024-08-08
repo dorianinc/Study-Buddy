@@ -10,19 +10,19 @@ const annotationSeeds = () => {
     {
       id: "32604966305545835",
       authorId: 10,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docId: 1,
       comment: "Better code!",
     },
     {
       id: "7523977432979492",
       authorId: 10,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docId: 1,
       comment: "This is a test...",
     },
     {
       id: "9298580906684795",
       authorId: 10,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docId: 1,
       comment: "That's alot of repo's",
     },
   ];

@@ -17,8 +17,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      docUrl: {
-        type: Sequelize.STRING,
+      docId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       comment: {

@@ -1,16 +1,9 @@
-const express = require("express");
-const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { doesNotExist } = require("../../utils/helpers.js");
-const { Document, Annotation } = require("../../db/models");
-const { validateNote } = require("../../utils/validation.js");
-const { transactionHandler } = require("../../utils/transaction.js");
-
-const router = express.Router();
-let middleware = [];
+const { isAuthorized } = require("../utils/auth");
+const { doesNotExist } = require("../utils/helpers.js");
+const { Document, Annotation } = require("../db/models");
 
 // Create a annotation
-middleware = [restoreUser, requireAuth, validateNote, transactionHandler];
-router.post("/", middleware, async (req, res) => {
+const createAnnotation = async () => {
   const { user } = req;
   const { content } = req.body;
   const doc = await Document.findByPk(req.query.docId, { raw: true });
@@ -32,35 +25,32 @@ router.post("/", middleware, async (req, res) => {
       });
     }
   }
-});
+};
 
 // Get all Annotations of specific document
-middleware = [restoreUser, requireAuth];
-router.get("/", middleware, async (req, res) => {
-  /*
+const getAnnotations = async (req, res) => {
+  const { user } = req;
+  const annotations = await Annotation.findAll({
+    where: {docId: req.query.docId}, raw: true})
 
-  allHilights = {
-  singleDocumentHighlights: [
-  id: string
-  comment: "this can be anythign"
-  content: {
-    type: "text"
-    text: "random text highlighted from pdf"
-  }
-  or
-  content: {
-    type: "area"
-    image: "data:image/png....."
-  }
-    
-  ] 
-  }
-  */
-});
+    annotations.array.forEach(annotations => {
+      
+    });
+  console.log("🖥️  annotations: ", annotations)
+  res.status(200).json(annotations)
+}
 
 // Update a single Annotation based off id
-middleware = [restoreUser, requireAuth, validateNote, transactionHandler];
-router.put("/:noteId", middleware, async (req, res) => {
+const getSingleAnnotation = async () => {
+  const annotation = await Annotation.findByPk(req.params.docId, { raw: true });
+
+  // check to see if note exists before creating note
+  if (!annotation) res.status(404).json(doesNotExist("Document"));
+  else res.status(200).json(annotation);
+};
+
+// Update a single Annotation based off id
+const updateAnnotation = async () => {
   const { user } = req;
   const annotation = await Annotation.findByPk(req.params.noteId);
 
@@ -75,11 +65,10 @@ router.put("/:noteId", middleware, async (req, res) => {
       res.status(200).json(annotation);
     }
   }
-});
+};
 
 // Delete a Single Annotation based of id
-middleware = [restoreUser, requireAuth, transactionHandler];
-router.delete("/:noteId", middleware, async (req, res) => {
+const deleteAnnotation = async () => {
   const { user } = req;
   const annotation = await Annotation.findByPk(req.params.noteId);
 
@@ -90,10 +79,16 @@ router.delete("/:noteId", middleware, async (req, res) => {
       res.status(200).json({
         message: "Successfully deleted",
         statusCode: 200,
-        noteId: annotation.id 
+        noteId: annotation.id,
       });
     }
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  createAnnotation,
+  getAnnotations,
+  getSingleAnnotation,
+  updateAnnotation,
+  deleteAnnotation
+}

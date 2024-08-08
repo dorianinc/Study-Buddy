@@ -5,8 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Annotation extends Model {
     static associate(models) {
       Annotation.belongsTo(models.Document, {
-        foreignKey: "docUrl",
-        targetKey: "fileUrl",
+        foreignKey: "docId",
       });
       Annotation.belongsTo(models.User, { foreignKey: "authorId" });
       Annotation.hasMany(models.Content, {
@@ -31,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      docUrl: {
-        type: DataTypes.STRING,
+      docId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       comment: {

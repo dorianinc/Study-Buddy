@@ -12,8 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true,
       });
       Document.hasMany(models.Annotation, {
-        foreignKey: "docUrl", // The key in Annotation
-        sourceKey: "fileUrl", // The key in Document
+        foreignKey: "docId", // The key in Annotation
         onDelete: "CASCADE",
         hooks: true,
       });

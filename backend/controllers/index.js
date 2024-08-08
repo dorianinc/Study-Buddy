@@ -3,6 +3,7 @@ const usersController = require("./usersController");
 const documentsController = require("./documentsController");
 const foldersController = require("./foldersController")
 const notesController = require("./notesController");
+const annotationsController = require("./annotationsController")
 
 module.exports = {
   sessionsController,
@@ -10,4 +11,5 @@ module.exports = {
   foldersController,
   docsController: documentsController,
   notesController,
+  annotationsController
 };

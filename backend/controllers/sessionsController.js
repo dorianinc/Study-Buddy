@@ -53,7 +53,7 @@ const loginUser = async (req, res, next) => {
 };
 
 // Restore session user
-const restoreUser = async () => {
+const restoreUser = async (req, res) => {
   const { user, token } = req;
   if (user) {
     const safeUser = {

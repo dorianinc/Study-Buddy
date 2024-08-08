@@ -6,7 +6,7 @@ import Sidebar from "./utilities/Sidebar";
 import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
-import { testHighlights as _testHighlights } from "./data/testHighlights";
+import { testHighlights as _testHighlights } from "./data/testHighlights-1";
 
 const TEST_HIGHLIGHTS = _testHighlights;
 const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
@@ -78,11 +78,11 @@ const Viewer = () => {
 
   return (
     <div className="App" style={{ display: "flex", height: "100vh" }}>
-      {/* <Sidebar
+      <Sidebar
         highlights={highlights}
         resetHighlights={resetHighlights}
         toggleDocument={toggleDocument}
-      /> */}
+      />
       <div
         style={{
           height: "100vh",

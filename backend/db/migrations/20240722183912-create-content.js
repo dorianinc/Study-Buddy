@@ -1,35 +1,34 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
+
+let options = {};
+if (process.env.NODE_ENV === "production") {
+  options.schema = process.env.SCHEMA; // define your schema in options object
+}
+
 module.exports = {
-  up: async (queryInterface, Sequelize) =>  {
-    await queryInterface.createTable("Documents", {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable("Contents", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      annotationId: {
         type: Sequelize.STRING,
-      },
-      authorId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
       },
-      folderId: {
-        type: Sequelize.INTEGER,
-      },
-      fileUrl: {
-        allowNull: false,
+      type: {
         type: Sequelize.STRING,
-      },
-      fileType: {
         allowNull: false,
-        type: Sequelize.STRING,
       },
-      summary: {
-        allowNull: false,
+      text: {
         type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +41,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Documents");
+    await queryInterface.dropTable("Contents");
   },
 };

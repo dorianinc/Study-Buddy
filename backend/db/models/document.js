@@ -1,10 +1,9 @@
 "use strict";
-const { Model, Validator } = require("sequelize");
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Document extends Model {
     static associate(models) {
-      // define association here
       Document.belongsTo(models.Folder, { foreignKey: "folderId" });
       Document.belongsTo(models.User, { foreignKey: "authorId" });
       Document.hasMany(models.Note, {
@@ -12,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
-      Document.hasMany(models.Highlight, {
-        foreignKey: "docUrl",
+      Document.hasMany(models.Annotation, {
+        foreignKey: "docUrl", // The key in Annotation
+        sourceKey: "fileUrl", // The key in Document
         onDelete: "CASCADE",
         hooks: true,
       });
@@ -26,10 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: {
-            args: true,
-            msg: "Document name is required.",
-          },
+          notNull: { msg: "Document name is required." },
           len: {
             args: [1, 25],
             msg: "Document name must be between 1 and 25 characters long.",
@@ -40,61 +37,38 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notNull: {
-            args: true,
-            msg: "Author ID is required.",
-          },
-          isInt: {
-            args: true,
-            msg: "Author ID must be an integer.",
-          },
+          notNull: { msg: "Author ID is required." },
+          isInt: { msg: "Author ID must be an integer." },
         },
       },
       folderId: {
         type: DataTypes.INTEGER,
         validate: {
-          isInt: {
-            args: true,
-            msg: "Folder ID must be an integer.",
-          },
+          isInt: { msg: "Folder ID must be an integer." },
         },
       },
       fileUrl: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
-          notNull: {
-            args: true,
-            msg: "File URL is required.",
-          },
-          isUrl: {
-            args: true,
-            msg: "File URL must be a valid URL.",
-          },
+          notNull: { msg: "File URL is required." },
+          isUrl: { msg: "File URL must be a valid URL." },
         },
       },
       fileType: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: {
-            args: true,
-            msg: "File type is required.",
-          },
-          isIn: {
-            args: [["pdf"]], // Adjust the file types as needed
-            msg: "File type must be pdf.",
-          },
+          notNull: { msg: "File type is required." },
+          isIn: { args: [["pdf"]], msg: "File type must be pdf." },
         },
       },
       summary: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: {
-            args: true,
-            msg: "Summary is required.",
-          },
+          notNull: { msg: "Summary is required." },
           len: {
             args: [1, 1000],
             msg: "Summary must be between 1 and 1000 characters long.",
@@ -105,6 +79,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Document",
+      defaultScope: {
+        attributes: {
+          // exclude: ["createdAt", "updatedAt"],
+        },
+      },
     }
   );
 

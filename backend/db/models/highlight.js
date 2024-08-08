@@ -1,130 +1,62 @@
 "use strict";
-const { Model} = require("sequelize");
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Highlight extends Model {
     static associate(models) {
-      Highlight.belongsTo(models.Document, {
-        foreignKey: "docUrl",
-      });
+      Highlight.belongsTo(models.Annotation, { foreignKey: "annotationId" });
     }
   }
 
   Highlight.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "ID is required.",
-          },
-        },
+      },
+      annotationId: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       type: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Type is required.",
-          },
-        },
       },
-      contentText: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      comment: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      boundingRectX1: {
+      x1: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect X1 is required.",
-          },
-        },
       },
-      boundingRectY1: {
+      y1: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect Y1 is required.",
-          },
-        },
       },
-      boundingRectX2: {
+      x2: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect X2 is required.",
-          },
-        },
       },
-      boundingRectY2: {
+      y2: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect Y2 is required.",
-          },
-        },
       },
-      boundingRectWidth: {
+      height: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect Width is required.",
-          },
-        },
       },
-      boundingRectHeight: {
+      width: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect Height is required.",
-          },
-        },
       },
-      boundingRectPageNumber: {
+      page: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Bounding Rect Page Number is required.",
-          },
-        },
-      },
-      docUrl: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Document URL is required.",
-          },
-        },
       },
     },
     {
       sequelize,
       modelName: "Highlight",
+      tableName: "Highlights",
     }
   );
 

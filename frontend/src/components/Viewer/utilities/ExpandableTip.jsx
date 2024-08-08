@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import CommentForm from "./CommentForm";
-import { usePdfHighlighterContext } from "react-pdf-highlighter-extended";
+import { usePdfHighlighterContext} from "react-pdf-highlighter-extended";
 import "../styles/ExpandableTip.css";
 
-const ExpandableTip = ({ addHighlight }) => {
+const ExpandableTip = ({ addHighlight,docId }) => {
   const [compact, setCompact] = useState(true);
   const selectionRef = useRef(null);
 
@@ -14,9 +14,12 @@ const ExpandableTip = ({ addHighlight }) => {
     updateTipPosition,
   } = usePdfHighlighterContext();
 
+
   useLayoutEffect(() => {
     updateTipPosition();
   }, [compact]);
+
+
 
   return (
     <div className="Tip">
@@ -47,6 +50,8 @@ const ExpandableTip = ({ addHighlight }) => {
             removeGhostHighlight();
             setTip(null);
           }}
+          selectedContent={selectionRef}
+          docId={docId}
         />
       )}
     </div>

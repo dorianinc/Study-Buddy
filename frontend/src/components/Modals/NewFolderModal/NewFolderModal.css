@@ -16,9 +16,8 @@
 }
 
 .form-errors{
-  max-width: 220px;
   color: red;
   min-height: 12px;
   max-height: 12px;
-  font-size: 14px;
+  font-size: 13px;
 }

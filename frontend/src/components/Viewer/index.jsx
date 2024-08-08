@@ -7,16 +7,23 @@ import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
+import { useGetOneDocQuery } from "../../store/features/api";
+import { useParams } from 'react-router-dom';
 
 const TEST_HIGHLIGHTS = _testHighlights;
 const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
 const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
 
 const Viewer = () => {
+  const {docId} = useParams()
+  const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  const [highlights, setHighlights] = useState(
-    TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
-  );
+  console.log('this is document',documents)
+  // const [url,setUrl] = useState(documents.fileUrl)
+  // const [highlights, setHighlights] = useState(
+  //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
+  // );
+  const [highlights,setHighlights] = useState(documents?.Highlights ?? [] )
   const currentPdfIndexRef = useRef(0);
   const [contextMenu, setContextMenu] = useState(null);
   const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
@@ -108,7 +115,7 @@ const Viewer = () => {
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
-              selectionTip={<ExpandableTip addHighlight={addHighlight} />} // Component will render as a tip upon any selection
+              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents.id}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
               {/* User-defined HighlightContainer component goes here */}

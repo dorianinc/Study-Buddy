@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../../store/features/api";
 import ModalButton from "../../Modals/ModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
-import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
+import SignupFormModal from "../../Modals/SignupFormModal";
 import "./ProfileButton.css";
 import {
   Button,

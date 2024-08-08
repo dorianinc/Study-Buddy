@@ -90,7 +90,7 @@ function MyNotes() {
                 <hr />
                 <br />
               </div>
-            )) : 
+            )) :
             <div>{error?.message}</div>
             }
 

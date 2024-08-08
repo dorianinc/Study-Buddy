@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       Highlight.belongsTo(models.Document, {
         foreignKey: "docUrl",
       });
+
+      Highlight.hasOne(models.Note)
     }
   }
 

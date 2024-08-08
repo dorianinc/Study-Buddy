@@ -6,30 +6,36 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const annotationSeeds = () => {
-  return [
+  const baseAnnotations = [
     {
-      id: "32604966305545835",
-      authorId: 10,
-      docId: 1,
-      docUrl: "https://tinyurl.com/ynnxvva9",
       comment: "Better code!",
     },
     {
-      id: "7523977432979492",
-      authorId: 10,
-      docId: 1,
-      docUrl: "https://tinyurl.com/ynnxvva9",
       comment: "This is a test...",
     },
     {
-      id: "9298580906684795",
-      authorId: 10,
-      docId: 1,
-      docUrl: "https://tinyurl.com/ynnxvva9",
-      comment: "That's alot of repo's",
+      comment: "That's a lot of repo's",
     },
   ];
+
+  const seeds = [];
+
+  for (let docId = 1; docId <= 10; docId++) {
+    baseAnnotations.forEach((annotation, index) => {
+      const uniqueId = `${docId}-${index + 1}`;
+      seeds.push({
+        id: uniqueId,
+        authorId: 10,
+        docUrl: "https://tinyurl.com/ynnxvva9",
+        docId: docId,
+        comment: annotation.comment,
+      });
+    });
+  }
+
+  return seeds;
 };
+
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

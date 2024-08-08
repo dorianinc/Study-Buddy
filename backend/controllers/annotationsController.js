@@ -1,51 +1,90 @@
 const { isAuthorized } = require("../utils/auth");
 const { doesNotExist } = require("../utils/helpers.js");
-const { Document, Annotation } = require("../db/models");
+const {
+  Annotation,
+  Content,
+  HighlightBox,
+  Highlight,
+} = require("../db/models");
 
 // Create a annotation
 const createAnnotation = async () => {
-  const { user } = req;
-  const { content } = req.body;
-  const doc = await Document.findByPk(req.query.docId, { raw: true });
-
-  // check to see if document exists before creating annotation
-  if (!doc) res.status(404).json(doesNotExist("Document"));
-  else {
-    if (isAuthorized(user.id, doc.authorId, res)) {
-      const newNote = await Annotation.create({
-        content,
-        docId: doc.id,
-        authorId: user.id,
-      });
-      res.status(200).json(newNote);
-    } else {
-      res.status(403).json({
-        message: "Forbidden",
-        statusCode: 403,
-      });
-    }
-  }
+  // const { user } = req;
+  // const { content } = req.body;
+  // const doc = await Document.findByPk(req.query.docId, { raw: true });
+  // const project = await HighlightBox.findOne({
+  //   where: { annotationId: "My Title" },
+  // });
+  // // check to see if document exists before creating annotation
+  // if (!doc) res.status(404).json(doesNotExist("Document"));
+  // else {
+  //   if (isAuthorized(user.id, doc.authorId, res)) {
+  //     const newNote = await Annotation.create({
+  //       content,
+  //       docId: doc.id,
+  //       authorId: user.id,
+  //     });
+  //     res.status(200).json(newNote);
+  //   } else {
+  //     res.status(403).json({
+  //       message: "Forbidden",
+  //       statusCode: 403,
+  //     });
+  //   }
+  // }
 };
 
-// Get all Annotations of specific document
-const getAnnotations = async (req, res) => {
-  const { user } = req;
-  const annotations = await Annotation.findAll({
-    where: {docId: req.query.docId}, raw: true})
+// add docUrl to annotation
+// create option where you can get annotions through query or direct parameter
 
-    annotations.array.forEach(annotations => {
-      
+// Get all Annotations of specific document
+const getAnnotations = async (req, res, docId = null) => {
+  let user;
+  if (req) {
+    user = { req };
+    docId = req.query.docId;
+  }
+  const annotations = await Annotation.findAll({
+    where: { docId },
+    raw: true,
+  });
+  const docUrl = annotations[0].docUrl;
+
+  for (let i = 0; i < annotations.length; i++) {
+    const annotation = annotations[i];
+    annotation.position = {};
+    const content = await Content.findOne({
+      where: { annotationId: annotation.id },
+      raw: true,
     });
-  console.log("🖥️  annotations: ", annotations)
-  res.status(200).json(annotations)
-}
+    const highlightBox = await HighlightBox.findOne({
+      where: { annotationId: annotation.id },
+      raw: true,
+    });
+
+    const highlights = await Highlight.findAll({
+      where: { annotationId: annotation.id },
+      raw: true,
+    });
+
+    annotation.content = content;
+    annotation.position.boundingRect = highlightBox;
+    annotation.position.rects = highlights;
+  }
+
+  if (req) {
+    res.status(200).json({ [docUrl]: [...annotations] });
+  } else {
+    return { [docUrl]: [...annotations] };
+  }
+};
 
 // Update a single Annotation based off id
 const getSingleAnnotation = async () => {
   const annotation = await Annotation.findByPk(req.params.docId, { raw: true });
 
   // check to see if note exists before creating note
-  if (!annotation) res.status(404).json(doesNotExist("Document"));
+  if (!annotation) res.status(404).json(doesNotExist("Annotation"));
   else res.status(200).json(annotation);
 };
 
@@ -90,5 +129,5 @@ module.exports = {
   getAnnotations,
   getSingleAnnotation,
   updateAnnotation,
-  deleteAnnotation
-}
+  deleteAnnotation,
+};

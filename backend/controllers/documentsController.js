@@ -5,6 +5,7 @@ const { doesNotExist } = require("../utils/helpers.js");
 const { Folder, Document, Note } = require("../db/models");
 const { uploadAWSFile, deleteAWSFile } = require("../awsS3.js");
 const { environment } = require("../config");
+const { getAnnotations } = require("./annotationsController.js");
 const isTesting = environment === "test";
 
 // Create a Document
@@ -51,9 +52,10 @@ const getDocuments = async (req, res) => {
 };
 
 // Get a single Document based off id
-const getSingleDocument = async () => {
+const getSingleDocument = async (req, res) => {
   const doc = await Document.findByPk(req.params.docId, { raw: true });
-
+  const annotations = await getAnnotations(null, null, doc.id)
+  doc.annotations = annotations
   // check to see if note exists before creating note
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else res.status(200).json(doc);

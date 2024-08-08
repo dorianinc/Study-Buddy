@@ -1,15 +1,15 @@
-const sessionsController = require("./sessionsController")
-const usersController = require("./usersController");
-const documentsController = require("./documentsController");
-const foldersController = require("./foldersController")
-const notesController = require("./notesController");
-const annotationsController = require("./annotationsController")
+const session = require("./sessionsController")
+const user = require("./usersController");
+const document = require("./documentsController");
+const folder = require("./foldersController")
+const note = require("./notesController");
+const annotation = require("./annotationsController")
 
 module.exports = {
-  sessionsController,
-  usersController,
-  foldersController,
-  docsController: documentsController,
-  notesController,
-  annotationsController
+  session,
+  user,
+  folder,
+  document,
+  note,
+  annotation
 };

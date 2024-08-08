@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "HighlightBox",
       defaultScope: {
         attributes: {
-          // exclude: ["createdAt", "updatedAt"],
+          exclude: ["createdAt", "updatedAt", "annotationId"],
         },
       },
     }

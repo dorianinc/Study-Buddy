@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      docUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       comment: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -44,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Annotation",
       defaultScope: {
         attributes: {
-          // exclude: ["createdAt", "updatedAt"],
+          exclude: ["authorId", "docId"],
         },
       },
     }

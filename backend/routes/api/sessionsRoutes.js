@@ -1,17 +1,17 @@
 const express = require("express");
 const { validateLogin } = require("../../utils/validation");
 const { restoreUser } = require("../../utils/auth");
-const { sessionsController } = require("../../controllers");
+const { session } = require("../../controllers");
 
 const router = express.Router();
 
 // Log in
-router.post("/", validateLogin, sessionsController.loginUser);
+router.post("/", validateLogin, session.loginUser);
 
 // Restore session user
-router.get("/", restoreUser, sessionsController.restoreUser);
+router.get("/", restoreUser, session.restoreUser);
 
 // logout user
-router.delete("/", sessionsController.logoutUser);
+router.delete("/", session.logoutUser);
 
 module.exports = router;

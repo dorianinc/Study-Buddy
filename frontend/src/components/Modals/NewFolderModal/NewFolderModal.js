@@ -63,22 +63,20 @@ function NewFolderModal() {
             />
             <Container className="form-errors">{errors.folderName}</Container>
           </FormLabel>
-          <FormLabel mt={5}>
-            Category
-            <select
-              placeholder="Select an option"
-              variant="outline"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option>Select an option</option>
-              <option>General</option>
-              <option>Math</option>
-              <option>Science</option>
-              <option>History</option>
-              <option>Literature</option>
-            </select>
-            <Container className="form-errors">{errors.category}</Container>
-          </FormLabel>
+          <FormLabel mt={5}>Category</FormLabel>
+          <select
+            placeholder="Select an option"
+            variant="outline"
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option>Select an option</option>
+            <option>General</option>
+            <option>Math</option>
+            <option>Science</option>
+            <option>History</option>
+            <option>Literature</option>
+          </select>
+          <Container className="form-errors">{errors.category}</Container>
           <button type="submit" className="submitBtn">
             Create Folder
           </button>

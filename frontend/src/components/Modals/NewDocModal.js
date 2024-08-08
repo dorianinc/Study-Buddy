@@ -51,7 +51,7 @@ function NewDocModal({ folderId }) {
         method="post"
         encType="multipart/form-data"
         action="/documents"
-        width="220px"
+        width="240px"
       >
         <FormControl display="flex" flexDirection="column">
           <FormLabel htmlFor="name">Document name</FormLabel>

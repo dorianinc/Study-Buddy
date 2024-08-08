@@ -78,11 +78,11 @@ function LoginFormModal() {
             />
             <Container className="form-errors">{errors.password}{errors.login}</Container>
           </FormLabel>
-          <Stack className="button-group" display='flex' >
-            <button className="submitBtn" type="submit">
+          <Stack spacing='1px'>
+            <Button className="submitBtn" type="submit">
               Log In
-            </button>
-            <Button mt={1} className="submitBtn" onClick={(e) => signInDemo(e)}>
+            </Button>
+            <Button mt="0px" pt={0} className="submitBtn" onClick={(e) => signInDemo(e)}>
               Demo User
             </Button>
           </Stack>

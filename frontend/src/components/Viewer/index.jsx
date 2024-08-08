@@ -9,6 +9,10 @@ import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
 import { useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
+import { 
+  Flex,
+  Box 
+} from "@chakra-ui/react";
 
 const TEST_HIGHLIGHTS = _testHighlights;
 const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
@@ -84,24 +88,18 @@ const Viewer = () => {
   };
 
   return (
-    <div className="App" 
-    // style={{ display: "flex", height: "100vh" }}
-    >
+    <Flex className="App" h={'100%'}>
       {/* <Sidebar
         highlights={highlights}
         resetHighlights={resetHighlights}
         toggleDocument={toggleDocument}
       /> */}
-      <div
-        style={{
-          height: "400px",
-          minWidth: "50vw",
-          // overflow: "hidden",
-          position: "relative",
-          borderRadius: "10px"
-          // top: 100
-          // flexGrow: 1,
-        }}
+      <Box
+          minWidth={"50vw"}
+          overflow={"hidden"}
+          position={"relative"}
+          borderRadius={"10px"}
+         border={'1px solid black'}
       >
         <Toolbar
           setPdfScaleValue={(value) => setPdfScaleValue(value)}
@@ -115,7 +113,7 @@ const Viewer = () => {
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
-              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents.id}/>} // Component will render as a tip upon any selection
+              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents?.id}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
               {/* User-defined HighlightContainer component goes here */}
@@ -126,8 +124,8 @@ const Viewer = () => {
             </PdfHighlighter>
           )}
         </PdfLoader>
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 };
 

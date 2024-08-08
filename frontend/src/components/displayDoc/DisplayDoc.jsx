@@ -1,36 +1,22 @@
 // import PdfViewer from "./pdfViewer"
 import Viewer from "../Viewer/index";
 import MyNotes from "../Note/MyNotes";
-import { Container, Box } from "@chakra-ui/react";
+import { Container, Flex, Heading } from "@chakra-ui/react";
 
 function DisplayDoc() {
   return (
     <>
       <MyNotes />
       <div>Display Doc</div>
-      <Box w={"100vw"} h={"100vh"} bg={"gray.300"}>
-               <Container
-                  w={"75%"}
-                  h={"200px"}
-                  border={'1px solid red'}
-                  borderRadius={10}
-                  // maxHeight={1}
-                  centerContent
-               >
-                  <Viewer />
-               </Container>
-               
-        <Container
-          border={'1px solid green'}
-         w={'75%'}
-         h={"400px"}
-         // position={'relative'}
-        // maxW={'2xl'}
-        // centerContent
-        >
-          <div>Hello I am a container</div>
+      <Flex w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5} >
+        <Container minW={"50vw"} h={"75%"} borderRadius={10} centerContent>
+          <Viewer />
         </Container>
-      </Box>
+
+        <Container w={"75%"} h={"75%"} borderRadius={10} bg={"white"} border={'1px solid black'}>
+          <Heading>Initial PDF Summary</Heading>
+        </Container>
+      </Flex>
     </>
   );
 }

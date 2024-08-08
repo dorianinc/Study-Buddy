@@ -107,7 +107,6 @@ const Viewer = () => {
               selectionTip={<ExpandableTip addHighlight={addHighlight} />} // Component will render as a tip upon any selection
               highlights={highlights}
             >
-              {/* User-defined HighlightContainer component goes here */}
               <HighlightContainer
                 editHighlight={editHighlight}
                 onContextMenu={handleContextMenu}

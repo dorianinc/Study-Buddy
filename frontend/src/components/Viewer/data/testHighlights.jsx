@@ -1,12 +1,12 @@
 export const testHighlights = {
   "https://tinyurl.com/ynnxvva9": [
     {
-      comment: "Better code!",
       id: "32604966305545835",
+      comment: "Better code!",
       content: {
+        type: "text",
         text: "The analysis indicates that TS applications exhibit significantly better code quality and understandability than JS applications.",
       },
-      type: "text",
       position: {
         boundingRect: {
           x1: 48.42552185058594,
@@ -41,10 +41,11 @@ export const testHighlights = {
     },
     {
       id: "7523977432979492",
+      comment: null,
       content: {
+        type: "text",
         text: " Frequently used instruments to evaluate code quality are code smells, i.e., indicators of low code quality which may impact maintainability ",
       },
-      type: "text",
       position: {
         boundingRect: {
           x1: 89.6534423828125,

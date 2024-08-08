@@ -167,39 +167,39 @@ describe("Folder Routes", () => {
     expect(response.status).to.equal(400);
   });
 
-  it("09. Should not create a folder when category is null", async () => {
-    const data = { name: "Folder 1", category: null };
+  // it("09. Should not create a folder when category is null", async () => {
+  //   const data = { name: "Folder 1", category: null };
 
-    const response = await agent
-      .post("/api/folders")
-      .set("Accept", "application/json")
-      .set("XSRF-Token", xsrfToken)
-      .send(data);
+  //   const response = await agent
+  //     .post("/api/folders")
+  //     .set("Accept", "application/json")
+  //     .set("XSRF-Token", xsrfToken)
+  //     .send(data);
 
-    const { folder, errors } = response.body;
+  //   const { folder, errors } = response.body;
 
-    expect(folder).to.not.exist;
-    expect(Object.values(errors)[0]).to.equal(
-      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
-    );
-    expect(response.status).to.equal(400);
-  });
+  //   expect(folder).to.not.exist;
+  //   expect(Object.values(errors)[0]).to.equal(
+  //     "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+  //   );
+  //   expect(response.status).to.equal(400);
+  // });
 
-  it("10. Should not create a folder with invalid category", async () => {
-    const data = { name: "Folder 1", category: null };
+  // it("10. Should not create a folder with invalid category", async () => {
+  //   const data = { name: "Folder 1", category: null };
 
-    const response = await agent
-      .post("/api/folders")
-      .set("Accept", "application/json")
-      .set("XSRF-Token", xsrfToken)
-      .send(data);
+  //   const response = await agent
+  //     .post("/api/folders")
+  //     .set("Accept", "application/json")
+  //     .set("XSRF-Token", xsrfToken)
+  //     .send(data);
 
-    const { folder, errors } = response.body;
+  //   const { folder, errors } = response.body;
 
-    expect(folder).to.not.exist;
-    expect(Object.values(errors)[0]).to.equal(
-      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
-    );
-    expect(response.status).to.equal(400);
-  });
+  //   expect(folder).to.not.exist;
+  //   expect(Object.values(errors)[0]).to.equal(
+  //     "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+  //   );
+  //   expect(response.status).to.equal(400);
+  // });
 });

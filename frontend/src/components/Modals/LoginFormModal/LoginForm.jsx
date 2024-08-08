@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import { useLoginMutation } from "../../../store/features/api";
 import { useModal } from "../../../context/ModalContext";
 import "./LoginForm.css";
+import {
+  Input,
+  Stack,
+  Container,
+  FormLabel,
+  Box,
+  FormControl,
+  Button,
+} from "@chakra-ui/react";
 
 function LoginFormModal() {
   const [login] = useLoginMutation();
@@ -28,40 +37,55 @@ function LoginFormModal() {
   };
 
   return (
-    <div className="login-modal">
+    <>
       <h1 className="header">Log In</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            placeholder="Username or Email"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            className="input-field"
-          />
-          {errors.credential && <p className="errors">{errors.credential}</p>}
-        </label>
-        <label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input-field"
-          />
-          {errors.password && <p className="errors">{errors.password}</p>}
-          {errors.login && <p className="errors">{errors.login}</p>}
-        </label>
-        <div className="button-group">
-          <button className="pink-button" type="submit">
-            Log In
-          </button>
-          <button className="demo-button" onClick={(e) => signInDemo(e)}>
-            Demo User
-          </button>
-        </div>
-      </form>
-    </div>
+      <Box
+        as="form"
+        method="post"
+        className="login-form"
+        onSubmit={handleSubmit}
+        width="280px"
+      >
+        <FormControl display="flex" flexDirection="column">
+          <FormLabel mt={5}>
+          Username or Email
+            <Input
+              w="100%"
+              border="1px solid lightgray"
+              borderRadius="5px"
+              placeholder="Username or Email"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+            />
+            <Box className="form-errors" mb=".5rem">
+              {errors.credential}
+            </Box>
+          </FormLabel>
+
+          <FormLabel mt={3}>
+            Password
+            <Input
+              w="100%"
+              border="1px solid lightgray"
+              borderRadius="5px"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Container className="form-errors">{errors.password}{errors.login}</Container>
+          </FormLabel>
+          <Stack spacing='1px'>
+            <Button className="submitBtn" type="submit">
+              Log In
+            </Button>
+            <Button mt=".5rem" className="submitBtn" onClick={(e) => signInDemo(e)}>
+              Demo User
+            </Button>
+          </Stack>
+        </FormControl>
+      </Box>
+    </>
   );
 }
 

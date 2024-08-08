@@ -1,3 +1,8 @@
+:root{
+  --main-blue: #63B3ED;
+  --hover-blue:rgba(0, 149, 255, 0.773);
+}
+
 .login-modal {
   padding: 20px;
   max-width: 400px;
@@ -17,13 +22,7 @@
   gap: 20px;
 }
 
-.input-field {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-}
+
 
 .button-group {
   display: flex;
@@ -59,4 +58,24 @@
   color: red;
   font-size: 0.875rem;
   margin-top: -15px;
+}
+
+.submitBtn{
+  margin-top: 1rem;
+  padding: 3px 0 3px 0;
+  border: 1px solid black;
+  background-color: var(--main-blue);
+  border-radius: 8px;
+  color: white;
+}
+
+.submitBtn:hover{
+  background-color:var(--hover-blue);
+}
+
+.form-errors{
+  color: red;
+  min-height: 12px;
+  max-height: 12px;
+  font-size: 13px;
 }

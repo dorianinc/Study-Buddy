@@ -23,7 +23,7 @@ const Viewer = () => {
   // const [highlights, setHighlights] = useState(
   //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
   // );
-  const [highlights,setHightLights] = useState(documents?.Highlights ?? [] )
+  const [highlights,setHighlights] = useState(documents?.Highlights ?? [] )
   const currentPdfIndexRef = useRef(0);
   const [contextMenu, setContextMenu] = useState(null);
   const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
@@ -111,7 +111,7 @@ const Viewer = () => {
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
-              selectionTip={<ExpandableTip addHighlight={addHighlight} />} // Component will render as a tip upon any selection
+              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents.id}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
               {/* User-defined HighlightContainer component goes here */}

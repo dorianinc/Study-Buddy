@@ -4,11 +4,19 @@ import { useRef } from "react";
 import Cookies from "js-cookie";
 import { useHighlightContainerContext, usePdfHighlighterContext } from "react-pdf-highlighter-extended";
 import { Bars } from 'react-loader-spinner'
-const CommentForm = ({ onSubmit, placeHolder, selectedContent,highlight }) => {
-  const [input, setInput] = useState("");
+import { useCreateNoteMutation, useGetOneDocQuery } from "../../../store/features/api";
+import { useSelector } from "react-redux";
+const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
+  const [content, setContent] = useState("");
+  const user = useSelector(state=>state.session.user)
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
+  // const {data:document} = useGetOneDocQuery()
+  // const document = useSelector(state=>state.document)
+  // const docId = document.id
+  // console.log('comment form',document)
+  console.log('comment form docId',docId)
   const selectedText = selectedContent.current.content.text
-console.log(highlight)
+  const [createNote] = useCreateNoteMutation()
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
@@ -24,21 +32,21 @@ console.log(highlight)
     })
     const data = await response.json()
     setIsLoadingAIRes(false)
-    setInput(data.AIResponse)
+    setContent(data.AIResponse)
   }
 
 
   return (
     <form
       className="Tip__card"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        onSubmit(input);
+        onSubmit(content);
+        await createNote({user,content,docId})
 
       }}
     >
       <Button
-
         onClick={AIGenerate}
       >
         {isLoadingAIRes ? <Bars
@@ -58,9 +66,9 @@ console.log(highlight)
           placeholder={placeHolder}
           autoFocus
           onChange={(event) => {
-            setInput(event.target.value);
+            setContent(event.target.value);
           }}
-          value={input}
+          value={content}
         />
       </div>
       <div>

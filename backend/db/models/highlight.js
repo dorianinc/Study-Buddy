@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Highlight extends Model {
     static associate(models) {
       Highlight.belongsTo(models.Annotation, { foreignKey: "annotationId" });
+      Highlight.hasOne(models.Note)
     }
   }
 

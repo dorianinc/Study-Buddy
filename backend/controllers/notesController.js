@@ -40,12 +40,19 @@ const getNotes = async (req, res) => {
 
 // Get a single Note based on id
 const getSingleNote = async (req, res) => {
-  const note = await Note.findByPk(req.params.noteId, { raw: true });
+  const note = await Note.findByPk(req.params.noteId, { raw: true});
+  if (!note) res.status(404).json(doesNotExist("Note"));
+  const highlight = await Highlight.findByPk(note.highlightId)
+
+  const data = {
+    ...note,
+    highlight
+  }
 
   // check to see if note exists before creating note
-  if (!note) res.status(404).json(doesNotExist("Note"));
-  else res.status(200).json(note);
+  res.status(200).json(data);
 };
+
 
 // Update a single Note based on id
 const updateNote = async (req, res) => {

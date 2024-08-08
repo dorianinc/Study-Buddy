@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       Note.belongsTo(models.Document, {
         foreignKey: "docId",
       });
+      Note.belongsTo(models.Highlight)
     }
   }
   Note.init(
@@ -53,6 +54,10 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      highlightId:{
+        type:DataTypes.INTEGER,
+        allowNull:true
+      }
     },
     {
       sequelize,

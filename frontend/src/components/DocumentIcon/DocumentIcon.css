@@ -1,0 +1,14 @@
+.document-icon:hover{
+fill: var(--hover-blue);
+background-color: rgb(233, 233, 233);
+}
+
+.document-icon{
+  justify-self: center;
+}
+
+.doc-icon-container:hover .document-icon{
+  fill: var(--hover-blue);
+
+}
+

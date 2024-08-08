@@ -14,7 +14,8 @@ function NewDocButton() {
         w={200}
         h={200}
         _hover={{
-          bg: "lightgrey",
+          bg: "rgb(233, 233, 233)",
+          boxShadow: "0 0 10px var(--main-blue)"
         }}
         >
         <AddIcon boxSize={30} />

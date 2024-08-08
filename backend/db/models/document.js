@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         hooks: true,
       });
+      Document.hasMany(models.Highlight, {
+        foreignKey: "docUrl",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
 

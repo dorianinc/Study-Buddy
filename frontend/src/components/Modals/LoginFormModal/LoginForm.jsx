@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useLoginMutation } from "../../../store/features/api";
 import { useModal } from "../../../context/ModalContext";
 import "./LoginForm.css";
@@ -21,12 +21,10 @@ function LoginFormModal() {
 
   const signInDemo = async (e) => {
     e.preventDefault();
-    return (
-      await login({ credential: "demo_user123", password: "password1" })
-        .unwrap()
-        .then(closeModal)
-        .catch((error) => setErrors(error.data.errors))
-    );
+    return await login({ credential: "demo_user123", password: "password1" })
+      .unwrap()
+      .then(closeModal)
+      .catch((error) => setErrors(error.data.errors));
   };
 
   return (

@@ -68,6 +68,12 @@ export const api = createApi({
       invalidatesTags: ["Folder"]
     }),
     //Documents
+    getOneDoc: builder.query({
+      query: ({docId}) => ({
+        url: `documents/${docId}`
+      }),
+      providesTags:["Document"]
+    }),
     createDoc: builder.mutation({
       query: ({ formData, folderId }) => ({
         url: `documents/?folderId=${folderId}`,
@@ -127,6 +133,7 @@ export const {
   useLogoutMutation,
   useCreateDocMutation,
   useDeleteDocMutation,
+  useGetOneDocQuery,
   useGetFoldersQuery,
   useCreateFolderMutation,
   useGetNotesQuery,

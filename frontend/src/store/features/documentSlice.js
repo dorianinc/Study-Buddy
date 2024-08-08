@@ -17,6 +17,12 @@ const documentSlice = createSlice({
         state.documents = state.documents
       }
     )
+    builder.addMatcher(
+      api.endpoints.getOneDoc.matchFulfilled,
+      (state,{payload})=>{
+        state[payload.id] = payload
+      }
+    )
   }
 })
 

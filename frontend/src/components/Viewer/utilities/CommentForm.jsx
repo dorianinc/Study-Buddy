@@ -2,13 +2,13 @@ import { Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import Cookies from "js-cookie";
-import { usePdfHighlighterContext } from "react-pdf-highlighter-extended";
+import { useHighlightContainerContext, usePdfHighlighterContext } from "react-pdf-highlighter-extended";
 import { Bars } from 'react-loader-spinner'
-const CommentForm = ({ onSubmit, placeHolder, selectedContent }) => {
+const CommentForm = ({ onSubmit, placeHolder, selectedContent,highlight }) => {
   const [input, setInput] = useState("");
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
   const selectedText = selectedContent.current.content.text
-
+console.log(highlight)
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
@@ -26,7 +26,7 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent }) => {
     setIsLoadingAIRes(false)
     setInput(data.AIResponse)
   }
-  console.log(selectedText)
+
 
   return (
     <form

@@ -18,6 +18,7 @@ let middleware = [];
 middleware = [restoreUser, requireAuth, validateDocument, transactionHandler];
 router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) => {
   // parsing pdf to text and get response from gemini
+  // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
     if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
   const summary = generateRes(

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import CommentForm from "./utilities/CommentForm";
 import ContextMenu from "./utilities/ContextMenu";
 import ExpandableTip from "./utilities/ExpandableTip";
-import Sidebar from "./utilities/Sidebar";
+// import Sidebar from "./utilities/Sidebar";
 import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
@@ -78,11 +78,11 @@ const Viewer = () => {
 
   return (
     <div className="App" style={{ display: "flex", height: "100vh" }}>
-      <Sidebar
+      {/* <Sidebar
         highlights={highlights}
         resetHighlights={resetHighlights}
         toggleDocument={toggleDocument}
-      />
+      /> */}
       <div
         style={{
           height: "100vh",

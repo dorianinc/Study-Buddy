@@ -1,11 +1,8 @@
-// import React from "react";
 import { useRestoreUserQuery } from "./store/features/api";
 import MyFolders from "./components/Folder/MyFolders";
 import MyDocuments from "./components/Document/MyDocuments";
-import MyNotes from "./components/Note/MyNotes";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
-// import Viewer from "./components/Viewer";
 import DisplayDoc from "./components/displayDoc/DisplayDoc";
 
 const App = () => {
@@ -17,17 +14,12 @@ const App = () => {
       {user && (
         <div className="content-container">
           <Routes>
-            <Route path="/folders/:folderId/:documentId" element={<DisplayDoc />} />
-            <Route path="/folders/:folderId" element={<MyDocuments />} />
             <Route
-              path="/"
-              element={
-                <>
-                  <MyNotes />
-                  <MyFolders />
-                </>
-              }
+              path="/folders/:folderId/:documentId"
+              element={<DisplayDoc />}
             />
+            <Route path="/folders/:folderId" element={<MyDocuments />} />
+            <Route path="/" element={<MyFolders />} />
           </Routes>
         </div>
       )}

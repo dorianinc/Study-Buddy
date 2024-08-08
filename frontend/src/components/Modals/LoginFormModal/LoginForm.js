@@ -82,7 +82,7 @@ function LoginFormModal() {
             <Button className="submitBtn" type="submit">
               Log In
             </Button>
-            <Button mt="0px" pt={0} className="submitBtn" onClick={(e) => signInDemo(e)}>
+            <Button mt="0px" mt=".5rem" className="submitBtn" onClick={(e) => signInDemo(e)}>
               Demo User
             </Button>
           </Stack>

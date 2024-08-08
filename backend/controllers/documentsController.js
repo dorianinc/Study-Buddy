@@ -1,27 +1,19 @@
-
-const express = require("express");
-const { generateRes } = require("../../utils/genAi.js");
-const { parsePDF } = require("../../utils/pdfParser.js");
-const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { doesNotExist } = require("../../utils/helpers.js");
-const { transactionHandler } = require("../../utils/transaction.js");
-const { validateDocument } = require("../../utils/validation.js");
-const { Folder, Document, Note,Highlight } = require("../../db/models");
-const { handleMulterFile, uploadAWSFile, deleteAWSFile } = require("../../awsS3.js");
-const { environment } = require("../../config");
+const { generateRes } = require("../utils/genAi.js");
+const { parsePDF } = require("../utils/pdfParser.js");
+const { isAuthorized } = require("../utils/auth");
+const { doesNotExist } = require("../utils/helpers.js");
+const { Folder, Document, Note } = require("../db/models");
+const { uploadAWSFile, deleteAWSFile } = require("../awsS3.js");
+const { environment } = require("../config");
+const { getAnnotations } = require("./annotationsController.js");
 const isTesting = environment === "test";
 
-const router = express.Router();
-let middleware = [];
-
 // Create a Document
-middleware = [restoreUser, requireAuth, validateDocument, transactionHandler];
-router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) => {
+const createDocument = async (req, res) => {
   // parsing pdf to text and get response from gemini
   // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
-    if (pdfText instanceof Error) res.status(400).json({"message":"Bad Request"})
-  const summary = generateRes(
+  const summary = await generateRes(
     "summarize this text in 14 sentences",
     pdfText
   );
@@ -43,11 +35,10 @@ router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) 
     });
     res.status(201).json(newDoc);
   }
-});
+};
 
 // Get all Documents for a specific user
-middleware = [restoreUser, requireAuth];
-router.get("/", middleware, async (req, res) => {
+const getDocuments = async (req, res) => {
   const { user } = req;
   const docs = await Document.findAll({
     where: { authorId: user.id },
@@ -59,24 +50,20 @@ router.get("/", middleware, async (req, res) => {
   } else {
     res.status(200).json(docs);
   }
-});
+};
 
 // Get a single Document based off id
-middleware = [restoreUser, requireAuth];
-router.get("/:docId", middleware, async (req, res) => {
-  console.log('this is docid',req.params.docId)
-  const doc = await Document.findByPk(req.params.docId,{
-    include:{model:Highlight}
-  });
-
-  // check to see if note exists before creating notes
+const getSingleDocument = async (req, res) => {
+  const doc = await Document.findByPk(req.params.docId, { raw: true });
+  const annotations = await getAnnotations(null, null, doc.id)
+  doc.annotations = annotations
+  // check to see if note exists before creating note
   if (!doc) res.status(404).json(doesNotExist("Document"));
   else res.status(200).json(doc);
-});
+};
 
 // Update a single Document based off id
-middleware = [restoreUser, requireAuth, transactionHandler];
-router.put("/:docId", middleware, async (req, res) => {
+const updateDocument = async (req, res) => {
   const { user } = req;
   const doc = await Note.findByPk(req.params.docId);
 
@@ -91,12 +78,10 @@ router.put("/:docId", middleware, async (req, res) => {
       res.status(200).json(doc);
     }
   }
-
-});
+};
 
 // Delete a Document
-middleware = [restoreUser, requireAuth]
-router.delete("/:docId", middleware, async (req, res) => {
+const deleteDocument = async (req, res) => {
   const { user } = req;
   const doc = await Document.findByPk(req.params.docId);
 
@@ -112,7 +97,12 @@ router.delete("/:docId", middleware, async (req, res) => {
       });
     }
   }
+};
 
-});
-
-module.exports = router;
+module.exports = {
+  createDocument,
+  getDocuments,
+  getSingleDocument,
+  updateDocument,
+  deleteDocument,
+};

@@ -2,14 +2,13 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Highlight extends Model {
+  class HighlightBox extends Model {
     static associate(models) {
-      Highlight.belongsTo(models.Annotation, { foreignKey: "annotationId" });
-      Highlight.hasOne(models.Note)
+      HighlightBox.belongsTo(models.Annotation, { foreignKey: "annotationId" });
     }
   }
 
-  Highlight.init(
+  HighlightBox.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -52,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Highlight",
+      modelName: "HighlightBox",
       defaultScope: {
         attributes: {
           exclude: ["createdAt", "updatedAt", "annotationId"],
@@ -61,5 +60,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  return Highlight;
+  return HighlightBox;
 };

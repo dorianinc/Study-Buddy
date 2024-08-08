@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useModal } from "../../../context/ModalContext";
 import "./SignupForm.css";
 import { useSignupMutation } from "../../../store/features/api";
+import {
+  Button,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Container,
+} from "@chakra-ui/react";
 
 function SignupFormModal() {
   const [email, setEmail] = useState("");
@@ -11,19 +19,26 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [buttonClass, setButtonClass] = useState("pink-button disabled");
   const { closeModal } = useModal();
 
   const [signup] = useSignupMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword: "Confirm Password field must be the same as the Password field",
-      });
-    }
-    setErrors({});
+    const errs = {};
+
+    if (!email) errs.email = "Email is required";
+    if (!username) errs.username = "Username must be between 5 and 15 characters long."
+    if (username === email) errs.username = "Username cannot be an email address."
+    if (!firstName) errs.firstName = "First name is required."
+    if (firstName.length < 1 || firstName.length > 25) errs.firstName = "First name must be between 1 and 25 characters long."
+    if (!lastName) errs.lastName = "Last name is required"
+    if(lastName.length < 1 || lastName.length > 25) errs.lastName = "Last name must be between 1 and 25 characters long."
+    if(!password) errs.password = "Password must be between 6 and 20 characters long."
+
+
+    if (password !== confirmPassword || !confirmPassword) errs.confirmPassword = "Passwords do not match"
+
     try {
       await signup({
         firstName,
@@ -31,103 +46,119 @@ function SignupFormModal() {
         email,
         username,
         password,
-      })
-      .unwrap()
+      }).unwrap();
       closeModal();
     } catch (error) {
-      setErrors(error.data.errors); 
+      return setErrors({...errs,...error.data.errors});
     }
   };
 
-  useEffect(() => {
-    if (
-      email.length >= 1 &&
-      firstName.length >= 1 &&
-      lastName.length >= 1 &&
-      username.length >= 4 &&
-      password.length >= 6 &&
-      password === confirmPassword
-    ) {
-      setButtonClass("pink-button");
-    } else {
-      setButtonClass("pink-button disabled");
-    }
-  }, [username, password, confirmPassword, email.length, firstName.length, lastName.length]);
-
   return (
     <>
-      <div className="signup-container">
-        <h1 className="header">Sign Up</h1>
-        <form className="signUpForm" onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.email && <p className="errors">{errors.email}</p>}
-          <label>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.username && <p className="errors">{errors.username}</p>}
-          <label>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.firstName && <p className="errors">{errors.firstName}</p>}
-          <label>
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.lastName && <p className="errors">{errors.lastName}</p>}
-          <label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.password && <p className="errors">{errors.password}</p>}
-          <label>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="input-field"
-            />
-          </label>
-          {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
-          <button
-            className={buttonClass}
-            type="submit"
-          >
-            Sign Up
-          </button>
-        </form>
-      </div>
-    </>
+    <h1 className="header">Sign Up</h1>
+    <Box
+      as="form"
+      className="signUpForm"
+      onSubmit={handleSubmit}
+      width="330px"
+    >
+      <FormControl display="flex" flexDirection="column">
+        <FormLabel>
+          Email
+          <Input
+            w="100%"
+            type="text"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.email}
+          </Container>
+        <FormLabel>
+          Username
+          <Input
+            w="100%"
+            type="text"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.username}
+          </Container>
+        <FormLabel>
+          First Name
+          <Input
+            w="100%"
+            type="text"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.firstName}
+          </Container>
+        <FormLabel>
+          Last Name
+          <Input
+            w="100%"
+            type="text"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.lastName}
+          </Container>
+        <FormLabel>
+          Password
+          <Input
+            w="100%"
+            type="password"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.password}
+          </Container>
+        <FormLabel>
+          Confirm Password
+          <Input
+            w="100%"
+            type="password"
+            border="1px solid lightgray"
+            borderRadius="5px"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </FormLabel>
+        <Container className="form-errors" mb='.5rem'>
+            {errors.confirmPassword}
+          </Container>
+        <Button className="submitBtn" type="submit">
+          Sign Up
+        </Button>
+      </FormControl>
+    </Box>
+  </>
   );
 }
 

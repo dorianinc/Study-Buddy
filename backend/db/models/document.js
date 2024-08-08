@@ -67,10 +67,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNull: { msg: "Summary is required." },
-          len: {
-            args: [1, 1000],
-            msg: "Summary must be between 1 and 1000 characters long.",
+          notNull: {
+            args: true,
+            msg: "Summary is required.",
           },
         },
       },

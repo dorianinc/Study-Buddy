@@ -11,6 +11,7 @@ const isTesting = environment === "test";
 // Create a Document
 const createDocument = async (req, res) => {
   // parsing pdf to text and get response from gemini
+  // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
   const summary = await generateRes(
     "summarize this text in 14 sentences",

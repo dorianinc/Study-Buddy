@@ -25,7 +25,7 @@ router.post("/", [handleMulterFile("theFile"), ...middleware], async (req, res) 
     "summarize this text in 14 sentences",
     pdfText
   );
-  console.log("SUMMARY: ", summary, "TYPE: ", typeof summary)
+  
   const { user } = req;
   const { name, fileType } = req.body;
   const fileUrl = await uploadAWSFile(req.file);

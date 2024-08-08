@@ -10,7 +10,7 @@
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
     "build": "node psql-setup-script.js",
-    "test": "NODE_ENV=test node test/index.js"
+    "test": "NODE_ENV=test node tests/index.js"
   },
   "keywords": [],
   "author": "",

@@ -85,11 +85,11 @@ const Viewer = () => {
 
   return (
     <div className="App" style={{ display: "flex", height: "100vh" }}>
-      {/* <Sidebar
+      <Sidebar
         highlights={highlights}
         resetHighlights={resetHighlights}
         toggleDocument={toggleDocument}
-      /> */}
+      />
       <div
         style={{
           height: "100vh",
@@ -114,7 +114,6 @@ const Viewer = () => {
               selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents.id}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
-              {/* User-defined HighlightContainer component goes here */}
               <HighlightContainer
                 editHighlight={editHighlight}
                 onContextMenu={handleContextMenu}

@@ -1,16 +1,8 @@
-const express = require("express");
 const bcrypt = require("bcryptjs");
-const { validateSignup } = require("../../utils/validation");
-const { setTokenCookie } = require("../../utils/auth");
-const { transactionHandler } = require("../../utils/transaction.js");
-const { User } = require("../../db/models");
+const { setTokenCookie } = require("../utils/auth");
+const { User } = require("../db/models");
 
-const router = express.Router();
-let middleware = [];
-
-// Sign up
-middleware = [validateSignup, transactionHandler];
-router.post("/", middleware, async (req, res) => {
+const signUpUser = async (req, res) => {
   const { email, firstName, lastName, password, username } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   const user = await User.create({
@@ -35,6 +27,8 @@ router.post("/", middleware, async (req, res) => {
     token: token,
     user: safeUser,
   });
-});
+};
 
-module.exports = router;
+module.exports = {
+  signUpUser,
+};

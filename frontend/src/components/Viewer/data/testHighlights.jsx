@@ -40,6 +40,7 @@ export const testHighlights = {
       },
     },
     {
+      id: "7523977432979492",
       content: {
         text: " Frequently used instruments to evaluate code quality are code smells, i.e., indicators of low code quality which may impact maintainability ",
       },
@@ -84,7 +85,6 @@ export const testHighlights = {
           },
         ],
       },
-      id: "7523977432979492",
     },
     {
       type: "text",
@@ -124,37 +124,5 @@ export const testHighlights = {
       },
       id: "9298580906684795",
     },
-  ],
-  "https://tinyurl.com/23pybv5e": [
-    {
-      type: "text",
-      content: {
-        text: "SSA",
-      },
-      position: {
-        boundingRect: {
-          x1: 816.4599609375,
-          y1: 360.1875,
-          x2: 848.4677734375,
-          y2: 380.1875,
-          width: 1019.9999999999999,
-          height: 1319.9999999999998,
-          pageNumber: 1,
-        },
-        rects: [
-          {
-            x1: 816.4599609375,
-            y1: 360.1875,
-            x2: 848.4677734375,
-            y2: 380.1875,
-            width: 1019.9999999999999,
-            height: 1319.9999999999998,
-            pageNumber: 1,
-          },
-        ],
-      },
-      comment: "Static Single Assignment",
-      id: "29668244118038056",
-    },
-  ],
+  ]
 };

@@ -1,0 +1,186 @@
+/* Global CSS Styles */
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+
+.content-container {
+  padding: 25px 10px;
+  scrollbar-gutter: stable;
+}
+.content-header{
+  font-size: 2rem;
+}
+
+.content-sub-header{
+  font-size: 1.5rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0px;
+  font-weight: 500;
+}
+
+textarea,
+input, select {
+  font-size: 1rem;
+}
+
+
+.pink-button {
+  cursor: pointer;
+  color: white;
+  background-color: #F4A460;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.grey-button {
+  cursor: pointer;
+  color: white;
+  background-color: #80808b;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+}
+
+.buttons-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.black-button {
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  background-color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 0 15px;
+}
+
+.clear-button {
+  cursor: pointer;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: transparent;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  text-decoration: underline;
+}
+
+.clear-button:hover {
+  background-color: #f7f7f7;
+}
+
+.text-area {
+  resize: none;
+  width: 100%;
+  height: 150px;
+}
+
+* {
+  margin: 0px;
+}
+
+/* CSS for HomePage and ManageSpots */
+
+/* -------- CSS for forms --------- */
+
+.errors {
+  color: red;
+  font-weight: bold;
+}
+
+/* NOT SURE IF WE NEED THE CODE BELOW THIS LINE
+
+
+span {
+  pointer-events: auto;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+#pdf-viewer {
+  width: 78%;
+  height: 700px;
+}
+
+.testing {
+  display: inline-block;
+  background-color: rgba(241, 114, 114, 0.502);
+  width: max-content;
+  box-sizing: border-box !important;
+}
+
+.react-pdf__Outline {
+  background-color: rgb(195, 196, 196);
+  font-size: small;
+  width: 90%;
+  padding: 15px;
+  min-width: 190px;
+}
+
+.react-pdf__Outline > ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.react-pdf__Document > ul:hover {
+  background-color: rgb(150, 153, 153);
+}
+
+.react-pdf__Document {
+  display: flex;
+  width: fit-content;
+  margin: auto;
+  position: relative;
+}
+
+.textLayer {
+  pointer-events: none;
+  z-index: 0 !important;
+}
+
+.note-toggle {
+  position: absolute;
+}
+.content-table {
+  width: fit-content;
+}
+.react-pdf__Page__canvas {
+  pointer-events: none;
+}
+
+.react-pdf__Page {
+  pointer-events: none;
+}

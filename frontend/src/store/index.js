@@ -3,6 +3,7 @@ import logger from "redux-logger";
 import sessionSliceReducer from "./features/sessionSlice";
 import folderSliceReducer from "./features/folderSlice";
 import documentSliceReducer from "./features/documentSlice";
+import noteSliceReducer from "./features/noteSlice";
 import { api } from "./features/api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
@@ -11,7 +12,8 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     session: sessionSliceReducer,
     folder: folderSliceReducer,
-    document: documentSliceReducer
+    document: documentSliceReducer,
+    note: noteSliceReducer
   },
   middleware: (getDefaultMiddleware) => {
     const middleware = getDefaultMiddleware().concat(api.middleware);

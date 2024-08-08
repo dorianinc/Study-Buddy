@@ -50,10 +50,10 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "Category is required.",
           },
-          isIn: {
-            args: [["General", "Math", "Science", "History", "Literature"]],
-            msg: "Category must be one of: General, Math, Science, History, Literature.",
-          },
+          // isIn: {
+          //   args: [["General", "Math", "Science", "History", "Literature"]],
+          //   msg: "Category must be one of: General, Math, Science, History, Literature.",
+          // },
         },
       },
     },

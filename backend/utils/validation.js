@@ -86,13 +86,13 @@ const validateFolder = [
     .isLength({ min: 1, max: 20 })
     .withMessage("Folder name must be between 1 and 20 characters long."),
 
-  check("category")
-    .exists({ checkFalsy: true })
-    .withMessage("Folder category is required.")
-    .isIn(["General", "Math", "Science", "History", "Literature"])
-    .withMessage(
-      "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
-    ),
+  // check("category")
+  //   .exists({ checkFalsy: true })
+  //   .withMessage("Folder category is required.")
+  //   .isIn(["General", "Math", "Science", "History", "Literature"])
+  //   .withMessage(
+  //     "Folder category must be one of 'General', 'Math', 'Science', 'History' or 'Literature'."
+  //   ),
   handleValidationErrors,
 ];
 

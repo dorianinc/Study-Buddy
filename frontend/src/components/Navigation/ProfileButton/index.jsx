@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../store/features/api";
 import ModalButton from "../../Modals/ModalButton";
@@ -23,13 +23,14 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  const history = useHistory();
+  const navigate = useNavigate(); // Updated to useNavigate
 
   const openMenu = (e) => {
     e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
+/////////// OPTION A only difference is like 38 vs 62
   useEffect(() => {
     if (!showMenu) return;
 
@@ -50,8 +51,23 @@ function ProfileButton({ user }) {
     e.preventDefault();
     logout();
     closeMenu();
-    history.push("/");
+    navigate("/"); // Updated to use navigate
   };
+
+/////////// OPTION B only difference is like 38 vs 62
+  // useEffect(() => {
+  //   if (!showMenu) return;
+
+  //   const closeMenu = (e) => {
+  //     if (!ulRef.current.contains(e.target)) {
+  //       setShowMenu(false);
+  //     }
+  //   };
+
+  //   document.addEventListener("click", closeMenu);
+
+  //   return () => document.removeEventListener("click", closeMenu);
+  // }, [showMenu]);
 
   // const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 

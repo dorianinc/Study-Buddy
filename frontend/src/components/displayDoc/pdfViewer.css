@@ -1,0 +1,61 @@
+#pdf-viewer{
+    width:78%;
+    height:700px;
+}
+
+.testing{
+    display:inline-block;
+    background-color: rgba(241, 114, 114, 0.502);
+    width:max-content;
+    box-sizing: border-box !important;
+}
+
+.react-pdf__Outline{
+    background-color: rgb(195, 196, 196);
+    font-size: small;
+    width: 90%;
+    padding:15px;
+    min-width: 190px;
+
+}
+
+.react-pdf__Outline > ul{
+    list-style-type: none;
+    padding:0px;
+}
+
+.react-pdf__Document > ul:hover{
+    background-color: rgb(150, 153, 153);
+}
+
+.react-pdf__Document{
+    display: flex;
+    width:fit-content;
+    margin:auto;
+    position:relative;
+}
+
+.textLayer{
+    pointer-events: none;
+    z-index:0 !important;
+}
+
+.note-toggle{
+    position:absolute;
+}
+.content-table{
+    width:fit-content;
+}
+.react-pdf__Page__canvas{
+    pointer-events: none;
+}
+
+.react-pdf__Page{
+    pointer-events: none;
+}
+span{
+    pointer-events: auto;
+}
+/* .note-toggle{
+    display: none;
+} */

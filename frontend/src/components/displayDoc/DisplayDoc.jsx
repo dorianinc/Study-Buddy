@@ -1,7 +1,12 @@
-import PdfViewer from "./pdfViewer"
-function DisplayDoc({pdfUrl}) {
+// import PdfViewer from "./pdfViewer"
+import Viewer from '../Viewer/index'
+function DisplayDoc() {
    return(
-        <PdfViewer pdfUrl={pdfUrl}/>
+      <>
+         <div>Display Doc</div>
+         <Viewer />
+      </>
+
    )
 }
 export default DisplayDoc

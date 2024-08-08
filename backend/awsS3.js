@@ -61,13 +61,13 @@ const storage = multer.memoryStorage({
   },
 });
 
-const handleMulterFile = (nameOfKey) => {
+const handleMulter = (nameOfKey) => {
   return multer({ storage: storage }).single(nameOfKey);
 };
 
 module.exports = {
   s3client,
-  handleMulterFile,
+  handleMulter,
   uploadAWSFile,
   deleteAWSFile,
 };

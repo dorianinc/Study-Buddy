@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Folder extends Model {
     static associate(models) {
@@ -60,6 +61,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Folder",
+      defaultScope: {
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
     }
   );
   return Folder;

@@ -18,6 +18,8 @@ const ExpandableTip = ({ addHighlight }) => {
     updateTipPosition();
   }, [compact]);
 
+
+
   return (
     <div className="Tip">
       {compact ? (
@@ -47,6 +49,7 @@ const ExpandableTip = ({ addHighlight }) => {
             removeGhostHighlight();
             setTip(null);
           }}
+          selectedContent={selectionRef}
         />
       )}
     </div>

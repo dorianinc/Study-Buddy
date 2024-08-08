@@ -77,7 +77,9 @@ const Viewer = () => {
   };
 
   return (
-    <div className="App" style={{ display: "flex", height: "100vh" }}>
+    <div className="App" 
+    // style={{ display: "flex", height: "100vh" }}
+    >
       {/* <Sidebar
         highlights={highlights}
         resetHighlights={resetHighlights}
@@ -85,11 +87,13 @@ const Viewer = () => {
       /> */}
       <div
         style={{
-          height: "100vh",
-          width: "75vw",
-          overflow: "hidden",
+          height: "400px",
+          minWidth: "50vw",
+          // overflow: "hidden",
           position: "relative",
-          flexGrow: 1,
+          borderRadius: "10px"
+          // top: 100
+          // flexGrow: 1,
         }}
       >
         <Toolbar

@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import ExpandableTip from "./utilities/ExpandableTip";
-import Sidebar from "./utilities/Sidebar";
+// import Sidebar from "./utilities/Sidebar";
 import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
 import { useGetOneDocQuery } from "../../store/features/api";
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { 
+  Flex,
+  Box 
+} from "@chakra-ui/react";
+
 
 const Viewer = () => {
   const { docId } = useParams();
@@ -58,16 +63,18 @@ const Viewer = () => {
   };
 
   return (
-    <div className="App" style={{ display: "flex", height: "100vh" }}>
-      <Sidebar highlights={highlights} resetHighlights={resetHighlights} />
-      <div
-        style={{
-          height: "100vh",
-          width: "75vw",
-          overflow: "hidden",
-          position: "relative",
-          flexGrow: 1,
-        }}
+    <Flex className="App" h={'100%'}>
+      {/* <Sidebar
+        highlights={highlights}
+        resetHighlights={resetHighlights}
+        toggleDocument={toggleDocument}
+      /> */}
+      <Box
+          minWidth={"50vw"}
+          overflow={"hidden"}
+          position={"relative"}
+          borderRadius={"10px"}
+         border={'1px solid black'}
       >
         <Toolbar toggleHighlightPen={() => setHighlightPen(!highlightPen)} />
         <PdfLoader document={url}>
@@ -90,8 +97,8 @@ const Viewer = () => {
             </PdfHighlighter>
           )}
         </PdfLoader>
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 };
 

@@ -81,6 +81,8 @@ const createAnnotation = async (req, res) => {
   }
 };
 
+// add docUrl to annotation
+// create option where you can get annotions through query or direct parameter
 
 // Get all Annotations of specific document
 const getAnnotations = async (req, res, docId = null) => {
@@ -124,9 +126,19 @@ const getAnnotations = async (req, res, docId = null) => {
   }
 };
 
+// Update a single Annotation based off id
+const getSingleAnnotation = async (req, res) => {};
 
+// Update a single Annotation based off id
+const updateAnnotation = async (req, res) => {};
+
+// Delete a Single Annotation based of id
+const deleteAnnotation = async (req, res) => {};
 
 module.exports = {
   createAnnotation,
   getAnnotations,
+  getSingleAnnotation,
+  updateAnnotation,
+  deleteAnnotation,
 };

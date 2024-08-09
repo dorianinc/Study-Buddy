@@ -23,20 +23,22 @@ const Viewer = () => {
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  console.log('this is document',annotation)
 
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
-  //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
-  // );
-  const [highlights,setHighlights] = useState(annotation? annotation:[])
-  const currentPdfIndexRef = useRef(0);
-  const [contextMenu, setContextMenu] = useState(null);
-  const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
-  const [highlightPen, setHighlightPen] = useState(false);
-  console.log('viewer',highlights)
-  // Refs for PdfHighlighter utilities
-  const highlighterUtilsRef = useRef();
+    //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
+    // );
+    const [highlights,setHighlights] = useState(annotation? annotation:[])
+    const currentPdfIndexRef = useRef(0);
+    const [contextMenu, setContextMenu] = useState(null);
+    const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
+    const [highlightPen, setHighlightPen] = useState(false);
+    // Refs for PdfHighlighter utilities
+    const highlighterUtilsRef = useRef();
+
+    useEffect(()=>{
+      setHighlights(annotation)
+    },[annotation])
 
   const toggleDocument = () => {
     const urls = [PRIMARY_PDF_URL, SECONDARY_PDF_URL];

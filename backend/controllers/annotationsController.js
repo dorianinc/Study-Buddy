@@ -134,7 +134,20 @@ const getAnnotations = async (req, res, docId = null) => {
 const getSingleAnnotation = async (req, res) => {};
 
 // Update a single Annotation based off id
-const updateAnnotation = async (req, res) => {};
+const updateAnnotation = async (req, res) => {
+  const user = req.user
+  const {annotationId} = req.query
+  const {comment} = req.body
+  const annotation = Annotation.findByPk(annotationId)
+  if(!annotation) res.status(403).json(doesNotExist("Annotation"))
+  if(isAuthorized(user.id,annotation.authorId,res)){
+    annotation.comment = comment
+    await annotation.save()
+    res.json({"message":"comment updated"})
+  }else{
+    res.json({"message":"Unauthorized"})
+  }
+};
 
 // Delete a Single Annotation based of id
 const deleteAnnotation = async (req, res) => {};

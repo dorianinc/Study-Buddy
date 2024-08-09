@@ -9,9 +9,9 @@ import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
 import { useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
-import { 
+import {
   Flex,
-  Box 
+  Box
 } from "@chakra-ui/react";
 
 const TEST_HIGHLIGHTS = _testHighlights;
@@ -22,7 +22,7 @@ const Viewer = () => {
   const {docId} = useParams()
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  console.log('this is document',documents)
+  console.log('this is document',docId)
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
   //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
@@ -113,7 +113,7 @@ const Viewer = () => {
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
-              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents?.id}/>} // Component will render as a tip upon any selection
+              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={docId}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
               <HighlightContainer

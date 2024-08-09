@@ -10,11 +10,6 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
   const [content, setContent] = useState("");
   const user = useSelector(state=>state.session.user)
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
-  // const {data:document} = useGetOneDocQuery()
-  // const document = useSelector(state=>state.document)
-  // const docId = document.id
-  // console.log('comment form',document)
-  console.log('comment form docId',docId)
   const selectedText = selectedContent.current.content.text
   const [createNote] = useCreateNoteMutation()
   // fetching response from gemini

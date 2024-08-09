@@ -4,21 +4,22 @@ import { useRef } from "react";
 import Cookies from "js-cookie";
 import { useHighlightContainerContext, usePdfHighlighterContext } from "react-pdf-highlighter-extended";
 import { Bars } from 'react-loader-spinner'
-import { useCreateNoteMutation, useGetOneDocQuery } from "../../../store/features/api";
+import { useCreateAnnotationMutation, useCreateNoteMutation, useGetOneDocQuery } from "../../../store/features/api";
 import { useSelector } from "react-redux";
-const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
-  const [content, setContent] = useState("");
-  const user = useSelector(state=>state.session.user)
+const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) => {
+  const user = useSelector(state => state.session.user)
+  const [comment, setComment] = useState("");
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
+  const [createAnnotation] = useCreateAnnotationMutation()
+  const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
-  const [createNote] = useCreateNoteMutation()
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
     const response = await fetch('/api/gemini', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'comment-Type': 'application/json',
         'XSRF-Token': `${Cookies.get('XSRF-TOKEN')}`
       },
       body: JSON.stringify({ 'prompt': selectedText })
@@ -27,7 +28,7 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
     })
     const data = await response.json()
     setIsLoadingAIRes(false)
-    setContent(data.AIResponse)
+    setComment(data.AIResponse)
   }
 
 
@@ -36,8 +37,15 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
       className="Tip__card"
       onSubmit={async (event) => {
         event.preventDefault();
-        onSubmit(content);
-        await createNote({user,content,docId})
+        onSubmit(comment);
+        const queryObject = {
+          user,
+          docId: parseInt(docId),
+          docUrl,
+          comment,
+          ...content
+        }
+        await createAnnotation({...queryObject})
 
       }}
     >
@@ -61,9 +69,9 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
           placeholder={placeHolder}
           autoFocus
           onChange={(event) => {
-            setContent(event.target.value);
+            setComment(event.target.value);
           }}
-          value={content}
+          value={comment}
         />
       </div>
       <div>

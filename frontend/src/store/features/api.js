@@ -19,7 +19,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["CurrentUser", "Document", "Folder", "Note"],
+  tagTypes: ["CurrentUser", "Document", "Folder", "Note","Annotation"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -118,6 +118,15 @@ export const api = createApi({
         method:'PUT',
         body:{content}
       })
+    }),
+    //Annotations
+    createAnnotation : builder.mutation({
+      query:({user,docId,docUrl,type,comment,content,position})=>({
+        url:`/annotations`,
+        method:'POST',
+        body:{docId,docUrl,type,comment,content,position}
+      }),
+      invalidatesTags : ['Annotation']
     })
   }),
 });
@@ -142,5 +151,6 @@ export const {
   useCreateNoteMutation,
   useDeleteNoteMutation,
   useEditNoteMutation,
-  useGetOneNoteQuery
+  useGetOneNoteQuery,
+  useCreateAnnotationMutation
 } = api;

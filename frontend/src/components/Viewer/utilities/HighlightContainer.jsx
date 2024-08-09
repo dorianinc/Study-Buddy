@@ -18,7 +18,6 @@ const HighlightContainer = ({ editHighlight, onContextMenu }) => {
   } = useHighlightContainerContext()
 
   const { toggleEditInProgress } = usePdfHighlighterContext()
-  console.log('this is from highlight container',highlight)
   const component =
     highlight.type === "text" ? (
       <TextHighlight

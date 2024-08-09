@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
 const highlightSeeds = () => {
   return [
     {
-      annotationId: "32604966305545835",
+      annotationId: 1,
       x1: 57.39482116699219,
       y1: 353.2035827636719,
       x2: 264.80804443359375,
@@ -18,7 +18,7 @@ const highlightSeeds = () => {
       pageNumber: 1,
     },
     {
-      annotationId: "32604966305545835",
+      annotationId: 1,
       x1: 48.42552185058594,
       y1: 363.0717468261719,
       x2: 248.294189453125,
@@ -28,7 +28,7 @@ const highlightSeeds = () => {
       pageNumber: 1,
     },
     {
-      annotationId: "7523977432979492",
+      annotationId: 2,
       x1: 197.78125,
       y1: 635.3316650390625,
       x2: 509.154052734375,
@@ -38,7 +38,7 @@ const highlightSeeds = () => {
       pageNumber: 4,
     },
     {
-      annotationId: "7523977432979492",
+      annotationId: 2,
       x1: 89.6534423828125,
       y1: 653.5972900390625,
       x2: 509.9925537109375,
@@ -48,7 +48,7 @@ const highlightSeeds = () => {
       pageNumber: 4,
     },
     {
-      annotationId: "7523977432979492",
+      annotationId: 2,
       x1: 89.6556396484375,
       y1: 671.8629150390625,
       x2: 270.62860107421875,
@@ -58,7 +58,7 @@ const highlightSeeds = () => {
       pageNumber: 4,
     },
     {
-      annotationId: "9298580906684795",
+      annotationId: 3,
       x1: 529.91796875,
       y1: 142.84837341308594,
       x2: 755.388427734375,
@@ -68,7 +68,7 @@ const highlightSeeds = () => {
       pageNumber: 11,
     },
     {
-      annotationId: "9298580906684795",
+      annotationId: 3,
       x1: 203.21282958984375,
       y1: 1165.67626953125,
       x2: 491.7064208984375,

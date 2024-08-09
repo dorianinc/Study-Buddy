@@ -7,28 +7,23 @@ if (process.env.NODE_ENV === "production") {
 
 const annotationSeeds = () => {
   const baseAnnotations = [
-    {
-      comment: "Better code!",
-    },
-    {
-      comment: "This is a test...",
-    },
-    {
-      comment: "That's a lot of repo's",
-    },
+    { comment: "Better code!" },
+    { comment: "This is a test..." },
+    { comment: "Pumpernickel" },
   ];
 
   const seeds = [];
+  let id = 1; // Initialize a unique id counter
 
-  for (let docId = 1; docId <= 10; docId++) {
-    baseAnnotations.forEach((annotation, index) => {
-      const uniqueId = `${docId}-${index + 1}`;
+  for (let i = 1; i <= 10; i++) {
+    baseAnnotations.forEach((annotation) => {
       seeds.push({
-        id: uniqueId,
+        id: id++, // Increment the id counter for each new record
         authorId: 10,
         docUrl: "https://tinyurl.com/ynnxvva9",
-        docId: docId,
+        docId: i,
         comment: annotation.comment,
+        type: "text"
       });
     });
   }

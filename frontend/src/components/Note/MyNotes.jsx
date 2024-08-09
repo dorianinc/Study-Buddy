@@ -48,7 +48,7 @@ function MyNotes() {
       <Button
         ref={btnRef}
         leftIcon={<ArrowLeftIcon />}
-        colorScheme="teal"
+        color="blue.300"
         iconSpacing={1}
         variant="outline"
         borderRadius={50}
@@ -57,6 +57,7 @@ function MyNotes() {
         position="fixed"
         right="50px"
         bottom={middleHeight}
+        zIndex={2}
         onClick={onOpen}
       >
         Notes

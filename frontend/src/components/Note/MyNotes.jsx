@@ -15,18 +15,15 @@ import {
   EditablePreview,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { useGetNotesQuery } from "../../store/features/api";
 
 // TODO: Make individual note components into Editables and reorderable
 
-function MyNotes() {
+function MyNotes({annotations}) {
   const document = {
     name: "Math homework",
   };
 
   // TODO: pass in docId to this component
-  const { data: notes, isSuccess, error } = useGetNotesQuery(1);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -83,15 +80,14 @@ function MyNotes() {
             <EditableTextarea />
           </Editable>
 
-          {isSuccess ?
-            notes.map((note) => (
-              <div key={note.id}>
-                <div>{note.content}</div>
+          {annotations?
+            annotations.map((annotation) => (
+              <div key={annotation.id}>
+                <div>{annotation.comment}</div>
                 <hr />
                 <br />
               </div>
-            )) :
-            <div>{error?.message}</div>
+            )) : null
             }
 
           <DrawerFooter>

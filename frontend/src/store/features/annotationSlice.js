@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-
+import {api} from './api.js'
 const initialState = {
     annotations:{}
 }
@@ -10,7 +10,13 @@ const annotationSlice = createSlice({
     reducers:{},
     extraReducers: (builder)=>{
         builder.addMatcher(
-            api.endpoints.createAnnotation.matchFullfilled,
+            api.endpoints.createAnnotation.matchFulfilled,
+            (state,{payload})=>{
+                state[payload.id] = payload
+            }
+        )
+        builder.addMatcher(
+            api.endpoints.getAllAnnotations.matchFulfilled,
             (state,{payload})=>{
                 state.annotations = payload
             }
@@ -19,3 +25,4 @@ const annotationSlice = createSlice({
 })
 
 export default annotationSlice.reducer
+export const selectAnnotation = (state) => state.annotations

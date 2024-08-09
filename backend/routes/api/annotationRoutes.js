@@ -11,7 +11,7 @@ middleware = [...baseMiddleware];
 router.post("/", middleware, annotation.createAnnotation);
 
 // Get all Annotations of specific document
-router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(null, req, res));
+router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(req, res));
 
 // Get a single Annotation based off id
 router.get("/:annotationId", baseMiddleware, annotation.getSingleAnnotation);

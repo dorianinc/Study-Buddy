@@ -38,6 +38,7 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
       onSubmit={async (event) => {
         event.preventDefault();
         onSubmit(comment);
+        console.log('submitted')
         const queryObject = {
           user,
           docId: parseInt(docId),

@@ -7,7 +7,7 @@ import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
-import { useGetOneDocQuery } from "../../store/features/api";
+import { useGetAllAnnotationsQuery, useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
 import {
   Flex,
@@ -21,18 +21,20 @@ const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
 const Viewer = () => {
   const {docId} = useParams()
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
+  const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  console.log('this is document',docId)
+  console.log('this is document',annotation)
+
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
   //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
   // );
-  const [highlights,setHighlights] = useState(documents?.Highlights ?? [] )
+  const [highlights,setHighlights] = useState(annotation? annotation:[])
   const currentPdfIndexRef = useRef(0);
   const [contextMenu, setContextMenu] = useState(null);
   const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
   const [highlightPen, setHighlightPen] = useState(false);
-
+  console.log('viewer',highlights)
   // Refs for PdfHighlighter utilities
   const highlighterUtilsRef = useRef();
 

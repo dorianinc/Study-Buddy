@@ -27,7 +27,7 @@ const createAnnotation = async (req, res) => {
     // console.log("Highlights: ", highlights);
 
     // Create the annotation
-    await Annotation.create({
+    const annotation = await Annotation.create({
       id,
       authorId: user.id,
       docId,
@@ -75,7 +75,11 @@ const createAnnotation = async (req, res) => {
       });
     }
 
-    res.send({ message: "sup" });
+   annotation.content = JSON.stringify(content)
+   annotation.position = position
+    console.log(annotation)
+    res.json(annotation);
+
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
@@ -89,10 +93,9 @@ const createAnnotation = async (req, res) => {
 const getAnnotations = async (req, res, docId = null) => {
   let user;
   if (req) {
-    user = { req };
+    user = req.user;
     docId = req.query.docId;
   }
-
   const annotations = await Annotation.findAll({
     where: { docId },
     raw: true,

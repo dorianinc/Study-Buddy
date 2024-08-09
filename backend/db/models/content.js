@@ -17,12 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       annotationId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
-      },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
       text: {
         type: DataTypes.TEXT,

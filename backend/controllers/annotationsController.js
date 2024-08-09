@@ -49,7 +49,6 @@ const getAnnotations = async (req, res, docId = null) => {
     where: { docId },
     raw: true,
   });
-  const docUrl = annotations[0].docUrl;
 
   for (let i = 0; i < annotations.length; i++) {
     const annotation = annotations[i];
@@ -74,9 +73,9 @@ const getAnnotations = async (req, res, docId = null) => {
   }
 
   if (req) {
-    res.status(200).json({ [docUrl]: [...annotations] });
+    res.status(200).json(annotations);
   } else {
-    return { [docUrl]: [...annotations] };
+    return annotations;
   }
 };
 

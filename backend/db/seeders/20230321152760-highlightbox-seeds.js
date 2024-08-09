@@ -6,9 +6,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const highlightBoxSeeds = () => {
-  return [
+  const highlightBoxes = [
     {
-      annotationId: "32604966305545835",
       x1: 48.42552185058594,
       y1: 353.2035827636719,
       x2: 264.80804443359375,
@@ -18,7 +17,6 @@ const highlightBoxSeeds = () => {
       pageNumber: 1,
     },
     {
-      annotationId: "7523977432979492",
       x1: 89.6534423828125,
       y1: 635.3316650390625,
       x2: 509.9925537109375,
@@ -28,7 +26,6 @@ const highlightBoxSeeds = () => {
       pageNumber: 4,
     },
     {
-      annotationId: "9298580906684795",
       x1: 203.21282958984375,
       y1: 142.84837341308594,
       x2: 755.388427734375,
@@ -38,6 +35,25 @@ const highlightBoxSeeds = () => {
       pageNumber: 11,
     },
   ];
+
+  const seeds = [];
+
+  for (let i = 1; i <= 10; i++) {
+    highlightBoxes.forEach((box) => {
+      seeds.push({
+        annotationId: i,
+        x1: box.x1,
+        y1: box.y1,
+        x2: box.x2,
+        y2: box.y2,
+        width: box.width,
+        height: box.height,
+        pageNumber: box.pageNumber,
+      });
+    });
+  }
+
+  return seeds; 
 };
 
 module.exports = {

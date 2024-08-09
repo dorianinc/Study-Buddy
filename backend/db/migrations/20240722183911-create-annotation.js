@@ -11,7 +11,7 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       authorId: {
         type: Sequelize.INTEGER,
@@ -26,6 +26,10 @@ module.exports = {
         allowNull: false,
       },
       comment: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      type: {
         type: Sequelize.STRING,
         allowNull: false,
       },

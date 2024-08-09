@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Annotation.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
       },
@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       comment: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      type: {
         type: DataTypes.STRING,
         allowNull: true,
       },

@@ -17,31 +17,31 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       annotationId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       x1: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT, 
         allowNull: false,
       },
       y1: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT, 
         allowNull: false,
       },
       x2: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT, 
         allowNull: false,
       },
       y2: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT, 
         allowNull: false,
       },
       height: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT, 
         allowNull: false,
       },
       width: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       pageNumber: {

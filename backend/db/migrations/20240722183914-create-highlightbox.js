@@ -15,31 +15,31 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       annotationId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       x1: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT, 
         allowNull: false,
       },
       y1: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       x2: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT, 
         allowNull: false,
       },
       y2: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       height: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       width: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT, 
         allowNull: false,
       },
       pageNumber: {

@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       annotationId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       text: {

@@ -8,7 +8,7 @@ let middleware = [];
 
 // Create a annotation
 middleware = [...baseMiddleware];
-router.post("/", middleware, annotation.createAnnotation);
+router.post("/", middleware,(req,res)=>annotation.createAnnotation(req,res));
 
 // Get all Annotations of specific document
 router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(req, res));

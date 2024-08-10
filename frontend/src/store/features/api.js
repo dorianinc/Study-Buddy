@@ -132,7 +132,15 @@ export const api = createApi({
       query: ({user,docId})=>({
         url:`/annotations?docId=${docId}`,
         method:'GET',
-      })
+      }),
+      invalidatesTags:['Annotation']
+    }),
+    updateAnnotations : builder.mutation({
+      query:({user,annotationId}) => ({
+        url: `/annotations?annotationId=${annotationId}`,
+        method:'PUT',
+      }),
+      invalidatesTags:["Annotation"]
     })
   }),
 });
@@ -160,4 +168,5 @@ export const {
   useGetOneNoteQuery,
   useCreateAnnotationMutation,
   useGetAllAnnotationsQuery,
+  useUpdateAnnotationsMutation
 } = api;

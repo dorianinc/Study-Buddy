@@ -23,7 +23,7 @@ const Viewer = () => {
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-
+  console.log('viewer',annotation)
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []

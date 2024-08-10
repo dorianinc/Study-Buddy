@@ -7,11 +7,11 @@ import { useParams } from "react-router-dom";
 
 function DisplayDoc() {
   const {docId} = useParams()
-  const {data:annotation} = useGetAllAnnotationsQuery({docId})
-  console.log('display doc',annotation)
+  // const {data:annotation} = useGetAllAnnotationsQuery({docId})
+  // console.log('display doc',annotation)
   return (
     <>
-      <MyNotes annotations={annotation}/>
+      <MyNotes docId={docId}/>
       <div>Display Doc</div>
       <Flex w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5} >
         <Container minW={"50vw"} h={"75%"} borderRadius={10} centerContent>

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Cookies from "js-cookie";
 import { useHighlightContainerContext, usePdfHighlighterContext } from "react-pdf-highlighter-extended";
 import { Bars } from 'react-loader-spinner'
-import { useCreateAnnotationMutation, useCreateNoteMutation, useGetOneDocQuery } from "../../../store/features/api";
+import { useCreateAnnotationMutation, useCreateNoteMutation, useGetAllAnnotationsQuery, useGetOneDocQuery } from "../../../store/features/api";
 import { useSelector } from "react-redux";
 const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) => {
   const user = useSelector(state => state.session.user)

@@ -37,19 +37,22 @@ const createAnnotation = async (req, res) => {
     });
 
     // Set content
+    let contentMain
     if (content.text) {
-      await Content.create({
+      contentMain = await Content.create({
         annotationId: id,
         text: content.text,
       });
     } else {
-      await Content.create({
+      contentMain = await Content.create({
         annotationId: id,
         image: content.image,
       });
     }
+    annotation.content = contentMain
 
-    await HighlightBox.create({
+    //set boundingRects
+    const boundingRect = await HighlightBox.create({
       annotationId: id,
       x1: Number(highlightBox.x1),
       y1: highlightBox.y1,
@@ -59,11 +62,14 @@ const createAnnotation = async (req, res) => {
       height: highlightBox.height,
       pageNumber: highlightBox.pageNumber,
     });
+    annotation.position = {}
+    annotation.position.boundingRect = boundingRect
 
     // Set highlights
+    annotation.rects = []
     for (let i = 0; i < highlights.length; i++) {
       const highlight = highlights[i];
-      await Highlight.create({
+      const rect = await Highlight.create({
         annotationId: id,
         x1: highlight.x1,
         y1: highlight.y1,
@@ -73,11 +79,10 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
+      annotation.rects.push(rect)
+
     }
 
-   annotation.content = JSON.stringify(content)
-   annotation.position = position
-    console.log(annotation)
     res.json(annotation);
 
   } catch (error) {

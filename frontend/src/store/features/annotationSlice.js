@@ -12,13 +12,24 @@ const annotationSlice = createSlice({
         builder.addMatcher(
             api.endpoints.createAnnotation.matchFulfilled,
             (state,{payload})=>{
-                state[payload.id] = payload
+                const newObj = {...state.annotations}
+                newObj[payload.id] = payload
+                state.annotations = newObj
             }
         )
         builder.addMatcher(
             api.endpoints.getAllAnnotations.matchFulfilled,
             (state,{payload})=>{
-                state.annotations = payload
+                const newObj = {}
+                payload.forEach(ele=>newObj[ele.id] = ele)
+                state.annotations = newObj
+            }
+        )
+        builder.addMatcher(
+            api.endpoints.updateAnnotations.matchFulfilled,
+            (state,{payload})=>{
+                const newObj = {...state.annotations,payload}
+                state.annotations = newObj
             }
         )
     }

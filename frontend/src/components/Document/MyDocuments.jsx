@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
-import { useGetOneFolderMutation } from "../../store/features/api";
+import { useGetOneFolderQuery } from "../../store/features/api";
 import { useSelector } from "react-redux";
 import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
@@ -12,16 +12,12 @@ import ModalButton from "../Modals/ModalButton";
 
 // Display all documents related to a specific folder
 function MyDocuments() {
-  const [getOneFolder] = useGetOneFolderMutation();
   const { folderId } = useParams();
-  const folder = useSelector((state) => state.folder[folderId]);
-  const documents = folder?.documents;
+  const { data: folder, isLoading, error } = useGetOneFolderQuery(folderId);
 
-  useEffect(() => {
-    getOneFolder(folderId);
-  }, [getOneFolder]);
-
-  if (!folder || !documents) return;
+  if (isLoading) {
+    return <div>Loading documents...</div>;
+  }
 
   return (
     <Box>
@@ -33,8 +29,8 @@ function MyDocuments() {
             modalComponent={<NewDocModal folderId={folderId} />}
           />
         </GridItem>
-        {documents.length ?
-          (documents?.map((doc) => (
+        {folder.documents.length ?
+          (folder.documents?.map((doc) => (
             <GridItem
               key={doc.id} display='flex' w='fit-content' justifyContent='center' pt={0}>
               <ChakraLink

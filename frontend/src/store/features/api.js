@@ -49,10 +49,8 @@ export const api = createApi({
       invalidatesTags: ["CurrentUser"],
     }),
     //Folders
-    getOneFolder: builder.mutation({
-      query: (folderId) => ({
-        url: `folders/${folderId}`
-      }),
+    getOneFolder: builder.query({
+      query: (folderId) => `folders/${folderId}`,
       providesTags: ["Folder"]
     }),
     getFolders: builder.query({
@@ -131,14 +129,13 @@ export const {
   useSignupMutation,
   useRestoreUserQuery,
   useLogoutMutation,
+  useGetOneDocQuery,
   useCreateDocMutation,
   useDeleteDocMutation,
-  useGetOneDocQuery,
   useGetFoldersQuery,
   useCreateFolderMutation,
   useGetNotesQuery,
-  useGetFoldersMutation,
-  useGetOneFolderMutation,
+  useGetOneFolderQuery,
   useCreateNoteMutation,
   useDeleteNoteMutation,
   useEditNoteMutation,

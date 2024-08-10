@@ -9,9 +9,9 @@ import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
 import { useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
-import { 
+import {
   Flex,
-  Box 
+  Box
 } from "@chakra-ui/react";
 
 const TEST_HIGHLIGHTS = _testHighlights;
@@ -19,8 +19,9 @@ const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
 const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
 
 const Viewer = () => {
-  const {docId} = useParams()
-  const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
+  const {documentId} = useParams()
+  console.log("🚀 ~ Viewer ~ docId:", documentId)
+  const {data:documents,isLoading,error} = useGetOneDocQuery({documentId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
   console.log('this is document',documents)
   // const [url,setUrl] = useState(documents.fileUrl)

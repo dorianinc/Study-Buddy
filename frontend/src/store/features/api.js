@@ -68,7 +68,7 @@ export const api = createApi({
     //Documents
     getOneDoc: builder.query({
       query: ({docId}) => ({
-        url: `documents/${docId}`
+        url: `documents/?docId=${docId}`
       }),
       providesTags:["Document"]
     }),
@@ -81,8 +81,8 @@ export const api = createApi({
       providesTags: ["Document"],
     }),
     deleteDoc: builder.mutation({
-      query: ({ user }) => ({
-        url: "documents/:docId/",
+      query: ({ docId }) => ({
+        url: `documents/${docId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Document"]

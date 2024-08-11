@@ -17,7 +17,7 @@ router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(req, res
 router.get("/:annotationId", baseMiddleware, annotation.getSingleAnnotation);
 
 // Update a single Annotation based off id
-router.put("/:annotationId", baseMiddleware, annotation.updateAnnotation);
+router.put("/:annotationId", baseMiddleware, (req,res)=>annotation.updateAnnotation(req,res));
 
 // Delete a Single Annotation based of id
 router.delete("/:annotationId", baseMiddleware, annotation.deleteAnnotation);

@@ -144,12 +144,15 @@ const getSingleAnnotation = async (req, res) => {};
 // Update a single Annotation based off id
 const updateAnnotation = async (req, res) => {
   const user = req.user
-  const {annotationId} = req.query
-  const {comment} = req.body
-  const annotation = Annotation.findByPk(annotationId)
-  if(!annotation) res.status(403).json(doesNotExist("Annotation"))
+  const {annotationId} = req.params
+  const {commentText} = req.body
+  const annotation = await Annotation.findByPk(annotationId)
+  if(!annotation){
+    res.status(404).json(doesNotExist("Annotation"))
+  }
   if(isAuthorized(user.id,annotation.authorId,res)){
-    annotation.comment = comment
+
+    annotation.comment = commentText
     await annotation.save()
     res.json(annotation)
   }else{
@@ -158,7 +161,19 @@ const updateAnnotation = async (req, res) => {
 };
 
 // Delete a Single Annotation based of id
-const deleteAnnotation = async (req, res) => {};
+const deleteAnnotation = async (req, res) => {
+  const user = req.user
+  const {annotationId} = req.params
+  const annotation  = await Annotation.findByPk(annotationId)
+  if(!annotation){
+    res.status(404).json(doesNotExist("Annotation"))
+  }
+  if(isAuthorized(user.id,annotation.authorId,res)){
+    await annotation.destroy()
+    res.json({"annotationId":annotationId})
+  }
+  res.json({"message":"Unauthorized"})
+};
 
 module.exports = {
   createAnnotation,

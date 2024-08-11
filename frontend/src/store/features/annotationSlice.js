@@ -28,7 +28,17 @@ const annotationSlice = createSlice({
         builder.addMatcher(
             api.endpoints.updateAnnotations.matchFulfilled,
             (state,{payload})=>{
-                const newObj = {...state.annotations,payload}
+                const newObj = {...state.annotations}
+                console.log('from slice',newObj[payload.id])
+                newObj[payload.id] = payload
+                state.annotations = newObj
+            }
+        )
+        builder.addMatcher(
+            api.endpoints.deleteAnnotation.matchFulfilled,
+            (state,{payload})=>{
+                const newObj = {...state.annotations}
+                delete newObj[payload.annotationId]
                 state.annotations = newObj
             }
         )

@@ -67,9 +67,7 @@ export const api = createApi({
     }),
     //Documents
     getOneDoc: builder.query({
-      query: ({docId}) => ({
-        url: `documents/?docId=${docId}`
-      }),
+      query: (docId) => `documents/${docId}`,
       providesTags:["Document"]
     }),
     createDoc: builder.mutation({

@@ -15,7 +15,7 @@ const App = () => {
         <div className="content-container">
           <Routes>
             <Route
-              path="/folders/:folderId/:documentId"
+              path="/folders/:folderId/:docId"
               element={<DisplayDoc />}
             />
             <Route path="/folders/:folderId" element={<MyDocuments />} />

@@ -19,9 +19,9 @@ const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
 const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
 
 const Viewer = () => {
-  const {documentId} = useParams()
-  console.log("🚀 ~ Viewer ~ docId:", documentId)
-  const {data:documents,isLoading,error} = useGetOneDocQuery({documentId})
+  const { docId } = useParams()
+  console.log("🚀 ~ Viewer ~ documentId:", docId)
+  const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
   console.log('this is document',documents)
   // const [url,setUrl] = useState(documents.fileUrl)
@@ -88,6 +88,9 @@ const Viewer = () => {
     return highlights.find((highlight) => highlight.id === id);
   };
 
+  if(isLoading) {
+    return <h1>Loading PDF</h1>
+  }
   return (
     <Flex className="App" h={'100%'}>
       {/* <Sidebar
@@ -106,7 +109,7 @@ const Viewer = () => {
           setPdfScaleValue={(value) => setPdfScaleValue(value)}
           toggleHighlightPen={() => setHighlightPen(!highlightPen)}
         />
-        <PdfLoader document={url}>
+        <PdfLoader document={documents.fileUrl}>
           {(pdfDocument) => (
             <PdfHighlighter
               enableAreaSelection={(event) => event.altKey}

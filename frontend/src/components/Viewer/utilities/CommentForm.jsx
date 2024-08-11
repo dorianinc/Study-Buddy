@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Container, Textarea } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import Cookies from "js-cookie";
@@ -11,18 +11,21 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
   const [comment, setComment] = useState("");
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
   const [createAnnotation] = useCreateAnnotationMutation()
+  const [prompt,setPrompt] = useState("")
   const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
+  console.log(selectedText)
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
+    console.log(selectedText)
     const response = await fetch('/api/gemini', {
       method: 'POST',
       headers: {
-        'comment-Type': 'application/json',
+        'Content-Type': 'application/json',
         'XSRF-Token': `${Cookies.get('XSRF-TOKEN')}`
       },
-      body: JSON.stringify({ 'prompt': selectedText })
+      body: JSON.stringify({"prompt": prompt,"selectedText":selectedText })
 
 
     })
@@ -50,21 +53,24 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
 
       }}
     >
+      <Container>
+        <Textarea
+          placeholder="What do you want to do with the passage?"
+          onChange={(e)=>setPrompt(e.target.value)}
+        >
+
+        </Textarea>
       <Button
         onClick={AIGenerate}
+        isDisabled = {!prompt}
+        isLoading={isLoadingAIRes}
+        colorScheme="blue"
       >
-        {isLoadingAIRes ? <Bars
-          height="40"
-          width="40"
-          color="#4fa94d"
-          ariaLabel="bars-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        /> : 'Generate Note'
-        }
+        Generate Note
 
       </Button>
+
+      </Container>
       <div>
         <textarea
           placeholder={placeHolder}

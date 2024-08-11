@@ -104,6 +104,9 @@ const getAnnotations = async (req, res, docId = null) => {
   const annotations = await Annotation.findAll({
     where: { docId },
     raw: true,
+    order:[
+      ['createdAt','DESC']
+    ]
   });
 
   for (let i = 0; i < annotations.length; i++) {
@@ -148,7 +151,7 @@ const updateAnnotation = async (req, res) => {
   if(isAuthorized(user.id,annotation.authorId,res)){
     annotation.comment = comment
     await annotation.save()
-    res.json({"message":"comment updated"})
+    res.json(annotation)
   }else{
     res.json({"message":"Unauthorized"})
   }

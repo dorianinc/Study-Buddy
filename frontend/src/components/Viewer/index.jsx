@@ -20,7 +20,8 @@ const Viewer = () => {
   const { docId } = useParams()
   const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
   const {data:annotation} = useGetAllAnnotationsQuery({docId})
-  const [url, setUrl] = useState(PRIMARY_PDF_URL);
+  const [url, setUrl] = useState(documents?.fileUrl);
+  console.log(documents)
   // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
@@ -116,6 +117,8 @@ const Viewer = () => {
   if(isLoading) {
     return <h1>Loading PDF</h1>
   }
+
+  if(error) return error
 
   return (
     <Flex className="App" h={'100%'}>

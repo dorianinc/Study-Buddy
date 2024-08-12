@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CommentForm from "./utilities/CommentForm";
-import ContextMenu from "./utilities/ContextMenu";
 import ExpandableTip from "./utilities/ExpandableTip";
 // import Sidebar from "./utilities/Sidebar";
 import Toolbar from "./utilities/Toolbar";
@@ -28,7 +26,6 @@ const Viewer = () => {
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
     // );
-    console.log(annotation)
     const [highlights,setHighlights] = useState(annotation? annotation:[])
     const currentPdfIndexRef = useRef(0);
     const [contextMenu, setContextMenu] = useState(null);
@@ -72,17 +69,14 @@ const Viewer = () => {
   };
 
   const addHighlight = (highlight, comment) => {
-    console.log("Saving highlight", highlight);
     setHighlights([{ ...highlight, comment, id: getNextId() }, ...highlights]);
   };
 
   const deleteHighlight = (highlight) => {
-    console.log("Deleting highlight", highlight);
     setHighlights(highlights.filter((h) => h.id != highlight.id));
   };
 
   const editHighlight = (idToUpdate, edit) => {
-    console.log(`Editing highlight ${idToUpdate} with `, edit);
     setHighlights(
       highlights.map((highlight) =>
         highlight.id === idToUpdate ? { ...highlight, ...edit } : highlight

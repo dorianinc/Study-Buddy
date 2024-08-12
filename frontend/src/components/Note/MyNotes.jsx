@@ -31,7 +31,7 @@ function MyNotes({docId}) {
   const data = useSelector(state=>state.annotation.annotations)
   const annotations = Object.values(data).sort((a,b)=>Date.parse(b.createdAt) - Date.parse(a.createdAt))
   // console.log('entered MyNotes',testingdata)
-  console.log('annotations',annotations)
+
 
   // console.log('this is annotations',annotations)
   const document = {
@@ -57,7 +57,7 @@ function MyNotes({docId}) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log('mynote',document.location)
+
 
   return (
     <>

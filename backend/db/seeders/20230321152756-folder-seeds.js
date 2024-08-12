@@ -27,7 +27,6 @@ const folderSeeds = () => {
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     options.tableName = "Folders";
-    console.log('=======> optins',options)
     return queryInterface.bulkInsert(options, folderSeeds(), {});
   },
 

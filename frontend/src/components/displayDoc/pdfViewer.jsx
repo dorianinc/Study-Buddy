@@ -138,7 +138,7 @@ function PdfViewer() {
         //     })
         // }
     }
-    console.log('this is note', note)
+
     function prev() {
         if (pageNumber > 1) setPageNumber(prev => prev - 1)
     }
@@ -167,7 +167,7 @@ function PdfViewer() {
 
     async function createNewNote(e){
         e.preventDefault()
-        console.log('entered createing notes') // hardcoding doc ID for testig
+        // hardcoding doc ID for testig
         if(!note.length) setNoteError(true)
         else{
             const docID = 1

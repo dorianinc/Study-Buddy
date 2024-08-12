@@ -16,7 +16,7 @@ const createAnnotation = async (req, res) => {
     const { docId, docUrl, type, comment, content, position } = req.body;
     const highlightBox = position.boundingRect;
     const highlights = position.rects;
-    console.log('from server',{...req.body})
+
 
     // Log inputs
     // console.log("🖥️  id: ", id);

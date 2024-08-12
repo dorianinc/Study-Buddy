@@ -29,7 +29,6 @@ const annotationSlice = createSlice({
             api.endpoints.updateAnnotations.matchFulfilled,
             (state,{payload})=>{
                 const newObj = {...state.annotations}
-                console.log('from slice',newObj[payload.id])
                 newObj[payload.id] = payload
                 state.annotations = newObj
             }

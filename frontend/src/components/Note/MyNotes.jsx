@@ -15,18 +15,33 @@ import {
   EditablePreview,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { useGetNotesQuery } from "../../store/features/api";
 
+
+import NoteContainer from './NoteContainer.jsx'
+import { useGetAllAnnotationsQuery } from "../../store/features/api.js";
+import { useSelector } from "react-redux";
 // TODO: Make individual note components into Editables and reorderable
 
-function MyNotes() {
+function MyNotes({docId}) {
+
+  // const {data:annotation} = useGetAllAnnotationsQuery({docId})
+  // const {data:annotations} = useGetAllAnnotationsQuery({docId})
+  // // const annotation = useSelector(state=>state.annotation)
+  // const {data} = useGetAllAnnotationsQuery({docId})
+  const data = useSelector(state=>state.annotation.annotations)
+  const annotations = Object.values(data).sort((a,b)=>Date.parse(b.createdAt) - Date.parse(a.createdAt))
+  // console.log('entered MyNotes',testingdata)
+  console.log('annotations',annotations)
+
+  // console.log('this is annotations',annotations)
   const document = {
     name: "Math homework",
   };
 
+  // useEffect(()=>{
+  //   useGetAllAnnotationsQuery({docId})
+  // },[annotation])
   // TODO: pass in docId to this component
-  const { data: notes, isSuccess, error } = useGetNotesQuery(1);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -42,6 +57,7 @@ function MyNotes() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  console.log('mynote',document.location)
 
   return (
     <>
@@ -75,24 +91,11 @@ function MyNotes() {
           <DrawerHeader>{document.name} Notes</DrawerHeader>
 
           <DrawerBody>
-            <Input placeholder="Type here..." />
+
+          {annotations?.map(ele=>{
+            if(ele.comment) return <NoteContainer key={ele.id} annotation={ele}/>
+            })}
           </DrawerBody>
-
-          <Editable defaultValue="">
-            <EditablePreview />
-            <EditableTextarea />
-          </Editable>
-
-          {isSuccess ?
-            notes.map((note) => (
-              <div key={note.id}>
-                <div>{note.content}</div>
-                <hr />
-                <br />
-              </div>
-            )) :
-            <div>{error?.message}</div>
-            }
 
           <DrawerFooter>
             <Button variant="outline" mr={3} onClick={onClose}>

@@ -7,8 +7,9 @@ import Toolbar from "./utilities/Toolbar";
 import HighlightContainer from "./utilities/HighlightContainer";
 import { PdfLoader, PdfHighlighter } from "react-pdf-highlighter-extended";
 import { testHighlights as _testHighlights } from "./data/testHighlights";
-import { useGetOneDocQuery } from "../../store/features/api";
+import { useGetAllAnnotationsQuery, useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
+import {
 import {
   Flex,
   Box
@@ -19,23 +20,33 @@ const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
 const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
 
 const Viewer = () => {
-  const { docId } = useParams()
-  console.log("🚀 ~ Viewer ~ documentId:", docId)
-  const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
+  const {docId} = useParams()
+  const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
+  const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  console.log('this is document',documents)
+  // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
-  //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
-  // );
-  const [highlights,setHighlights] = useState(documents?.Highlights ?? [] )
-  const currentPdfIndexRef = useRef(0);
-  const [contextMenu, setContextMenu] = useState(null);
-  const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
-  const [highlightPen, setHighlightPen] = useState(false);
+    //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
+    // );
+    console.log(annotation)
+    const [highlights,setHighlights] = useState(annotation? annotation:[])
+    const currentPdfIndexRef = useRef(0);
+    const [contextMenu, setContextMenu] = useState(null);
+    const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
+    const [highlightPen, setHighlightPen] = useState(false);
+    // Refs for PdfHighlighter utilities
+    const highlighterUtilsRef = useRef();
 
-  // Refs for PdfHighlighter utilities
-  const highlighterUtilsRef = useRef();
+    useEffect(()=>{
+      setHighlights(annotation)
+    },[annotation])
+
+    // useEffect for changing highlightRef
+    // (()=>{
+    //   document.location.hash = highLightRef
+    //   console.log('this is hash',document.location.hash)
+    // },[highLightRef])
 
   const toggleDocument = () => {
     const urls = [PRIMARY_PDF_URL, SECONDARY_PDF_URL];
@@ -88,9 +99,27 @@ const Viewer = () => {
     return highlights.find((highlight) => highlight.id === id);
   };
 
-  if(isLoading) {
-    return <h1>Loading PDF</h1>
+  const resetHash = ()=>{
+    window.location.hash=""
   }
+
+  const scrollToHighlightFromHash = () => {
+    const highlight = getHighlightById(parseIdFromHash());
+    if (highlight && highlighterUtilsRef.current) {
+      highlighterUtilsRef.current.scrollToHighlight(highlight);
+    }
+  };
+
+  // Hash listeners for autoscrolling to highlights
+  useEffect(() => {
+    window.addEventListener("hashchange", scrollToHighlightFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", scrollToHighlightFromHash);
+    };
+  }, [scrollToHighlightFromHash]);
+
+
   return (
     <Flex className="App" h={'100%'}>
       {/* <Sidebar
@@ -114,10 +143,11 @@ const Viewer = () => {
             <PdfHighlighter
               enableAreaSelection={(event) => event.altKey}
               pdfDocument={pdfDocument}
+              onScrollAway={resetHash}
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
-              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={documents?.id}/>} // Component will render as a tip upon any selection
+              selectionTip={<ExpandableTip addHighlight={addHighlight} docId={docId} url={url}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >
               <HighlightContainer

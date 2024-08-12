@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Annotation",
       defaultScope: {
         attributes: {
-          exclude: ["authorId", "docId"],
+          exclude: ["docId"],
         },
       },
     }

@@ -16,6 +16,7 @@ const createAnnotation = async (req, res) => {
     const { docId, docUrl, type, comment, content, position } = req.body;
     const highlightBox = position.boundingRect;
     const highlights = position.rects;
+    console.log('from server',{...req.body})
 
     // Log inputs
     // console.log("🖥️  id: ", id);
@@ -26,7 +27,7 @@ const createAnnotation = async (req, res) => {
     // console.log("Highlights: ", highlights);
 
     // Create the annotation
-    await Annotation.create({
+    const annotation = await Annotation.create({
       id,
       authorId: user.id,
       docId,
@@ -36,19 +37,22 @@ const createAnnotation = async (req, res) => {
     });
 
     // Set content
+    let contentMain
     if (content.text) {
-      await Content.create({
+      contentMain = await Content.create({
         annotationId: id,
         text: content.text,
       });
     } else {
-      await Content.create({
+      contentMain = await Content.create({
         annotationId: id,
         image: content.image,
       });
     }
+    annotation.content = contentMain
 
-    await HighlightBox.create({
+    //set boundingRects
+    const boundingRect = await HighlightBox.create({
       annotationId: id,
       x1: Number(highlightBox.x1),
       y1: highlightBox.y1,
@@ -58,11 +62,14 @@ const createAnnotation = async (req, res) => {
       height: highlightBox.height,
       pageNumber: highlightBox.pageNumber,
     });
+    annotation.position = {}
+    annotation.position.boundingRect = boundingRect
 
     // Set highlights
+    annotation.rects = []
     for (let i = 0; i < highlights.length; i++) {
       const highlight = highlights[i];
-      await Highlight.create({
+      const rect = await Highlight.create({
         annotationId: id,
         x1: highlight.x1,
         y1: highlight.y1,
@@ -72,9 +79,12 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
+      annotation.rects.push(rect)
+
     }
 
-    res.send({ message: "sup" });
+    res.json(annotation);
+
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
@@ -88,13 +98,15 @@ const createAnnotation = async (req, res) => {
 const getAnnotations = async (req, res, docId = null) => {
   let user;
   if (req) {
-    user = { req };
+    user = req.user;
     docId = req.query.docId;
   }
-
   const annotations = await Annotation.findAll({
     where: { docId },
     raw: true,
+    order:[
+      ['createdAt','DESC']
+    ]
   });
 
   for (let i = 0; i < annotations.length; i++) {
@@ -130,10 +142,38 @@ const getAnnotations = async (req, res, docId = null) => {
 const getSingleAnnotation = async (req, res) => {};
 
 // Update a single Annotation based off id
-const updateAnnotation = async (req, res) => {};
+const updateAnnotation = async (req, res) => {
+  const user = req.user
+  const {annotationId} = req.params
+  const {commentText} = req.body
+  const annotation = await Annotation.findByPk(annotationId)
+  if(!annotation){
+    res.status(404).json(doesNotExist("Annotation"))
+  }
+  if(isAuthorized(user.id,annotation.authorId,res)){
+
+    annotation.comment = commentText
+    await annotation.save()
+    res.json(annotation)
+  }else{
+    res.json({"message":"Unauthorized"})
+  }
+};
 
 // Delete a Single Annotation based of id
-const deleteAnnotation = async (req, res) => {};
+const deleteAnnotation = async (req, res) => {
+  const user = req.user
+  const {annotationId} = req.params
+  const annotation  = await Annotation.findByPk(annotationId)
+  if(!annotation){
+    res.status(404).json(doesNotExist("Annotation"))
+  }
+  if(isAuthorized(user.id,annotation.authorId,res)){
+    await annotation.destroy()
+    res.json({"annotationId":annotationId})
+  }
+  res.json({"message":"Unauthorized"})
+};
 
 module.exports = {
   createAnnotation,

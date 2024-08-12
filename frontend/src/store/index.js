@@ -6,6 +6,8 @@ import documentSliceReducer from "./features/documentSlice";
 import noteSliceReducer from "./features/noteSlice";
 import { api } from "./features/api";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import annotationSliceReducer from "./features/annotationSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +15,8 @@ export const store = configureStore({
     session: sessionSliceReducer,
     folder: folderSliceReducer,
     document: documentSliceReducer,
-    note: noteSliceReducer
+    note: noteSliceReducer,
+    annotation : annotationSliceReducer
   },
   middleware: (getDefaultMiddleware) => {
     const middleware = getDefaultMiddleware().concat(api.middleware);

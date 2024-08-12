@@ -23,15 +23,15 @@ module.exports = {
         allowNull: false,
       },
       y1: {
-        type: Sequelize.FLOAT, 
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       x2: {
-        type: Sequelize.FLOAT, 
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       y2: {
-        type: Sequelize.FLOAT, 
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       height: {
@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
       },
       width: {
-        type: Sequelize.FLOAT, 
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       pageNumber: {
@@ -56,9 +56,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
-    });
+    },options);
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Highlights");
+    options.tableName = 'Highlights'
+    await queryInterface.dropTable(options);
   },
 };

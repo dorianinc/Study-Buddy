@@ -1,38 +1,37 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Container, Textarea } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import Cookies from "js-cookie";
 import { useHighlightContainerContext, usePdfHighlighterContext } from "react-pdf-highlighter-extended";
 import { Bars } from 'react-loader-spinner'
-import { useCreateNoteMutation, useGetOneDocQuery } from "../../../store/features/api";
+import { useCreateAnnotationMutation, useCreateNoteMutation, useGetAllAnnotationsQuery, useGetOneDocQuery } from "../../../store/features/api";
 import { useSelector } from "react-redux";
-const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
-  const [content, setContent] = useState("");
-  const user = useSelector(state=>state.session.user)
+const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) => {
+  const user = useSelector(state => state.session.user)
+  const [comment, setComment] = useState("");
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
-  // const {data:document} = useGetOneDocQuery()
-  // const document = useSelector(state=>state.document)
-  // const docId = document.id
-  // console.log('comment form',document)
-  console.log('comment form docId',docId)
+  const [createAnnotation] = useCreateAnnotationMutation()
+  const [prompt,setPrompt] = useState("")
+  const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
-  const [createNote] = useCreateNoteMutation()
+  console.log(selectedText)
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
+    console.log(selectedText)
     const response = await fetch('/api/gemini', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'XSRF-Token': `${Cookies.get('XSRF-TOKEN')}`
       },
-      body: JSON.stringify({ 'prompt': selectedText })
+      body: JSON.stringify({"prompt": prompt,"selectedText":selectedText })
 
 
     })
     const data = await response.json()
     setIsLoadingAIRes(false)
-    setContent(data.AIResponse)
+    setComment(data.AIResponse)
   }
 
 
@@ -41,34 +40,45 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent,docId}) => {
       className="Tip__card"
       onSubmit={async (event) => {
         event.preventDefault();
-        onSubmit(content);
-        await createNote({user,content,docId})
+        onSubmit(comment);
+        console.log('submitted')
+        const queryObject = {
+          user,
+          docId: parseInt(docId),
+          docUrl,
+          comment,
+          ...content
+        }
+        await createAnnotation({...queryObject})
 
       }}
     >
+      <Container>
+        <Textarea
+          placeholder="What do you want to do with the passage?"
+          onChange={(e)=>setPrompt(e.target.value)}
+        >
+
+        </Textarea>
       <Button
         onClick={AIGenerate}
+        isDisabled = {!prompt}
+        isLoading={isLoadingAIRes}
+        colorScheme="blue"
       >
-        {isLoadingAIRes ? <Bars
-          height="40"
-          width="40"
-          color="#4fa94d"
-          ariaLabel="bars-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        /> : 'Generate Note'
-        }
+        Generate Note
 
       </Button>
+
+      </Container>
       <div>
         <textarea
           placeholder={placeHolder}
           autoFocus
           onChange={(event) => {
-            setContent(event.target.value);
+            setComment(event.target.value);
           }}
-          value={content}
+          value={comment}
         />
       </div>
       <div>

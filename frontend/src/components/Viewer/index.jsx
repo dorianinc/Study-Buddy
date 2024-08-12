@@ -10,7 +10,6 @@ import { testHighlights as _testHighlights } from "./data/testHighlights";
 import { useGetAllAnnotationsQuery, useGetOneDocQuery } from "../../store/features/api";
 import { useParams } from 'react-router-dom';
 import {
-import {
   Flex,
   Box
 } from "@chakra-ui/react";

@@ -3,7 +3,7 @@ import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
 import { useGetOneFolderQuery } from "../../store/features/api";
 import { useSelector } from "react-redux";
-import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Button, Container, Grid, GridItem } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import Document from "../DocumentIcon/DocumentIcon";
@@ -31,16 +31,22 @@ function MyDocuments() {
         </GridItem>
         {folder.documents.length ?
           (folder.documents?.map((doc) => (
+            <Container>
+
             <GridItem
               key={doc.id} display='flex' w='fit-content' justifyContent='center' pt={0}>
               <ChakraLink
                 as={ReactRouterLink}
                 to={`/folders/${folderId}/${doc.id}`}
 
-              >
+                >
                 <Document document={doc} />
               </ChakraLink>
             </GridItem>
+            <ModalButton
+              buttonContent={<><Button size='xs'>Delete</Button></>}
+            />
+                </Container>
           ))) :
           <>
             <h1>No documents have been uploaded. Click on the plus button to get started!</h1>

@@ -70,7 +70,7 @@ const restoreUser = async (req, res) => {
   } else return res.json({ user: null });
 };
 // logout user
-const logoutUser = async () => {
+const logoutUser = async (req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });
 };

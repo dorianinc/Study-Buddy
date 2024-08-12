@@ -51,7 +51,7 @@ export const api = createApi({
     //Folders
     getOneFolder: builder.query({
       query: (folderId) => `folders/${folderId}`,
-      providesTags: ["Folder"]
+      providesTags: ["Folder", "Document"]
     }),
     getFolders: builder.query({
       query: (user) => 'folders/',
@@ -76,14 +76,14 @@ export const api = createApi({
         method: "POST",
         body: formData,
       }),
-      providesTags: ["Document"],
+      invalidatesTags: ["Document"],
     }),
     deleteDoc: builder.mutation({
       query: ({ docId }) => ({
         url: `documents/${docId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Document"]
+      invalidatesTags: ["Document", "Folder"]
     }),
     getNotes: builder.query({
       query: (docId) => `/notes?docId=${docId}`,

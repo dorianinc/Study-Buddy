@@ -10,7 +10,8 @@ import {
     EditableTextarea,
     Input,
     useControllableProp,
-    Button
+    Button,
+    Container
 } from "@chakra-ui/react";
 
 import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
@@ -33,6 +34,11 @@ const NoteContainer = ({ annotation }) => {
     async function deleteComment(){
         await deleteAnnotation({user,annotationId})
     }
+
+    function updateHash(){
+        console.log('entered note',annotationId)
+        window.location.hash = `highlight-${annotationId}`
+    }
     function EditableControls() {
         const {
             isEditing,
@@ -46,9 +52,7 @@ const NoteContainer = ({ annotation }) => {
             <ButtonGroup
                 justifyContent='center'
                 size ='l'
-
             >
-
                 <IconButton icon={<CheckIcon boxSize={4} />} {...getSubmitButtonProps()} isDisabled={!commentText} />
                 <IconButton icon={<CloseIcon boxSize={4} />} {...getCancelButtonProps()} />
             </ButtonGroup>
@@ -56,7 +60,6 @@ const NoteContainer = ({ annotation }) => {
             <Flex justifyContent='center'>
                 <ButtonGroup
                     size='l'
-
                 >
                     <IconButton icon={<EditIcon boxSize={4} />} {...getEditButtonProps()} />
                     <IconButton icon={<DeleteIcon boxSize={4} />} onClick={deleteComment} />
@@ -69,7 +72,7 @@ const NoteContainer = ({ annotation }) => {
 
     return (
         <Editable
-            textAlign='center'
+            // textAlign='center'
             defaultValue={commentText}
             fontSize='xl'
             isPreviewFocusable={false}
@@ -77,8 +80,21 @@ const NoteContainer = ({ annotation }) => {
             display="flex"
             flexDirection='collumn'
             gap='5px'
+            marginTop='10px'
+            marginBottom="10px"
         >
+            <Container
+                maxHeight='200'
+                overflowY="auto"
+                onClick={updateHash}
+                boxShadow='xs' p='6' rounded='md' bg='white'
+                >
             <EditablePreview
+                _hover={{
+                    background: "white",
+                    color: "blue.500",
+                    cursor:'pointer'
+                  }}
                 width='90%'
             />
             <Input
@@ -86,7 +102,9 @@ const NoteContainer = ({ annotation }) => {
                 onChange={(e) => setCommentText(e.target.value)}
                 width='90%'
             />
+            </Container>
             <EditableControls />
+
         </Editable>
     )
 }

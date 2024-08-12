@@ -57,7 +57,7 @@ function MyNotes({docId}) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log('mynote',annotations)
+  console.log('mynote',document.location)
 
   return (
     <>

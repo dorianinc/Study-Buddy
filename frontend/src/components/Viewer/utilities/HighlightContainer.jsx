@@ -16,7 +16,7 @@ const HighlightContainer = ({ editHighlight, onContextMenu }) => {
     isScrolledTo,
     highlightBindings
   } = useHighlightContainerContext()
-
+  console.log('fromo highlight container',isScrolledTo)
   const { toggleEditInProgress } = usePdfHighlighterContext()
   const component =
     highlight.type === "text" ? (

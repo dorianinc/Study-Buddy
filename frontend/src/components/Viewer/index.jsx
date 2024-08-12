@@ -23,11 +23,12 @@ const Viewer = () => {
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  console.log('viewer',annotation)
+  const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
     // );
+    console.log(annotation)
     const [highlights,setHighlights] = useState(annotation? annotation:[])
     const currentPdfIndexRef = useRef(0);
     const [contextMenu, setContextMenu] = useState(null);
@@ -40,13 +41,19 @@ const Viewer = () => {
       setHighlights(annotation)
     },[annotation])
 
+    // useEffect for changing highlightRef
+    useEffect(()=>{
+      document.location.hash = highLightRef
+      console.log('this is hash',document.location.hash)
+    },[highLightRef])
+
   const toggleDocument = () => {
     const urls = [PRIMARY_PDF_URL, SECONDARY_PDF_URL];
     currentPdfIndexRef.current = (currentPdfIndexRef.current + 1) % urls.length;
     setUrl(urls[currentPdfIndexRef.current]);
     setHighlights(TEST_HIGHLIGHTS[urls[currentPdfIndexRef.current]] ?? []);
   };
-
+  console.log('utils',highlighterUtilsRef.current)
   const getNextId = () => String(Math.random()).slice(2);
 
   const parseIdFromHash = () => {
@@ -91,6 +98,27 @@ const Viewer = () => {
     return highlights.find((highlight) => highlight.id === id);
   };
 
+  const resetHash = ()=>{
+    window.location.hash=""
+  }
+
+  const scrollToHighlightFromHash = () => {
+    const highlight = getHighlightById(parseIdFromHash());
+    if (highlight && highlighterUtilsRef.current) {
+      highlighterUtilsRef.current.scrollToHighlight(highlight);
+    }
+  };
+
+  // Hash listeners for autoscrolling to highlights
+  useEffect(() => {
+    window.addEventListener("hashchange", scrollToHighlightFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", scrollToHighlightFromHash);
+    };
+  }, [scrollToHighlightFromHash]);
+
+
   return (
     <Flex className="App" h={'100%'}>
       {/* <Sidebar
@@ -114,6 +142,7 @@ const Viewer = () => {
             <PdfHighlighter
               enableAreaSelection={(event) => event.altKey}
               pdfDocument={pdfDocument}
+              // onScrollAway={resetHash}
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}

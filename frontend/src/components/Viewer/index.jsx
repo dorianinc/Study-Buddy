@@ -23,7 +23,7 @@ const Viewer = () => {
   const {data:documents,isLoading,error} = useGetOneDocQuery({docId})
   const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(PRIMARY_PDF_URL);
-  const [highLightRef,setHighlightRef] = useState('')
+  // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
@@ -42,10 +42,10 @@ const Viewer = () => {
     },[annotation])
 
     // useEffect for changing highlightRef
-    useEffect(()=>{
-      document.location.hash = highLightRef
-      console.log('this is hash',document.location.hash)
-    },[highLightRef])
+    // (()=>{
+    //   document.location.hash = highLightRef
+    //   console.log('this is hash',document.location.hash)
+    // },[highLightRef])
 
   const toggleDocument = () => {
     const urls = [PRIMARY_PDF_URL, SECONDARY_PDF_URL];
@@ -53,7 +53,7 @@ const Viewer = () => {
     setUrl(urls[currentPdfIndexRef.current]);
     setHighlights(TEST_HIGHLIGHTS[urls[currentPdfIndexRef.current]] ?? []);
   };
-  console.log('utils',highlighterUtilsRef.current)
+
   const getNextId = () => String(Math.random()).slice(2);
 
   const parseIdFromHash = () => {
@@ -142,7 +142,7 @@ const Viewer = () => {
             <PdfHighlighter
               enableAreaSelection={(event) => event.altKey}
               pdfDocument={pdfDocument}
-              // onScrollAway={resetHash}
+              onScrollAway={resetHash}
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}

@@ -10,6 +10,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { useCreateDocMutation } from "../../store/features/api";
+import { useModal } from "../../context/ModalContext";
 
 function NewDocModal({ folderId }) {
   const [docName, setDocName] = useState("");
@@ -17,6 +18,7 @@ function NewDocModal({ folderId }) {
   const [fileType, setFileType] = useState("pdf");
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState({});
+  const { closeModal } = useModal();
   const [createDoc, { error, isError, isLoading }] = useCreateDocMutation();
 
   const handleSubmit = async (e) => {
@@ -37,6 +39,7 @@ function NewDocModal({ folderId }) {
     formData.append("name", docName);
     formData.append("fileType", fileType);
     createDoc({ formData, folderId });
+    closeModal();
   };
 
   if (isError) {

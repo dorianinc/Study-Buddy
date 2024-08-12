@@ -1,27 +1,22 @@
-import { useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import NewDocModal from "../Modals/NewDocModal";
-import { useGetOneFolderMutation } from "../../store/features/api";
-import { useSelector } from "react-redux";
-import { Box, Container, Grid, GridItem } from "@chakra-ui/react";
+import { useGetOneFolderQuery } from "../../store/features/api";
+import { Box, Button, Container, Grid, GridItem } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import Document from "../DocumentIcon/DocumentIcon";
 import NewDocButton from "./newDocumentBtn";
 import ModalButton from "../Modals/ModalButton";
+import DeleteDocModal from "../Modals/DeleteDocModal";
 
 // Display all documents related to a specific folder
 function MyDocuments() {
-  const [getOneFolder] = useGetOneFolderMutation();
   const { folderId } = useParams();
-  const folder = useSelector((state) => state.folder[folderId]);
-  const documents = folder?.documents;
+  const { data: folder, isLoading, error } = useGetOneFolderQuery(folderId);
 
-  useEffect(() => {
-    getOneFolder(folderId);
-  }, [getOneFolder]);
-
-  if (!folder || !documents) return;
+  if (isLoading) {
+    return <div>Loading documents...</div>;
+  }
 
   return (
     <Box>
@@ -33,18 +28,25 @@ function MyDocuments() {
             modalComponent={<NewDocModal folderId={folderId} />}
           />
         </GridItem>
-        {documents.length ?
-          (documents?.map((doc) => (
+        {folder.documents.length ?
+          (folder.documents?.map((doc) => (
+            <Container key={doc.id}>
+
             <GridItem
-              key={doc.id} display='flex' w='fit-content' justifyContent='center' pt={0}>
+               display='flex' w='fit-content' justifyContent='center' pt={0}>
               <ChakraLink
                 as={ReactRouterLink}
                 to={`/folders/${folderId}/${doc.id}`}
 
-              >
+                >
                 <Document document={doc} />
               </ChakraLink>
             </GridItem>
+            <ModalButton
+              buttonContent={<><Button size='xs'>Delete</Button></>}
+              modalComponent={< DeleteDocModal doc={doc}/>}
+            />
+                </Container>
           ))) :
           <>
             <h1>No documents have been uploaded. Click on the plus button to get started!</h1>

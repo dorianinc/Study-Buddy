@@ -3,7 +3,7 @@ import CommentForm from "./CommentForm";
 import { usePdfHighlighterContext} from "react-pdf-highlighter-extended";
 import "../styles/ExpandableTip.css";
 
-const ExpandableTip = ({ addHighlight,docId }) => {
+const ExpandableTip = ({ addHighlight,docId,url }) => {
   const [compact, setCompact] = useState(true);
   const selectionRef = useRef(null);
 
@@ -55,6 +55,7 @@ const ExpandableTip = ({ addHighlight,docId }) => {
           onSubmit={(input) => handleSubmit(input)}
           selectedContent={selectionRef}
           docId={docId}
+          docUrl={url}
         />
       )}
     </div>

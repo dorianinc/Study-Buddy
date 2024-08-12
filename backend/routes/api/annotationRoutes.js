@@ -8,16 +8,16 @@ let middleware = [];
 
 // Create a annotation
 middleware = [...baseMiddleware];
-router.post("/", middleware, annotation.createAnnotation);
+router.post("/", middleware,(req,res)=>annotation.createAnnotation(req,res));
 
 // Get all Annotations of specific document
-router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(null, req, res));
+router.get("/", baseMiddleware, (req, res) => annotation.getAnnotations(req, res));
 
 // Get a single Annotation based off id
 router.get("/:annotationId", baseMiddleware, annotation.getSingleAnnotation);
 
 // Update a single Annotation based off id
-router.put("/", baseMiddleware, annotation.updateAnnotation);
+router.put("/:annotationId", baseMiddleware, (req,res)=>annotation.updateAnnotation(req,res));
 
 // Delete a Single Annotation based of id
 router.delete("/:annotationId", baseMiddleware, annotation.deleteAnnotation);

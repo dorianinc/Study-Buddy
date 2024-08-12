@@ -19,7 +19,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["CurrentUser", "Document", "Folder", "Note"],
+  tagTypes: ["CurrentUser", "Document", "Folder", "Note","Annotation"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: ({ firstName, lastName, username, email, password }) => ({
@@ -118,6 +118,36 @@ export const api = createApi({
         method:'PUT',
         body:{content}
       })
+    }),
+    //Annotations
+    createAnnotation : builder.mutation({
+      query:({user,docId,docUrl,type,comment,content,position})=>({
+        url:`/annotations`,
+        method:'POST',
+        body:{docId,docUrl,type,comment,content,position}
+      }),
+      invalidatesTags : ['Annotation']
+    }),
+    getAllAnnotations : builder.query({
+      query: ({user,docId})=>({
+        url:`/annotations?docId=${docId}`,
+        method:'GET',
+      }),
+      invalidatesTags:['Annotation']
+    }),
+    updateAnnotations : builder.mutation({
+      query:({user,annotationId,commentText}) => ({
+        url: `/annotations/${annotationId}`,
+        method:'PUT',
+        body:{commentText}
+      }),
+      invalidatesTags:["Annotation"]
+    }),
+    deleteAnnotation: builder.mutation({
+      query:({user,annotationId})=>({
+        url:`/annotations/${annotationId}`,
+        method:'DELETE',
+      })
     })
   }),
 });
@@ -142,5 +172,9 @@ export const {
   useCreateNoteMutation,
   useDeleteNoteMutation,
   useEditNoteMutation,
-  useGetOneNoteQuery
+  useGetOneNoteQuery,
+  useCreateAnnotationMutation,
+  useGetAllAnnotationsQuery,
+  useUpdateAnnotationsMutation,
+  useDeleteAnnotationMutation
 } = api;

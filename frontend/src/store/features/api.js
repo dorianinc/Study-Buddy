@@ -49,11 +49,9 @@ export const api = createApi({
       invalidatesTags: ["CurrentUser"],
     }),
     //Folders
-    getOneFolder: builder.mutation({
-      query: (folderId) => ({
-        url: `folders/${folderId}`
-      }),
-      providesTags: ["Folder"]
+    getOneFolder: builder.query({
+      query: (folderId) => `folders/${folderId}`,
+      providesTags: ["Folder", "Document"]
     }),
     getFolders: builder.query({
       query: (user) => 'folders/',
@@ -69,9 +67,7 @@ export const api = createApi({
     }),
     //Documents
     getOneDoc: builder.query({
-      query: ({docId}) => ({
-        url: `documents/${docId}`
-      }),
+      query: (docId) => `documents/${docId}`,
       providesTags:["Document"]
     }),
     createDoc: builder.mutation({
@@ -80,14 +76,14 @@ export const api = createApi({
         method: "POST",
         body: formData,
       }),
-      providesTags: ["Document"],
+      invalidatesTags: ["Document"],
     }),
     deleteDoc: builder.mutation({
-      query: ({ user }) => ({
-        url: "documents/:docId/",
+      query: ({ docId }) => ({
+        url: `documents/${docId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Document"]
+      invalidatesTags: ["Document", "Folder"]
     }),
     getNotes: builder.query({
       query: (docId) => `/notes?docId=${docId}`,
@@ -161,14 +157,13 @@ export const {
   useSignupMutation,
   useRestoreUserQuery,
   useLogoutMutation,
+  useGetOneDocQuery,
   useCreateDocMutation,
   useDeleteDocMutation,
-  useGetOneDocQuery,
   useGetFoldersQuery,
   useCreateFolderMutation,
   useGetNotesQuery,
-  useGetFoldersMutation,
-  useGetOneFolderMutation,
+  useGetOneFolderQuery,
   useCreateNoteMutation,
   useDeleteNoteMutation,
   useEditNoteMutation,

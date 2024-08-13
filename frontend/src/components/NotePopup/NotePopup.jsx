@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 
 function NotePopup({ passage, onModal }) {
-    console.log('From NotePopup')
     const { isOpen, onToggle, onClose } = useDisclosure()
     return (
         <>

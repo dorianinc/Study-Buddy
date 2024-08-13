@@ -5,6 +5,8 @@ function NewFolderButton() {
   return (
     <>
       <Box
+        className="gridTile"
+
         as="button"
         boxShadow="lg"
         rounded="xl"
@@ -14,10 +16,10 @@ function NewFolderButton() {
         w={200}
         h={200}
         _hover={{
-          bg: "lightgrey",
+          bg: "var(--hover-gray)",
+          boxShadow: "0 0 10px var(--hover-blue)",
         }}
-        // onClick={() => createNewFolder()}
-        >
+      >
         <AddIcon boxSize={30} />
       </Box>
     </>

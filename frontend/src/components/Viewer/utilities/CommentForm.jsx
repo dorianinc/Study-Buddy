@@ -14,11 +14,9 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
   const [prompt,setPrompt] = useState("")
   const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
-  console.log(selectedText)
   // fetching response from gemini
   const AIGenerate = async () => {
     setIsLoadingAIRes(true)
-    console.log(selectedText)
     const response = await fetch('/api/gemini', {
       method: 'POST',
       headers: {
@@ -34,14 +32,15 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
     setComment(data.AIResponse)
   }
 
-
+  console.log(
+    'docurl',docUrl
+  )
   return (
     <form
       className="Tip__card"
       onSubmit={async (event) => {
         event.preventDefault();
         onSubmit(comment);
-        console.log('submitted')
         const queryObject = {
           user,
           docId: parseInt(docId),

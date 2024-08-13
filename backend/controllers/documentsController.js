@@ -14,9 +14,10 @@ const createDocument = async (req, res) => {
   // parsing pdf to text and get response from gemini
   const pdfText = await parsePDF(req.file.buffer);
   const summary = await generateRes(
-    "Summarize this text in 14 sentences or less",
+    "summarize this text in 4 sentences",
     pdfText
   );
+  console.log(summary)
 
   const { user } = req;
   const { name, fileType } = req.body;

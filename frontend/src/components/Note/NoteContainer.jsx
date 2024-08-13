@@ -36,7 +36,7 @@ const NoteContainer = ({ annotation }) => {
     }
 
     function updateHash(){
-        console.log('entered note',annotationId)
+
         window.location.hash = `highlight-${annotationId}`
     }
     function EditableControls() {

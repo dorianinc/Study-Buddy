@@ -12,14 +12,14 @@ import {
 import { useGetAllAnnotationsQuery } from "../../store/features/api";
 // import { selectFolder } from "../../store/features/folderSlice";
 import { useParams, Link as ReactRouterLink } from "react-router-dom";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function DisplayDoc() {
   const { folderId, docId } = useParams();
-  // const document = useSelector((state, docId) => state.documents[docId])
-  // const folder = useSelector((state, folderId) => state.folders[folderId])
-  // console.log("DOCUMENT", document)
-  // console.log("FOLDER", folder)
+  const document = useSelector((state) => state.document[docId])
+  const folder = useSelector((state) => state.folder[folderId])
+  console.log("DOCUMENT", document)
+  console.log("FOLDER", folder)
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
   // console.log('display doc',annotation)
   return (
@@ -34,7 +34,7 @@ function DisplayDoc() {
         <BreadcrumbItem>
           <BreadcrumbLink as={ReactRouterLink} to={`/folders/${folderId}`}>
           This Folder: 
-          {/* {folder?.name} */}
+          {folder?.name}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage={true}>

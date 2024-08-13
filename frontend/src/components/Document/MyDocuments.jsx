@@ -87,7 +87,7 @@ function MyDocuments() {
               started!
             </h1>
           </>
-        )}
+        }
       </Grid>
     </Box>
   );

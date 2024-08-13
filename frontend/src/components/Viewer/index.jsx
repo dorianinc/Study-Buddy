@@ -30,7 +30,7 @@ const Viewer = () => {
     const [highlightPen, setHighlightPen] = useState(false);
     // Refs for PdfHighlighter utilities
     const highlighterUtilsRef = useRef();
-
+    console.log('this is highlights',highlights)
     useEffect(()=>{
       setHighlights(annotations)
     },[annotations])

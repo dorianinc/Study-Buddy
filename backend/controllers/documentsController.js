@@ -22,6 +22,7 @@ const createDocument = async (req, res) => {
   const { user } = req;
   const { name, fileType } = req.body;
   const fileUrl = await uploadAWSFile(req.file);
+  console.log('this is file',req.file)
   const folder = await Folder.findByPk(req.query.folderId, { raw: true });
 
   if (!folder) res.status(404).json(doesNotExist("Folder"));

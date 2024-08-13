@@ -128,8 +128,8 @@ export const api = createApi({
       query: ({user,docId})=>({
         url:`/annotations?docId=${docId}`,
         method:'GET',
+        providesTags:['Annotation']
       }),
-      invalidatesTags:['Annotation']
     }),
     updateAnnotations : builder.mutation({
       query:({user,annotationId,commentText}) => ({
@@ -137,13 +137,14 @@ export const api = createApi({
         method:'PUT',
         body:{commentText}
       }),
-      invalidatesTags:["Annotation"]
+      invalidatesTags:["Annotation","Document"]
     }),
     deleteAnnotation: builder.mutation({
       query:({user,annotationId})=>({
         url:`/annotations/${annotationId}`,
         method:'DELETE',
-      })
+      }),
+      invalidatesTags:['Annotation']
     })
   }),
 });

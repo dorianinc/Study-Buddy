@@ -2,7 +2,6 @@ import React from "react";
 import "../styles/Sidebar.css";
 
 const Sidebar = ({ highlights, toggleDocument, resetHighlights }) => {
-  console.log("🖥️  highlights in sidebar: ", highlights)
   const updateHash = (highlight) => {
     document.location.hash = `highlight-${highlight.id}`;
   };

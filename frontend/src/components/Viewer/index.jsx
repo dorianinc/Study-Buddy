@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import CommentForm from "./utilities/CommentForm";
-import ContextMenu from "./utilities/ContextMenu";
 import ExpandableTip from "./utilities/ExpandableTip";
 // import Sidebar from "./utilities/Sidebar";
 import Toolbar from "./utilities/Toolbar";
@@ -14,22 +12,18 @@ import {
   Box
 } from "@chakra-ui/react";
 
-const TEST_HIGHLIGHTS = _testHighlights;
-const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
-const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
-
 const Viewer = () => {
   const { docId } = useParams()
   const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
-  const {data:annotation} = useGetAllAnnotationsQuery({docId})
-  const [url, setUrl] = useState(PRIMARY_PDF_URL);
+  // const {data:annotation} = useGetAllAnnotationsQuery({docId})
+  const {data:annotations} = useGetAllAnnotationsQuery({docId})
+  const [url, setUrl] = useState();
   // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
     // );
-    console.log(annotation)
-    const [highlights,setHighlights] = useState(annotation? annotation:[])
+    const [highlights,setHighlights] = useState(annotations? annotations:[])
     const currentPdfIndexRef = useRef(0);
     const [contextMenu, setContextMenu] = useState(null);
     const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
@@ -38,9 +32,12 @@ const Viewer = () => {
     const highlighterUtilsRef = useRef();
 
     useEffect(()=>{
-      setHighlights(annotation)
-    },[annotation])
+      setHighlights(annotations)
+    },[annotations])
 
+    useEffect(()=>{
+      setUrl(documents?.fileUrl)
+    },[documents])
     // useEffect for changing highlightRef
     // (()=>{
     //   document.location.hash = highLightRef
@@ -72,17 +69,14 @@ const Viewer = () => {
   };
 
   const addHighlight = (highlight, comment) => {
-    console.log("Saving highlight", highlight);
     setHighlights([{ ...highlight, comment, id: getNextId() }, ...highlights]);
   };
 
   const deleteHighlight = (highlight) => {
-    console.log("Deleting highlight", highlight);
     setHighlights(highlights.filter((h) => h.id != highlight.id));
   };
 
   const editHighlight = (idToUpdate, edit) => {
-    console.log(`Editing highlight ${idToUpdate} with `, edit);
     setHighlights(
       highlights.map((highlight) =>
         highlight.id === idToUpdate ? { ...highlight, ...edit } : highlight
@@ -122,6 +116,8 @@ const Viewer = () => {
   if(isLoading) {
     return <h1>Loading PDF</h1>
   }
+
+  if(error) return error
 
   return (
     <Flex className="App" h={'100%'}>

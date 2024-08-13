@@ -15,7 +15,6 @@ const ExpandableTip = ({ addHighlight,docId,url }) => {
   } = usePdfHighlighterContext();
 
   const handleSubmit = (input) => {
-    console.log("🖥️  input: ", input)
     const current = selectionRef.current;
 
     const highlight = {
@@ -23,7 +22,6 @@ const ExpandableTip = ({ addHighlight,docId,url }) => {
       position: current.position
     };
 
-    console.log("highlight ===> ", highlight)
     addHighlight(highlight, input)
     removeGhostHighlight();
     setTip(null);

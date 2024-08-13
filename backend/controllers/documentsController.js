@@ -14,9 +14,10 @@ const createDocument = async (req, res) => {
   // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
   const summary = await generateRes(
-    "summarize this text in 14 sentences",
+    "summarize this text in 4 sentences",
     pdfText
   );
+  console.log(summary)
 
   const { user } = req;
   const { name, fileType } = req.body;

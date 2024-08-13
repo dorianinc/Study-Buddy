@@ -1,5 +1,4 @@
 const express = require('express')
-const { restoreUser, requireAuth } = require('../../utils/auth')
 const { generateRes } = require('../../utils/genAi')
 
 const router = express.Router()

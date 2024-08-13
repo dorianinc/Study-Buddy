@@ -1,7 +1,7 @@
 const { generateRes } = require("../utils/genAi.js");
 const { parsePDF } = require("../utils/pdfParser.js");
-const { isAuthorized } = require("../utils/auth");
-const { doesNotExist } = require("../utils/helpers.js");
+const { isAuthorized } = require("../utils/middleware/auth");
+const { doesNotExist } = require("../utils/middleware/helpers.js");
 const { Folder, Document, Note } = require("../db/models");
 const { uploadAWSFile, deleteAWSFile } = require("../awsS3.js");
 const { environment } = require("../config");
@@ -34,7 +34,7 @@ const createDocument = async (req, res) => {
       folderId: folder.id,
     });
     // leave line below commented out unless your trying to store this a seed data in a json file
-    // saveToFile("document", newDoc.toJSON())
+    saveToFile("document", newDoc.toJSON())
     res.status(201).json(newDoc);
   }
 };

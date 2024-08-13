@@ -1,5 +1,5 @@
-const { isAuthorized } = require("../utils/auth");
-const { doesNotExist } = require("../utils/helpers.js");
+const { isAuthorized } = require("../utils/middleware/auth");
+const { doesNotExist } = require("../utils/middleware/helpers.js");
 const { Document, Note } = require("../db/models");
 const saveToFile = require("../utils/saveToFile.js");
 

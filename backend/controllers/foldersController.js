@@ -1,5 +1,5 @@
-const { isAuthorized } = require("../utils/auth");
-const { doesNotExist } = require("../utils/helpers.js");
+const { isAuthorized } = require("../utils/middleware/auth");
+const { doesNotExist } = require("../utils/middleware/helpers.js");
 const { Folder, Document } = require("../db/models");
 const saveToFile = require("../utils/saveToFile.js");
 
@@ -16,7 +16,7 @@ const createFolder = async (req, res) => {
 
   const newFolder = await Folder.create({ ...data });
   // leave line below commented out unless your trying to store this a seed data in a json file
-  // saveToFile("folder", newFolder.toJSON());
+  saveToFile("folder", newFolder.toJSON());
   res.status(201).json(newFolder);
 };
 

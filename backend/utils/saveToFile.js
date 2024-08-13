@@ -3,14 +3,17 @@ const path = require("path");
 
 // Function to write data to a JSON file
 const saveToFile = (type, data) => {
+  return;
   // Ensure the request has data
   if (!data) {
     console.error("Invalid data format. Expected an array of objects.");
     return;
   }
 
+  console.log(`❗❗❗ Creating entry for ${type} ❗❗❗`)
+
   // Define the output directory and filename relative to this file
-  const directory = path.join(__dirname, "data"); // Directory relative to the location of this file
+  const directory = path.join(__dirname,  '..', 'data');
   const filename = `${type}.json`;
   const filePath = path.join(directory, filename);
 

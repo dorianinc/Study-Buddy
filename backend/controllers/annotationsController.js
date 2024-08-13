@@ -1,6 +1,6 @@
 const crypto = require("crypto");
-const { isAuthorized } = require("../utils/auth");
-const { doesNotExist } = require("../utils/helpers.js");
+const { isAuthorized } = require("../utils/middleware/auth");
+const { doesNotExist } = require("../utils/middleware/helpers.js");
 const { Annotation, Content } = require("../db/models");
 const { HighlightBox, Highlight } = require("../db/models");
 const saveToFile = require("../utils/saveToFile.js");
@@ -23,8 +23,7 @@ const createAnnotation = async (req, res) => {
       type,
       comment,
     });
-    saveToFile("annotation", newAnnotation.toJSON());
-
+    
     // Set content
     let newContent;
     if (content.text) {
@@ -38,9 +37,9 @@ const createAnnotation = async (req, res) => {
         image: content.image,
       });
     }
+    console.log("🖥️  newContent: ", newContent)
     newAnnotation.content = newContent;
-    saveToFile("content", newContent.toJSON());
-
+    
     //set boundingRects
     const newBoundingRect = await HighlightBox.create({
       annotationId: id,
@@ -54,13 +53,12 @@ const createAnnotation = async (req, res) => {
     });
     newAnnotation.position = {};
     newAnnotation.position.boundingRect = newBoundingRect;
-    saveToFile("highlightBox", newBoundingRect.toJSON());
-
+    
     // Set highlights
     newAnnotation.rects = [];
     for (let i = 0; i < highlights.length; i++) {
       const highlight = highlights[i];
-      const rect = await Highlight.create({
+      const newRect = await Highlight.create({
         annotationId: id,
         x1: highlight.x1,
         y1: highlight.y1,
@@ -70,13 +68,17 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
-      newAnnotation.rects.push(rect);
+      newAnnotation.rects.push(newRect);
+      saveToFile("highlight", newRect.toJSON());
       // leave line below commented out unless your trying to store this a seed data in a json file
-      // saveToFile("highlight", rect.toJSON());
     }
-
-    res.json(newAnnotation);
+    
+    saveToFile("annotation", newAnnotation.toJSON());
+    saveToFile("content", newContent.toJSON());
+    saveToFile("highlightBox", newBoundingRect.toJSON());
+    res.status(200).json(newAnnotation);
   } catch (error) {
+    console.log("🖥️  error: ", error)
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
   }

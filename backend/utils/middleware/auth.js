@@ -1,8 +1,7 @@
-// backend/utils/auth.js
+// backend/utils/middleware/auth.js
 const jwt = require("jsonwebtoken");
-const { jwtConfig } = require("../config");
-const { dbTestFile } = require("../config");
-const { User } = require("../db/models");
+const { jwtConfig } = require("../../config");
+const { User } = require("../../db/models");
 
 const dotenv = require("dotenv");
 dotenv.config();

@@ -1,6 +1,6 @@
 const express = require("express");
-const { restoreUser, requireAuth } = require("../../utils/auth");
-const { validateDocument } = require("../../utils/validation.js");
+const { restoreUser, requireAuth } = require("../../utils/middleware/auth");
+const { validateDocument } = require("../../utils/middleware/validation.js");
 const { handleMulter } = require("../../awsS3.js");
 const { document } = require("../../controllers");
 

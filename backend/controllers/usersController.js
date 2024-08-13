@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const { setTokenCookie } = require("../utils/auth");
+const { setTokenCookie } = require("../utils/middleware/auth");
 const { User } = require("../db/models");
 
 const signUpUser = async (req, res) => {

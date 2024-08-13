@@ -1,6 +1,6 @@
 const express = require("express");
-const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { validateNote } = require("../../utils/validation.js");
+const { restoreUser, requireAuth, isAuthorized } = require("../../utils/middleware/auth");
+const { validateNote } = require("../../utils/middleware/validation.js");
 const { note } = require("../../controllers");
 
 const router = express.Router();

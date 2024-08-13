@@ -4,24 +4,23 @@ import MyNotes from "../Note/MyNotes";
 import {
   Container,
   Flex,
-  Heading,
+  Heading,Text,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import { useGetAllAnnotationsQuery } from "../../store/features/api";
-import { useGetOneFolderQuery } from "../../store/features/api";
-// import { useEffect, useState } from "react";
+import { useGetAllAnnotationsQuery, useGetOneDocQuery, useGetOneFolderQuery } from "../../store/features/api";
 import { useParams, Link as ReactRouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 
 function DisplayDoc() {
   const { folderId, docId } = useParams();
   const document = useSelector((state) => state.document.document[docId]);
   const { data: folder } = useGetOneFolderQuery(folderId);
 
-  // const {data:annotation} = useGetAllAnnotationsQuery({docId})
-  // console.log('display doc',annotation)
+  const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
+  if(error) return <h1>cant load document</h1>
   return (
     <>
       <MyNotes docId={docId} />
@@ -47,19 +46,26 @@ function DisplayDoc() {
           <BreadcrumbLink>{document?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Flex w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5}>
-        <Container minW={"50vw"} h={"75%"} borderRadius={10} centerContent>
+      <Flex
+      marginTop='15px'
+      w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5}>
+        <Container minW={"60vw"} h={"75%"} borderRadius={10} centerContent>
           <Viewer />
         </Container>
 
         <Container
-          w={"75%"}
-          h={"75%"}
-          borderRadius={10}
-          bg={"white"}
-          border={"1px solid black"}
+            w={"50%"}
+            h={"75%"}
+            borderRadius={10}
+            bg={"white"}
+            border={'1px solid black'}
         >
-          <Heading>Initial PDF Summary</Heading>
+          <Heading>Short Summary</Heading>
+          {isLoading && <h3>loading document</h3>}
+          <Text
+            padding='10px'
+            fontSize='l'>{documents?.summary}
+          </Text>
         </Container>
       </Flex>
     </>

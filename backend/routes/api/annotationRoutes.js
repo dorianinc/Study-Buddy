@@ -1,5 +1,5 @@
 const express = require("express");
-const { restoreUser, requireAuth } = require("../../utils/auth");
+const { restoreUser, requireAuth } = require("../../utils/middleware/auth");
 const { annotation } = require("../../controllers");
 
 const router = express.Router();

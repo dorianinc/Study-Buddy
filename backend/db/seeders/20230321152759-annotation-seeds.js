@@ -6,31 +6,98 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const annotationSeeds = () => {
-  const baseAnnotations = [
-    { comment: "Better code!" },
-    { comment: "This is a test..." },
-    { comment: "Pumpernickel" },
+  return [
+    {
+      id: "8411ebc0-d07a-4cb5-b977-ea19c6167366",
+      authorId: 1,
+      docId: 15,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536077471.pdf",
+      type: "text",
+      comment: "Can combo really well with darkness spell",
+      updatedAt: "2024-08-13T20:21:10.884Z",
+      createdAt: "2024-08-13T20:21:10.884Z",
+    },
+    {
+      id: "753a7a2c-9673-4e3d-be4d-22b47e9bf0da",
+      authorId: 1,
+      docId: 15,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536077471.pdf",
+      type: "text",
+      comment: "Possibly the best subclass so far!",
+      updatedAt: "2024-08-13T20:25:38.325Z",
+      createdAt: "2024-08-13T20:25:38.325Z",
+    },
+    {
+      id: "4fd3d01d-9826-4af6-a6f2-c0bca003fce2",
+      authorId: 1,
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
+      type: "text",
+      comment: "Better code!",
+      updatedAt: "2024-08-13T20:34:57.069Z",
+      createdAt: "2024-08-13T20:34:57.069Z",
+    },
+    {
+      id: "a1630391-039c-412a-9afa-08d7b969de8c",
+      authorId: 1,
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
+      type: "text",
+      comment: "Interesting...",
+      updatedAt: "2024-08-13T20:53:29.587Z",
+      createdAt: "2024-08-13T20:53:29.587Z",
+    },
+    {
+      id: "8d88bfae-6bbc-4602-9134-7bf023a7f894",
+      authorId: 1,
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
+      type: "text",
+      comment: "Final Verdict",
+      updatedAt: "2024-08-13T20:57:05.803Z",
+      createdAt: "2024-08-13T20:57:05.803Z",
+    },
+    {
+      id: "edff7858-05c9-493e-aba5-440d7f7c60dd",
+      authorId: 1,
+      docId: 10,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment: "Very profound for a rooster",
+      updatedAt: "2024-08-13T21:01:21.753Z",
+      createdAt: "2024-08-13T21:01:21.753Z",
+    },
+    {
+      id: "641859ae-fdfe-4500-a114-50483a2b4f09",
+      authorId: 1,
+      docId: 10,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment:
+        "The moral of the story is that powerful individuals often use false accusations and flimsy excuses to justify their actions, especially when they seek to exploit or harm those weaker than themselves",
+      updatedAt: "2024-08-13T21:04:54.638Z",
+      createdAt: "2024-08-13T21:04:54.638Z",
+    },
+    {
+      id: "5beaadc7-3f17-46be-a41f-90227dd31061",
+      authorId: "1",
+      docId: "10",
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment: "Very powerful message",
+      updatedAt: "2024-08-13T21:19:07.812Z",
+      createdAt: "2024-08-13T21:19:07.812Z",
+    },
   ];
-
-  const seeds = [];
-  let id = 1; // Initialize a unique id counter
-
-  for (let i = 1; i <= 10; i++) {
-    baseAnnotations.forEach((annotation) => {
-      seeds.push({
-        id: id++, // Increment the id counter for each new record
-        authorId: 10,
-        docUrl: "https://tinyurl.com/ynnxvva9",
-        docId: i,
-        comment: annotation.comment,
-        type: "text"
-      });
-    });
-  }
-
-  return seeds;
 };
-
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

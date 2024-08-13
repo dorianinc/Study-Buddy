@@ -1,6 +1,8 @@
-const { isAuthorized } = require("../utils/auth");
-const { doesNotExist } = require("../utils/helpers.js");
+const { isAuthorized } = require("../utils/middleware/auth");
+const { doesNotExist } = require("../utils/middleware/helpers.js");
 const { Document, Note } = require("../db/models");
+const saveToFile = require("../utils/saveToFile.js");
+
 
 // Create a Note
 const createNote = async (req, res) => {
@@ -17,6 +19,8 @@ const createNote = async (req, res) => {
         docId: doc.id,
         authorId: user.id,
       });
+          // leave line below commented out unless your trying to store this a seed data in a json file
+    // saveToFile("note", newNote.toJSON())
       res.status(200).json(newNote);
     } else {
       res.status(403).json({

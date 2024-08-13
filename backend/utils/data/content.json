@@ -1,0 +1,9 @@
+[
+  {
+    "id": 4,
+    "annotationId": "4ba9069b-22d8-4b8b-ac99-99ce2bd6dbcf",
+    "text": "TypeScript (TS) mainly extends JavaScript with type annota- tions and provides tsc, the TypeScript Compiler to transpile TS to JS. TS performs type checking at transpile-time, while JS per- forms type checking at run-time [19 ]. This is one of the reasons why JavaScript does not have the best reputation for delivering",
+    "updatedAt": "2024-08-13T20:51:13.845Z",
+    "createdAt": "2024-08-13T20:51:13.845Z"
+  }
+]

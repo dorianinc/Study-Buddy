@@ -7,21 +7,43 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const folderSeeds = () => {
-  const folders = [];
-  const categories = ["General", "Math", "Science", "History", "Literature"];
-
-  for (let i = 0; i < 5; i++) {
-    folders.push({
-      name: faker.commerce.department(),
-      userId: 10,
-      category:
-        categories[faker.number.int({ min: 0, max: categories.length - 1 })],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-  }
-
-  return folders;
+  return [
+    {
+      userId: 1,
+      name: "Math",
+      category: "Math",
+      updatedAt: "2024-08-13T07:37:22.814Z",
+      createdAt: "2024-08-13T07:37:22.814Z",
+    },
+    {
+      userId: 1,
+      name: "Plants",
+      category: "Science",
+      updatedAt: "2024-08-13T07:44:23.351Z",
+      createdAt: "2024-08-13T07:44:23.351Z",
+    },
+    {
+      userId: 1,
+      name: "History",
+      category: "History",
+      updatedAt: "2024-08-13T07:51:12.076Z",
+      createdAt: "2024-08-13T07:51:12.076Z",
+    },
+    {
+      userId: 1,
+      name: "Books",
+      category: "General",
+      updatedAt: "2024-08-13T07:55:13.519Z",
+      createdAt: "2024-08-13T07:55:13.519Z",
+    },
+    {
+      userId: 1,
+      name: "Etc...",
+      category: "General",
+      updatedAt: "2024-08-13T08:00:18.271Z",
+      createdAt: "2024-08-13T08:00:18.271Z",
+    },
+  ];
 };
 
 module.exports = {

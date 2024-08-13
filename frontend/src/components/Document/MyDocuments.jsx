@@ -29,11 +29,20 @@ function MyDocuments() {
 
   return (
     <Box>
-      <Breadcrumb>
+      <Breadcrumb
+        fontWeight={"bold"}
+        fontSize={"xl"}
+        mt={5}
+        mb={5}
+        ml={5}
+        color={"blue.500"}
+      >
         <BreadcrumbItem>
-          <BreadcrumbLink as={ReactRouterLink} to={'/'}>Folders</BreadcrumbLink>
+          <BreadcrumbLink as={ReactRouterLink} to={"/"}>
+            Folders
+          </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage={true}>
+        <BreadcrumbItem isCurrentPage={true} color={"blue.700"}>
           <BreadcrumbLink>{folder?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
@@ -41,7 +50,6 @@ function MyDocuments() {
         templateColumns="repeat(5, 1fr)"
         rowGap={20}
         p={20}
-        border="1px solid green"
         alignItems="center"
       >
         <GridItem w="fit-content">
@@ -50,44 +58,50 @@ function MyDocuments() {
             modalComponent={<NewDocModal folderId={folderId} />}
           />
         </GridItem>
-        {folder.documents.length ?
-          (folder.documents?.map((doc) => (
+        {folder.documents.length ? (
+          folder.documents?.map((doc) => (
             <Container key={doc.id} title={doc.name}>
-
               <GridItem
-                display='flex' w='fit-content' justifyContent='center' pt={0}>
+                display="flex"
+                w="fit-content"
+                justifyContent="center"
+                pt={0}
+              >
                 <ChakraLink
                   as={ReactRouterLink}
                   to={`/folders/${folderId}/${doc.id}`}
-
                 >
                   <Document document={doc} />
                 </ChakraLink>
               </GridItem>
               <ModalButton
-                buttonContent={<>
-                  <Button
-                  w={210}
-                  size='xs' _hover={{
-                    boxShadow: "0 0 10px var(--hover-blue)"
-                  }}
-                  backgroundColor='red'
-                  color='white'
-                  >
-                    Delete
-                  </Button>
-                </>}
-                modalComponent={< DeleteDocModal doc={doc} />}
+                buttonContent={
+                  <>
+                    <Button
+                      w={210}
+                      size="xs"
+                      _hover={{
+                        boxShadow: "0 0 10px var(--hover-blue)",
+                      }}
+                      backgroundColor="red"
+                      color="white"
+                    >
+                      Delete
+                    </Button>
+                  </>
+                }
+                modalComponent={<DeleteDocModal doc={doc} />}
               />
             </Container>
-          ))) :
+          ))
+        ) : (
           <>
             <h1>
               No documents have been uploaded. Click on the plus button to get
               started!
             </h1>
           </>
-        }
+        )}
       </Grid>
     </Box>
   );

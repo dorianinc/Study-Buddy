@@ -15,10 +15,9 @@ import { useGetOneFolderQuery } from "../../store/features/api";
 import { useParams, Link as ReactRouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-
 function DisplayDoc() {
   const { folderId, docId } = useParams();
-  const document = useSelector((state) => state.document.document[docId])
+  const document = useSelector((state) => state.document.document[docId]);
   const { data: folder } = useGetOneFolderQuery(folderId);
 
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
@@ -26,7 +25,14 @@ function DisplayDoc() {
   return (
     <>
       <MyNotes docId={docId} />
-      <Breadcrumb>
+      <Breadcrumb
+        fontWeight={"bold"}
+        fontSize={"xl"}
+        mt={5}
+        mb={5}
+        ml={5}
+        color={"blue.500"}
+      >
         <BreadcrumbItem>
           <BreadcrumbLink as={ReactRouterLink} to={"/"}>
             Folders
@@ -34,10 +40,10 @@ function DisplayDoc() {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink as={ReactRouterLink} to={`/folders/${folderId}`}>
-         {folder?.name}
+            {folder?.name}
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage={true}>
+        <BreadcrumbItem isCurrentPage={true} color={"blue.700"}>
           <BreadcrumbLink>{document?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>

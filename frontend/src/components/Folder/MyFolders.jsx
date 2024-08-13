@@ -24,7 +24,14 @@ function MyFolders() {
   return (
     <>
       <Box>
-        <Breadcrumb>
+        <Breadcrumb
+          fontWeight={"bold"}
+          fontSize={"xl"}
+          mt={5}
+          mb={5}
+          ml={5}
+          color={"blue.500"}
+        >
           <BreadcrumbItem isCurrentPage={true}>
             <BreadcrumbLink>Folders</BreadcrumbLink>
           </BreadcrumbItem>

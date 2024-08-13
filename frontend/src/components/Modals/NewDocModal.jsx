@@ -66,7 +66,7 @@ function NewDocModal({ folderId }) {
         width="240px"
       >
         <FormControl display="flex" flexDirection="column">
-          <FormLabel htmlFor="name">Document name</FormLabel>
+          <FormLabel htmlFor="name" className="form-labels">Document name</FormLabel>
           <Input
             id="name"
             placeholder="name"
@@ -79,7 +79,7 @@ function NewDocModal({ folderId }) {
           >
             {errors.docName}
           </Container>
-          <FormLabel mt={5} htmlFor="uploaded_file">
+          <FormLabel mt={5} htmlFor="uploaded_file" className="form-labels">
             Upload a File
           </FormLabel>
           <Input

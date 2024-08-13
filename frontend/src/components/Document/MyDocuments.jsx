@@ -20,8 +20,8 @@ function MyDocuments() {
 
   return (
     <Box>
-      <h1>Documents Page</h1>
-      <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20} border='1px solid green' alignItems='center'>
+      <h1>My Documents</h1>
+      <Grid templateColumns="repeat(5, 1fr)" rowGap={20} p={20} alignItems='center'>
         <GridItem w='fit-content'>
           <ModalButton
             buttonContent={<NewDocButton />}
@@ -30,23 +30,34 @@ function MyDocuments() {
         </GridItem>
         {folder.documents.length ?
           (folder.documents?.map((doc) => (
-            <Container key={doc.id}>
+            <Container key={doc.id} title={doc.name}>
 
-            <GridItem
-               display='flex' w='fit-content' justifyContent='center' pt={0}>
-              <ChakraLink
-                as={ReactRouterLink}
-                to={`/folders/${folderId}/${doc.id}`}
+              <GridItem
+                display='flex' w='fit-content' justifyContent='center' pt={0}>
+                <ChakraLink
+                  as={ReactRouterLink}
+                  to={`/folders/${folderId}/${doc.id}`}
 
                 >
-                <Document document={doc} />
-              </ChakraLink>
-            </GridItem>
-            <ModalButton
-              buttonContent={<><Button size='xs'>Delete</Button></>}
-              modalComponent={< DeleteDocModal doc={doc}/>}
-            />
-                </Container>
+                  <Document document={doc} />
+                </ChakraLink>
+              </GridItem>
+              <ModalButton
+                buttonContent={<>
+                  <Button
+                  w={210}
+                  size='xs' _hover={{
+                    boxShadow: "0 0 10px var(--hover-blue)"
+                  }}
+                  backgroundColor='red'
+                  color='white'
+                  >
+                    Delete
+                  </Button>
+                </>}
+                modalComponent={< DeleteDocModal doc={doc} />}
+              />
+            </Container>
           ))) :
           <>
             <h1>No documents have been uploaded. Click on the plus button to get started!</h1>

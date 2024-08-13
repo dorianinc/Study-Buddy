@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === "production") {
 const documentSeeds = () => {
   const documents = [
     {
-      id: 1,
       name: "Math Refresher",
       fileType: "pdf",
       fileUrl:
@@ -22,7 +21,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:38:48.949Z",
     },
     {
-      id: 2,
       name: "Fundamentals",
       fileType: "pdf",
       fileUrl:
@@ -35,7 +33,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:40:18.575Z",
     },
     {
-      id: 3,
       name: "Plants 101",
       fileType: "pdf",
       fileUrl:
@@ -48,7 +45,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:46:27.267Z",
     },
     {
-      id: 4,
       name: "Plant Part Worksheet",
       fileType: "pdf",
       fileUrl:
@@ -61,7 +57,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:47:43.693Z",
     },
     {
-      id: 5,
       name: "Plants of Arizona",
       fileType: "pdf",
       fileUrl:
@@ -74,7 +69,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:49:01.532Z",
     },
     {
-      id: 6,
       name: "The Art of War",
       fileType: "pdf",
       fileUrl:
@@ -87,7 +81,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:51:55.970Z",
     },
     {
-      id: 7,
       name: "Conquering California",
       fileType: "pdf",
       fileUrl:
@@ -100,7 +93,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:52:55.817Z",
     },
     {
-      id: 8,
       name: "Flights by the Wrights",
       fileType: "pdf",
       fileUrl:
@@ -113,7 +105,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:53:32.331Z",
     },
     {
-      id: 9,
       name: "The Empress of Rome",
       fileType: "pdf",
       fileUrl:
@@ -126,7 +117,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:54:14.630Z",
     },
     {
-      id: 10,
       name: "Aesop's Fables",
       fileType: "pdf",
       fileUrl:
@@ -139,7 +129,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:56:03.578Z",
     },
     {
-      id: 11,
       name: "A Christmas Carol",
       fileType: "pdf",
       fileUrl:
@@ -152,7 +141,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:56:48.282Z",
     },
     {
-      id: 12,
       name: "Alice in Wonderland",
       fileType: "pdf",
       fileUrl:
@@ -165,7 +153,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:57:34.457Z",
     },
     {
-      id: 13,
       name: "Frankenstein",
       fileType: "pdf",
       fileUrl:
@@ -178,7 +165,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:58:50.159Z",
     },
     {
-      id: 14,
       name: "Grimm's Fairy Tales",
       fileType: "pdf",
       fileUrl:
@@ -191,7 +177,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T07:59:46.232Z",
     },
     {
-      id: 15,
       name: "D&D Monstrous Races",
       fileType: "pdf",
       fileUrl:
@@ -204,7 +189,6 @@ const documentSeeds = () => {
       createdAt: "2024-08-13T08:01:18.305Z",
     },
     {
-      id: 16,
       name: "JS and TS Comparison",
       fileType: "pdf",
       fileUrl:

@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Box,
   Container,
+  Spinner
 } from "@chakra-ui/react";
 import { useCreateDocMutation } from "../../store/features/api";
 import { useModal } from "../../context/ModalContext";
@@ -18,8 +19,9 @@ function NewDocModal({ folderId }) {
   const [fileType, setFileType] = useState("pdf");
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState({});
+  const [hidden, setHidden] = useState(true);
   const { closeModal } = useModal();
-  const [createDoc, { error, isError, isLoading }] = useCreateDocMutation();
+  const [createDoc, { error, isError, isLoading, isFetching }] = useCreateDocMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +41,12 @@ function NewDocModal({ folderId }) {
     formData.append("name", docName);
     formData.append("fileType", fileType);
     createDoc({ formData, folderId });
-    closeModal();
+    setErrors({})
+    setHidden(!hidden)
+
+    setTimeout(() => {
+      closeModal();
+    }, 3000)
   };
 
   if (isError) {
@@ -86,6 +93,10 @@ function NewDocModal({ folderId }) {
             className="form-errors"
           >
             {errors.file}
+
+          </Container>
+          <Container minH={25} maxH={25} display='flex' justifyContent='center'>
+            <Spinner h={25} w={25} hidden={hidden}/>
           </Container>
           <button type="submit" className="submitBtn">
             Upload Document

@@ -10,16 +10,17 @@ import {
   BreadcrumbLink,
 } from "@chakra-ui/react";
 import { useGetAllAnnotationsQuery } from "../../store/features/api";
-// import { selectFolder } from "../../store/features/folderSlice";
+import { useGetOneFolderQuery } from "../../store/features/api";
+// import { useEffect, useState } from "react";
 import { useParams, Link as ReactRouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
 function DisplayDoc() {
   const { folderId, docId } = useParams();
-  const document = useSelector((state) => state.document[docId])
-  const folder = useSelector((state) => state.folder[folderId])
-  console.log("DOCUMENT", document)
-  console.log("FOLDER", folder)
+  const document = useSelector((state) => state.document.document[docId])
+  const { data: folder } = useGetOneFolderQuery(folderId);
+
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
   // console.log('display doc',annotation)
   return (
@@ -33,12 +34,11 @@ function DisplayDoc() {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink as={ReactRouterLink} to={`/folders/${folderId}`}>
-          This Folder: 
-          {folder?.name}
+         {folder?.name}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage={true}>
-          <BreadcrumbLink>This Doc: {document?.name}</BreadcrumbLink>
+          <BreadcrumbLink>{document?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5}>

@@ -54,7 +54,7 @@ function MyNotes({docId}) {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log('mynote',document.location)
+  console.log('mynote',document?.location)
 
   return (
     <>
@@ -85,7 +85,7 @@ function MyNotes({docId}) {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>{document.name} Notes</DrawerHeader>
+          <DrawerHeader>{document?.name} Notes</DrawerHeader>
 
           <DrawerBody>
 

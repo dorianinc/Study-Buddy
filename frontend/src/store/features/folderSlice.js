@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from './api.js'
 
-const initialState = {}
+const initialState = {
+  folders: {},
+  folder: {}
+}
 
 const folderSlice = createSlice({
   name: 'folder',
@@ -11,15 +14,13 @@ const folderSlice = createSlice({
     builder.addMatcher(
       api.endpoints.getFolders.matchFulfilled,
       (state, { payload }) => {
-        state.folder = payload
+        state.folders = payload
       }
     );
     builder.addMatcher(
       api.endpoints.getOneFolder.matchFulfilled,
       (state, { payload }) => {
-
-
-        state[payload.id] = payload;
+        state.folder[payload.id] = payload;
       }
     )
   }

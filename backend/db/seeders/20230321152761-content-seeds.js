@@ -9,24 +9,24 @@ const contentSeeds = () => {
   const seeds = [
     {
       id: 1,
-      annotationId: "08c401b3-7240-4fe0-bcea-e493e6a92d07",
-      text: "Rug of Smothering",
-      updatedAt: "2024-08-13T08:53:28.792Z",
-      createdAt: "2024-08-13T08:53:28.792Z",
+      annotationId: "8411ebc0-d07a-4cb5-b977-ea19c6167366",
+      text: "Devil’s Sight. Magical darkness doesn't impede your Darkvision",
+      updatedAt: "2024-08-13T20:21:10.905Z",
+      createdAt: "2024-08-13T20:21:10.905Z",
     },
     {
       id: 2,
-      annotationId: "79793832-2f69-4912-8e86-39815197c146",
-      text: "Devil’s Sight.",
-      updatedAt: "2024-08-13T08:56:26.482Z",
-      createdAt: "2024-08-13T08:56:26.482Z",
+      annotationId: "753a7a2c-9673-4e3d-be4d-22b47e9bf0da",
+      text: "The Rug of Smothering is an interesting creature. It’s only offensive option is Smother, which is a fairly unique grapple mechanic when combined with Damage Transfer.",
+      updatedAt: "2024-08-13T20:25:38.622Z",
+      createdAt: "2024-08-13T20:25:38.622Z",
     },
     {
       id: 3,
-      annotationId: "912a889e-ba02-48c9-a3bd-75f9a45d2606",
-      text: "Dinosaurs",
-      updatedAt: "2024-08-13T08:57:12.805Z",
-      createdAt: "2024-08-13T08:57:12.805Z",
+      annotationId: "4fd3d01d-9826-4af6-a6f2-c0bca003fce2",
+      text: "The analysis indicates that TS applications exhibit significantly better code quality and understandability than JS applications.",
+      updatedAt: "2024-08-13T20:34:57.085Z",
+      createdAt: "2024-08-13T20:34:57.085Z",
     },
   ];
 

@@ -6,54 +6,49 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const highlightBoxSeeds = () => {
-  const highlightBoxes = [
+  const seeds = [
     {
-      x1: 48.42552185058594,
-      y1: 353.2035827636719,
-      x2: 264.80804443359375,
-      y2: 372.0717468261719,
-      width: 551,
-      height: 713.0588235294117,
-      pageNumber: 1,
+      id: 1,
+      annotationId: "08c401b3-7240-4fe0-bcea-e493e6a92d07",
+      x1: 64.9375,
+      y1: 651.328125,
+      x2: 148.788330078125,
+      y2: 663.328125,
+      width: 690,
+      height: 892.9411764705882,
+      pageNumber: 12,
+      updatedAt: "2024-08-13T08:53:28.806Z",
+      createdAt: "2024-08-13T08:53:28.806Z",
     },
     {
-      x1: 89.6534423828125,
-      y1: 635.3316650390625,
-      x2: 509.9925537109375,
-      y2: 688.3629150390625,
-      width: 1019.9999999999999,
-      height: 1319.9999999999998,
-      pageNumber: 4,
+      id: 2,
+      annotationId: "79793832-2f69-4912-8e86-39815197c146",
+      x1: 75.484375,
+      y1: 636.859375,
+      x2: 135.36083984375,
+      y2: 648.859375,
+      width: 690,
+      height: 892.9411764705882,
+      pageNumber: 53,
+      updatedAt: "2024-08-13T08:56:26.497Z",
+      createdAt: "2024-08-13T08:56:26.497Z",
     },
     {
-      x1: 203.21282958984375,
-      y1: 142.84837341308594,
-      x2: 755.388427734375,
-      y2: 1182.17626953125,
-      width: 1019.9999999999999,
-      height: 1319.9999999999998,
-      pageNumber: 11,
+      id: 3,
+      annotationId: "912a889e-ba02-48c9-a3bd-75f9a45d2606",
+      x1: 64.9375,
+      y1: 488.1875,
+      x2: 128.76202392578125,
+      y2: 505.1875,
+      width: 690,
+      height: 892.9411764705882,
+      pageNumber: 61,
+      updatedAt: "2024-08-13T08:57:12.819Z",
+      createdAt: "2024-08-13T08:57:12.819Z",
     },
   ];
 
-  const seeds = [];
-
-  for (let i = 1; i <= 10; i++) {
-    highlightBoxes.forEach((box) => {
-      seeds.push({
-        annotationId: i,
-        x1: box.x1,
-        y1: box.y1,
-        x2: box.x2,
-        y2: box.y2,
-        width: box.width,
-        height: box.height,
-        pageNumber: box.pageNumber,
-      });
-    });
-  }
-
-  return seeds; 
+  return seeds;
 };
 
 module.exports = {

@@ -6,12 +6,12 @@ const { Folder, Document, Note } = require("../db/models");
 const { uploadAWSFile, deleteAWSFile } = require("../awsS3.js");
 const { environment } = require("../config");
 const { getAnnotations } = require("./annotationsController.js");
+const saveToFile = require("../utils/saveToFile.js");
 const isTesting = environment === "test";
 
 // Create a Document
 const createDocument = async (req, res) => {
   // parsing pdf to text and get response from gemini
-  // console.log("******* **************************!!!!!MADE IT IN BACKEND". req.body.theFile)
   const pdfText = await parsePDF(req.file.buffer);
   const summary = await generateRes(
     "summarize this text in 14 sentences",
@@ -33,6 +33,8 @@ const createDocument = async (req, res) => {
       authorId: user.id,
       folderId: folder.id,
     });
+    // leave line below commented out unless your trying to store this a seed data in a json file
+    // saveToFile("document", newDoc.toJSON())
     res.status(201).json(newDoc);
   }
 };

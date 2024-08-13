@@ -1,12 +1,9 @@
 const crypto = require("crypto");
 const { isAuthorized } = require("../utils/auth");
 const { doesNotExist } = require("../utils/helpers.js");
-const {
-  Annotation,
-  Content,
-  HighlightBox,
-  Highlight,
-} = require("../db/models");
+const { Annotation, Content } = require("../db/models");
+const { HighlightBox, Highlight } = require("../db/models");
+const saveToFile = require("../utils/saveToFile.js");
 
 // Create an annotation
 const createAnnotation = async (req, res) => {
@@ -16,18 +13,9 @@ const createAnnotation = async (req, res) => {
     const { docId, docUrl, type, comment, content, position } = req.body;
     const highlightBox = position.boundingRect;
     const highlights = position.rects;
-    console.log('from server',{...req.body})
-
-    // Log inputs
-    // console.log("🖥️  id: ", id);
-    // console.log("Type: ", type);
-    // console.log("Comment: ", comment);
-    // console.log("Content: ", content);
-    // console.log("HighlightBox: ", highlightBox);
-    // console.log("Highlights: ", highlights);
 
     // Create the annotation
-    const annotation = await Annotation.create({
+    const newAnnotation = await Annotation.create({
       id,
       authorId: user.id,
       docId,
@@ -35,24 +23,26 @@ const createAnnotation = async (req, res) => {
       type,
       comment,
     });
+    saveToFile("annotation", newAnnotation.toJSON());
 
     // Set content
-    let contentMain
+    let newContent;
     if (content.text) {
-      contentMain = await Content.create({
+      newContent = await Content.create({
         annotationId: id,
         text: content.text,
       });
     } else {
-      contentMain = await Content.create({
+      newContent = await Content.create({
         annotationId: id,
         image: content.image,
       });
     }
-    annotation.content = contentMain
+    newAnnotation.content = newContent;
+    saveToFile("content", newContent.toJSON());
 
     //set boundingRects
-    const boundingRect = await HighlightBox.create({
+    const newBoundingRect = await HighlightBox.create({
       annotationId: id,
       x1: Number(highlightBox.x1),
       y1: highlightBox.y1,
@@ -62,11 +52,12 @@ const createAnnotation = async (req, res) => {
       height: highlightBox.height,
       pageNumber: highlightBox.pageNumber,
     });
-    annotation.position = {}
-    annotation.position.boundingRect = boundingRect
+    newAnnotation.position = {};
+    newAnnotation.position.boundingRect = newBoundingRect;
+    saveToFile("highlightBox", newBoundingRect.toJSON());
 
     // Set highlights
-    annotation.rects = []
+    newAnnotation.rects = [];
     for (let i = 0; i < highlights.length; i++) {
       const highlight = highlights[i];
       const rect = await Highlight.create({
@@ -79,12 +70,12 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
-      annotation.rects.push(rect)
-
+      newAnnotation.rects.push(rect);
+      // leave line below commented out unless your trying to store this a seed data in a json file
+      // saveToFile("highlight", rect.toJSON());
     }
 
-    res.json(annotation);
-
+    res.json(newAnnotation);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
@@ -104,9 +95,7 @@ const getAnnotations = async (req, res, docId = null) => {
   const annotations = await Annotation.findAll({
     where: { docId },
     raw: true,
-    order:[
-      ['createdAt','DESC']
-    ]
+    order: [["createdAt", "DESC"]],
   });
 
   for (let i = 0; i < annotations.length; i++) {
@@ -143,36 +132,35 @@ const getSingleAnnotation = async (req, res) => {};
 
 // Update a single Annotation based off id
 const updateAnnotation = async (req, res) => {
-  const user = req.user
-  const {annotationId} = req.params
-  const {commentText} = req.body
-  const annotation = await Annotation.findByPk(annotationId)
-  if(!annotation){
-    res.status(404).json(doesNotExist("Annotation"))
+  const user = req.user;
+  const { annotationId } = req.params;
+  const { commentText } = req.body;
+  const annotation = await Annotation.findByPk(annotationId);
+  if (!annotation) {
+    res.status(404).json(doesNotExist("Annotation"));
   }
-  if(isAuthorized(user.id,annotation.authorId,res)){
-
-    annotation.comment = commentText
-    await annotation.save()
-    res.json(annotation)
-  }else{
-    res.json({"message":"Unauthorized"})
+  if (isAuthorized(user.id, annotation.authorId, res)) {
+    annotation.comment = commentText;
+    await annotation.save();
+    res.json(annotation);
+  } else {
+    res.json({ message: "Unauthorized" });
   }
 };
 
 // Delete a Single Annotation based of id
 const deleteAnnotation = async (req, res) => {
-  const user = req.user
-  const {annotationId} = req.params
-  const annotation  = await Annotation.findByPk(annotationId)
-  if(!annotation){
-    res.status(404).json(doesNotExist("Annotation"))
+  const user = req.user;
+  const { annotationId } = req.params;
+  const annotation = await Annotation.findByPk(annotationId);
+  if (!annotation) {
+    res.status(404).json(doesNotExist("Annotation"));
   }
-  if(isAuthorized(user.id,annotation.authorId,res)){
-    await annotation.destroy()
-    res.json({"annotationId":annotationId})
+  if (isAuthorized(user.id, annotation.authorId, res)) {
+    await annotation.destroy();
+    res.json({ annotationId: annotationId });
   }
-  res.json({"message":"Unauthorized"})
+  res.json({ message: "Unauthorized" });
 };
 
 module.exports = {

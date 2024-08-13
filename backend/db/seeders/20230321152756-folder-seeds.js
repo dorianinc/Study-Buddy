@@ -16,8 +16,6 @@ const folderSeeds = () => {
       userId: 10,
       category:
         categories[faker.number.int({ min: 0, max: categories.length - 1 })],
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
   }
 

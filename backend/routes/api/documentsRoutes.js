@@ -5,20 +5,24 @@ const { handleMulter } = require("../../awsS3.js");
 const { document } = require("../../controllers");
 
 const router = express.Router();
+
 const baseMiddleware = [restoreUser, requireAuth];
-let middleware = [];
+const documentMiddleware = [
+  handleMulter("theFile"),
+  ...baseMiddleware,
+  validateDocument,
+];
 
 // Create a Document
-middleware = [...baseMiddleware, validateDocument];
-router.post("/", [handleMulter("theFile"), ...middleware], document.createDocument);
+router.post("/", [...documentMiddleware], document.createDocument);
 
 // Get all Documents for a specific user
 router.get("/", baseMiddleware, document.getDocuments);
 
-// Get a single Document based off id
+// Get a single Document based on id
 router.get("/:docId", baseMiddleware, document.getSingleDocument);
 
-// Update a single Document based off id
+// Update a single Document based on id
 router.put("/:docId", baseMiddleware, document.updateDocument);
 
 // Delete a Document

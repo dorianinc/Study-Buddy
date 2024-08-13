@@ -17,8 +17,6 @@ const documentSeeds = () => {
       fileUrl: "https://tinyurl.com/ynnxvva9",
       fileType: "pdf",
       summary: faker.lorem.paragraph(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
   }
 
@@ -30,8 +28,6 @@ const documentSeeds = () => {
       fileUrl: "https://tinyurl.com/ynnxvva9",
       fileType: "pdf",
       summary: faker.lorem.paragraph(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
   }
 

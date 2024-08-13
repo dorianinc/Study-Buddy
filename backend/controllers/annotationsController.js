@@ -68,17 +68,22 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
-      newAnnotation.rects.push(newRect);
-      saveToFile("highlight", newRect.toJSON());
-      // leave line below commented out unless your trying to store this a seed data in a json file
+      // saveToFile("testhighligh", newRect)
+      newAnnotation.rects.push(newRect.toJSON());
     }
+    // saveToFile("testannotation", newAnnotation)
+    // saveToFile("testcontent", newContent)
+    // saveToFile("testhighlightbox", newBoundingRect)
+    // console.log("🖥️  newAnnotation: ", newAnnotation.toJSON());
+    // console.log("🖥️  newContent: ", newContent.toJSON());
+    // console.log("🖥️  newBoundingRect: ", newBoundingRect.toJSON());
+    // console.log("🖥️  newRects : ", newAnnotation.rects);
 
-    saveToFile("annotation", newAnnotation.toJSON());
-    saveToFile("content", newContent.toJSON());
-    saveToFile("highlightBox", newBoundingRect.toJSON());
+
+
     res.status(200).json(newAnnotation);
   } catch (error) {
-    console.log("🖥️  error: ", error)
+    console.log("🖥️  error: ", error);
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
   }

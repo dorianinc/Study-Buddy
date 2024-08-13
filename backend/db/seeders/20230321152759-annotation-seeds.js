@@ -6,40 +6,97 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const annotationSeeds = () => {
-  const seeds = [
+  return [
     {
-      id: "08c401b3-7240-4fe0-bcea-e493e6a92d07",
+      id: "8411ebc0-d07a-4cb5-b977-ea19c6167366",
       authorId: 1,
       docId: 15,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536077471.pdf",
       type: "text",
-      comment: "Best subrace so far",
-      updatedAt: "2024-08-13T08:53:28.771Z",
-      createdAt: "2024-08-13T08:53:28.771Z",
+      comment: "Can combo really well with darkness spell",
+      updatedAt: "2024-08-13T20:21:10.884Z",
+      createdAt: "2024-08-13T20:21:10.884Z",
     },
     {
-      id: "79793832-2f69-4912-8e86-39815197c146",
+      id: "753a7a2c-9673-4e3d-be4d-22b47e9bf0da",
       authorId: 1,
       docId: 15,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536077471.pdf",
       type: "text",
-      comment: "Super strong with darkness",
-      updatedAt: "2024-08-13T08:56:26.186Z",
-      createdAt: "2024-08-13T08:56:26.186Z",
+      comment: "Possibly the best subclass so far!",
+      updatedAt: "2024-08-13T20:25:38.325Z",
+      createdAt: "2024-08-13T20:25:38.325Z",
     },
     {
-      id: "912a889e-ba02-48c9-a3bd-75f9a45d2606",
+      id: "4fd3d01d-9826-4af6-a6f2-c0bca003fce2",
       authorId: 1,
-      docId: 15,
-      docUrl: "https://tinyurl.com/ynnxvva9",
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
       type: "text",
-      comment: "Build character named Barney",
-      updatedAt: "2024-08-13T08:57:12.787Z",
-      createdAt: "2024-08-13T08:57:12.787Z",
+      comment: "Better code!",
+      updatedAt: "2024-08-13T20:34:57.069Z",
+      createdAt: "2024-08-13T20:34:57.069Z",
+    },
+    {
+      id: "a1630391-039c-412a-9afa-08d7b969de8c",
+      authorId: 1,
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
+      type: "text",
+      comment: "Interesting...",
+      updatedAt: "2024-08-13T20:53:29.587Z",
+      createdAt: "2024-08-13T20:53:29.587Z",
+    },
+    {
+      id: "8d88bfae-6bbc-4602-9134-7bf023a7f894",
+      authorId: 1,
+      docId: 16,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723536135698.pdf",
+      type: "text",
+      comment: "Final Verdict",
+      updatedAt: "2024-08-13T20:57:05.803Z",
+      createdAt: "2024-08-13T20:57:05.803Z",
+    },
+    {
+      id: "edff7858-05c9-493e-aba5-440d7f7c60dd",
+      authorId: 1,
+      docId: 10,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment: "Very profound for a rooster",
+      updatedAt: "2024-08-13T21:01:21.753Z",
+      createdAt: "2024-08-13T21:01:21.753Z",
+    },
+    {
+      id: "641859ae-fdfe-4500-a114-50483a2b4f09",
+      authorId: 1,
+      docId: 10,
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment:
+        "The moral of the story is that powerful individuals often use false accusations and flimsy excuses to justify their actions, especially when they seek to exploit or harm those weaker than themselves",
+      updatedAt: "2024-08-13T21:04:54.638Z",
+      createdAt: "2024-08-13T21:04:54.638Z",
+    },
+    {
+      id: "5beaadc7-3f17-46be-a41f-90227dd31061",
+      authorId: "1",
+      docId: "10",
+      docUrl:
+        "https://study-buddy-pdf-files.s3.us-west-1.amazonaws.com/1723535763277.pdf",
+      type: "text",
+      comment: "Very powerful message",
+      updatedAt: "2024-08-13T21:19:07.812Z",
+      createdAt: "2024-08-13T21:19:07.812Z",
     },
   ];
-
-  return seeds;
 };
 
 module.exports = {

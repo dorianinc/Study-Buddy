@@ -1,6 +1,7 @@
 :root{
   --main-blue: #63B3ED;
   --hover-blue:rgba(0, 149, 255, 0.773);
+  --hover-gray: rgb(233, 233, 233)
 }
 .submitBtn{
   margin-top: 1rem;
@@ -20,4 +21,12 @@
   min-height: 12px;
   max-height: 12px;
   font-size: 13px;
+}
+
+.form-labels{
+  font-size: 17px;
+}
+
+.gridTile:hover  *{
+  color: var(--hover-blue)
 }

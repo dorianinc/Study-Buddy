@@ -8,6 +8,7 @@ import {
   FormHelperText,
   Box,
   Container,
+  Spinner
 } from "@chakra-ui/react";
 import { useCreateDocMutation } from "../../store/features/api";
 import { useModal } from "../../context/ModalContext";
@@ -18,8 +19,9 @@ function NewDocModal({ folderId }) {
   const [fileType, setFileType] = useState("pdf");
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState({});
+  const [hidden, setHidden] = useState(true);
   const { closeModal } = useModal();
-  const [createDoc, { error, isError, isLoading }] = useCreateDocMutation();
+  const [createDoc, { error, isError, isLoading, isFetching }] = useCreateDocMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,12 +36,19 @@ function NewDocModal({ folderId }) {
       return errors;
     }
 
+    setErrors({})
+    setHidden(!hidden)
     const formData = new FormData();
     formData.append("theFile", file);
     formData.append("name", docName);
     formData.append("fileType", fileType);
-    createDoc({ formData, folderId });
-    closeModal();
+    const newDoc = await createDoc({ formData, folderId });
+
+    if (newDoc.data.id) {
+      closeModal();
+    };
+
+
   };
 
   if (isError) {
@@ -57,7 +66,7 @@ function NewDocModal({ folderId }) {
         width="240px"
       >
         <FormControl display="flex" flexDirection="column">
-          <FormLabel htmlFor="name">Document name</FormLabel>
+          <FormLabel htmlFor="name" className="form-labels">Document name</FormLabel>
           <Input
             id="name"
             placeholder="name"
@@ -70,7 +79,7 @@ function NewDocModal({ folderId }) {
           >
             {errors.docName}
           </Container>
-          <FormLabel mt={5} htmlFor="uploaded_file">
+          <FormLabel mt={5} htmlFor="uploaded_file" className="form-labels">
             Upload a File
           </FormLabel>
           <Input
@@ -86,6 +95,10 @@ function NewDocModal({ folderId }) {
             className="form-errors"
           >
             {errors.file}
+
+          </Container>
+          <Container minH={25} maxH={25} display='flex' justifyContent='center'>
+            <Spinner h={25} w={25} hidden={hidden}/>
           </Container>
           <button type="submit" className="submitBtn">
             Upload Document

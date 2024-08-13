@@ -50,33 +50,37 @@ function MyDocuments() {
             modalComponent={<NewDocModal folderId={folderId} />}
           />
         </GridItem>
-        {folder.documents.length ? (
-          folder.documents?.map((doc) => (
-            <Container key={doc.id}>
+        {folder.documents.length ?
+          (folder.documents?.map((doc) => (
+            <Container key={doc.id} title={doc.name}>
+
               <GridItem
-                display="flex"
-                w="fit-content"
-                justifyContent="center"
-                pt={0}
-              >
+                display='flex' w='fit-content' justifyContent='center' pt={0}>
                 <ChakraLink
                   as={ReactRouterLink}
                   to={`/folders/${folderId}/${doc.id}`}
+
                 >
                   <Document document={doc} />
                 </ChakraLink>
               </GridItem>
               <ModalButton
-                buttonContent={
-                  <>
-                    <Button size="xs">Delete</Button>
-                  </>
-                }
-                modalComponent={<DeleteDocModal doc={doc} />}
+                buttonContent={<>
+                  <Button
+                  w={210}
+                  size='xs' _hover={{
+                    boxShadow: "0 0 10px var(--hover-blue)"
+                  }}
+                  backgroundColor='red'
+                  color='white'
+                  >
+                    Delete
+                  </Button>
+                </>}
+                modalComponent={< DeleteDocModal doc={doc} />}
               />
             </Container>
-          ))
-        ) : (
+          ))) :
           <>
             <h1>
               No documents have been uploaded. Click on the plus button to get

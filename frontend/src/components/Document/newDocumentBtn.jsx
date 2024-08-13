@@ -5,6 +5,7 @@ function NewDocButton() {
   return (
     <>
       <Box
+        className="gridTile"
         as="button"
         boxShadow="lg"
         rounded="xl"
@@ -15,10 +16,12 @@ function NewDocButton() {
         h={200}
         _hover={{
           bg: "rgb(233, 233, 233)",
-          boxShadow: "0 0 10px var(--main-blue)"
+          boxShadow: "0 0 10px var(--hover-blue)"
         }}
         >
-        <AddIcon boxSize={30} />
+        <AddIcon _hover={{
+          color: "var(--main-blue)"
+        }} boxSize={30} />
       </Box>
     </>
   );

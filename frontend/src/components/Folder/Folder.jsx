@@ -13,7 +13,8 @@ function Folder({ folder }) {
         w={200}
         h={200}
         _hover={{
-          bg: "lightgrey",
+          bg: "var(--hover-gray)",
+          boxShadow: "0 0 10px var(--hover-blue)"
         }}
       >
         <Text noOfLines={1}>{folder.name}</Text>

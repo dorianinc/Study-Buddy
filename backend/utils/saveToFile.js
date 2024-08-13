@@ -3,6 +3,7 @@ const path = require('path');
 
 const saveToFile = (type, data) => {
   // Ensure the request has data
+  return;
   if (!data) {
     console.error("Invalid data format. Expected an array of objects.");
     return;

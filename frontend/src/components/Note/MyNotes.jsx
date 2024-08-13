@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import {
   Drawer,
   DrawerBody,
@@ -19,24 +20,20 @@ import { ArrowLeftIcon } from "@chakra-ui/icons";
 
 import NoteContainer from './NoteContainer.jsx'
 import { useGetAllAnnotationsQuery } from "../../store/features/api.js";
-import { useSelector } from "react-redux";
 // TODO: Make individual note components into Editables and reorderable
 
 function MyNotes({docId}) {
-
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
   // const {data:annotations} = useGetAllAnnotationsQuery({docId})
   // // const annotation = useSelector(state=>state.annotation)
   // const {data} = useGetAllAnnotationsQuery({docId})
+  const document = useSelector((state) => state.document[docId])
   const data = useSelector(state=>state.annotation.annotations)
   const annotations = Object.values(data).sort((a,b)=>Date.parse(b.createdAt) - Date.parse(a.createdAt))
   // console.log('entered MyNotes',testingdata)
   console.log('annotations',annotations)
 
   // console.log('this is annotations',annotations)
-  const document = {
-    name: "Math homework",
-  };
 
   // useEffect(()=>{
   //   useGetAllAnnotationsQuery({docId})

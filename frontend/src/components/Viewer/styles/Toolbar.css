@@ -32,6 +32,7 @@
 }
 
 .HighlightButton {
+    display: none;
     background: none;
     /* Remove background */
     color: #f5f5f5;

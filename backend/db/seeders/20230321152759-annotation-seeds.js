@@ -6,31 +6,41 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const annotationSeeds = () => {
-  const baseAnnotations = [
-    { comment: "Better code!" },
-    { comment: "This is a test..." },
-    { comment: "Pumpernickel" },
+  const seeds = [
+    {
+      id: "08c401b3-7240-4fe0-bcea-e493e6a92d07",
+      authorId: 1,
+      docId: 15,
+      docUrl: "https://tinyurl.com/ynnxvva9",
+      type: "text",
+      comment: "Best subrace so far",
+      updatedAt: "2024-08-13T08:53:28.771Z",
+      createdAt: "2024-08-13T08:53:28.771Z",
+    },
+    {
+      id: "79793832-2f69-4912-8e86-39815197c146",
+      authorId: 1,
+      docId: 15,
+      docUrl: "https://tinyurl.com/ynnxvva9",
+      type: "text",
+      comment: "Super strong with darkness",
+      updatedAt: "2024-08-13T08:56:26.186Z",
+      createdAt: "2024-08-13T08:56:26.186Z",
+    },
+    {
+      id: "912a889e-ba02-48c9-a3bd-75f9a45d2606",
+      authorId: 1,
+      docId: 15,
+      docUrl: "https://tinyurl.com/ynnxvva9",
+      type: "text",
+      comment: "Build character named Barney",
+      updatedAt: "2024-08-13T08:57:12.787Z",
+      createdAt: "2024-08-13T08:57:12.787Z",
+    },
   ];
-
-  const seeds = [];
-  let id = 1; // Initialize a unique id counter
-
-  for (let i = 1; i <= 10; i++) {
-    baseAnnotations.forEach((annotation) => {
-      seeds.push({
-        id: id++, // Increment the id counter for each new record
-        authorId: 10,
-        docUrl: "https://tinyurl.com/ynnxvva9",
-        docId: i,
-        comment: annotation.comment,
-        type: "text"
-      });
-    });
-  }
 
   return seeds;
 };
-
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

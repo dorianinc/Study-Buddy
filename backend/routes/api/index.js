@@ -6,7 +6,7 @@ const docRouter = require("./documentsRoutes.js");
 const notesRouter = require("./notesRoutes.js");
 const annotationRouter = require("./annotationRoutes.js");
 const geminiAI = require("./geminiAi.js");
-const { restoreUser } = require("../../utils/auth.js");
+const { restoreUser } = require("../../utils/middleware/auth.js");
 
 router.use(restoreUser);
 

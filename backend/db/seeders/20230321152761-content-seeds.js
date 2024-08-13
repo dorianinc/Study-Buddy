@@ -6,32 +6,29 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const contentSeeds = () => {
-  const contentItems = [
+  const seeds = [
     {
-      text: "The analysis indicates that TS applications exhibit significantly better code quality and understandability than JS applications.",
-      image: null,
+      id: 1,
+      annotationId: "08c401b3-7240-4fe0-bcea-e493e6a92d07",
+      text: "Rug of Smothering",
+      updatedAt: "2024-08-13T08:53:28.792Z",
+      createdAt: "2024-08-13T08:53:28.792Z",
     },
     {
-      text: "Frequently used instruments to evaluate code quality are code smells, i.e., indicators of low code quality which may impact maintainability",
-      image: null,
+      id: 2,
+      annotationId: "79793832-2f69-4912-8e86-39815197c146",
+      text: "Devil’s Sight.",
+      updatedAt: "2024-08-13T08:56:26.482Z",
+      createdAt: "2024-08-13T08:56:26.482Z",
     },
     {
-      text: "We examined a total of 604 repositories (299 JS, 305 TS) with over 16M lines of code.",
-      image: null,
+      id: 3,
+      annotationId: "912a889e-ba02-48c9-a3bd-75f9a45d2606",
+      text: "Dinosaurs",
+      updatedAt: "2024-08-13T08:57:12.805Z",
+      createdAt: "2024-08-13T08:57:12.805Z",
     },
   ];
-
-  const seeds = [];
-
-  for (let i = 1; i <= 10; i++) {
-    contentItems.forEach((content, index) => {
-      seeds.push({
-        annotationId: i,
-        text: content.text,
-        image: content.image
-      });
-    });
-  }
 
   return seeds;
 };

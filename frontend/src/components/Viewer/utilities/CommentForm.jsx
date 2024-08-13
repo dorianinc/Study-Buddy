@@ -32,7 +32,9 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
     setComment(data.AIResponse)
   }
 
-
+  console.log(
+    'docurl',docUrl
+  )
   return (
     <form
       className="Tip__card"

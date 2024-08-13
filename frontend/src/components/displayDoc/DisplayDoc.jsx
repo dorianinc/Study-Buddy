@@ -15,20 +15,17 @@ function DisplayDoc() {
       <MyNotes docId={docId}/>
       <div>Display Doc</div>
       <Flex
-        paddingTop='20px'
-      w={"100vw"} h={"100vh"} bg={"gray.300"} px={100} gap={5} >
+      marginTop='15px'
+      w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5} >
         <Container minW={"60vw"} h={"75%"} borderRadius={10} centerContent>
           <Viewer />
         </Container>
 
         <Container
-            display='flex'
-            flexDir='column'
             w={"50%"}
             h={"75%"}
             borderRadius={10}
             bg={"white"}
-            padding='10px'
             border={'1px solid black'}
         >
           <Heading>Short Summary</Heading>

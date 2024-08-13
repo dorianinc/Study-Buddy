@@ -17,8 +17,7 @@ const Viewer = () => {
   const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const {data:annotations} = useGetAllAnnotationsQuery({docId})
-  const [url, setUrl] = useState(documents?.fileUrl);
-  console.log(annotations)
+  const [url, setUrl] = useState();
   // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
@@ -36,6 +35,9 @@ const Viewer = () => {
       setHighlights(annotations)
     },[annotations])
 
+    useEffect(()=>{
+      setUrl(documents?.fileUrl)
+    },[documents])
     // useEffect for changing highlightRef
     // (()=>{
     //   document.location.hash = highLightRef

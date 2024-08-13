@@ -37,7 +37,8 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
   const prompt = useRef()
   const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
-
+  const position = selectedContent.current.position
+  console.log('selected content',position)
   // fetching response from gemini
   const AIGenerate = async () => {
     if (!prompt.current) {
@@ -95,7 +96,8 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
           docId: parseInt(docId),
           docUrl,
           comment,
-          ...content
+          ...content,
+          position
         }
         await createAnnotation({ ...queryObject })
 

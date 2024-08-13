@@ -13,6 +13,7 @@ const createAnnotation = async (req, res) => {
     const { docId, docUrl, type, comment, content, position } = req.body;
     const highlightBox = position.boundingRect;
     const highlights = position.rects;
+    console.log("========>position",position)
 
     // Create the annotation
     const newAnnotation = await Annotation.create({
@@ -23,7 +24,7 @@ const createAnnotation = async (req, res) => {
       type,
       comment,
     });
-    
+
     // Set content
     let newContent;
     if (content.text) {
@@ -37,9 +38,8 @@ const createAnnotation = async (req, res) => {
         image: content.image,
       });
     }
-    console.log("🖥️  newContent: ", newContent)
     newAnnotation.content = newContent;
-    
+
     //set boundingRects
     const newBoundingRect = await HighlightBox.create({
       annotationId: id,
@@ -53,7 +53,7 @@ const createAnnotation = async (req, res) => {
     });
     newAnnotation.position = {};
     newAnnotation.position.boundingRect = newBoundingRect;
-    
+
     // Set highlights
     newAnnotation.rects = [];
     for (let i = 0; i < highlights.length; i++) {
@@ -72,7 +72,7 @@ const createAnnotation = async (req, res) => {
       saveToFile("highlight", newRect.toJSON());
       // leave line below commented out unless your trying to store this a seed data in a json file
     }
-    
+
     saveToFile("annotation", newAnnotation.toJSON());
     saveToFile("content", newContent.toJSON());
     saveToFile("highlightBox", newBoundingRect.toJSON());

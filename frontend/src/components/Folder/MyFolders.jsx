@@ -1,6 +1,11 @@
 import { useSelector } from "react-redux";
 import { Link as ReactRouterLink } from "react-router-dom";
-import { Link as ChakraLink } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import Folder from "./Folder";
 import NewFolderButton from "./NewFolderButton";
 import ModalButton from "../Modals/ModalButton";
@@ -19,6 +24,18 @@ function MyFolders() {
   return (
     <>
       <Box>
+        <Breadcrumb
+          fontWeight={"bold"}
+          fontSize={"xl"}
+          mt={5}
+          mb={5}
+          ml={5}
+          color={"blue.500"}
+        >
+          <BreadcrumbItem isCurrentPage={true}>
+            <BreadcrumbLink>Folders</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
         <Grid templateColumns="repeat(5,1fr)" rowGap={20} p={20}>
           {error ? (
             <>

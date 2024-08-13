@@ -67,12 +67,18 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
+      // saveToFile("testhighligh", newRect)
       newAnnotation.rects.push(newRect.toJSON());
     }
-    console.log("🖥️  newAnnotation: ", newAnnotation.toJSON());
-    console.log("🖥️  newContent: ", newContent.toJSON());
-    console.log("🖥️  newBoundingRect: ", newBoundingRect.toJSON());
-    console.log("🖥️  newRects : ", newAnnotation.rects);
+    // saveToFile("testannotation", newAnnotation)
+    // saveToFile("testcontent", newContent)
+    // saveToFile("testhighlightbox", newBoundingRect)
+    // console.log("🖥️  newAnnotation: ", newAnnotation.toJSON());
+    // console.log("🖥️  newContent: ", newContent.toJSON());
+    // console.log("🖥️  newBoundingRect: ", newBoundingRect.toJSON());
+    // console.log("🖥️  newRects : ", newAnnotation.rects);
+
+
     
     res.status(200).json(newAnnotation);
   } catch (error) {

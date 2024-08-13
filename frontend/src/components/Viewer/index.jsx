@@ -12,22 +12,19 @@ import {
   Box
 } from "@chakra-ui/react";
 
-const TEST_HIGHLIGHTS = _testHighlights;
-const PRIMARY_PDF_URL = "https://tinyurl.com/ynnxvva9";
-const SECONDARY_PDF_URL = "https://tinyurl.com/23pybv5e";
-
 const Viewer = () => {
   const { docId } = useParams()
   const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
-  const {data:annotation} = useGetAllAnnotationsQuery({docId})
+  // const {data:annotation} = useGetAllAnnotationsQuery({docId})
+  const {data:annotations} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState(documents?.fileUrl);
-  console.log(documents)
+  console.log(annotations)
   // const [highLightRef,setHighlightRef] = useState('')
   // const [url,setUrl] = useState(documents.fileUrl)
   // const [highlights, setHighlights] = useState(
     //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
     // );
-    const [highlights,setHighlights] = useState(annotation? annotation:[])
+    const [highlights,setHighlights] = useState(annotations? annotations:[])
     const currentPdfIndexRef = useRef(0);
     const [contextMenu, setContextMenu] = useState(null);
     const [pdfScaleValue, setPdfScaleValue] = useState(undefined);
@@ -36,8 +33,8 @@ const Viewer = () => {
     const highlighterUtilsRef = useRef();
 
     useEffect(()=>{
-      setHighlights(annotation)
-    },[annotation])
+      setHighlights(annotations)
+    },[annotations])
 
     // useEffect for changing highlightRef
     // (()=>{

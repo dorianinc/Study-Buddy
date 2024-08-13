@@ -17,6 +17,7 @@ const createDocument = async (req, res) => {
     "summarize this text in 14 sentences",
     pdfText
   );
+  console.log(summary)
 
   const { user } = req;
   const { name, fileType } = req.body;

@@ -30,7 +30,7 @@ function MyNotes({docId}) {
   // const {data} = useGetAllAnnotationsQuery({docId})
   const data = useSelector(state=>state.annotation.annotations)
   const annotations = Object.values(data).sort((a,b)=>Date.parse(b.createdAt) - Date.parse(a.createdAt))
-  // console.log('entered MyNotes',testingdata)
+
 
 
   // console.log('this is annotations',annotations)

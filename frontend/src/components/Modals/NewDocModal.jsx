@@ -36,17 +36,19 @@ function NewDocModal({ folderId }) {
       return errors;
     }
 
+    setErrors({})
+    setHidden(!hidden)
     const formData = new FormData();
     formData.append("theFile", file);
     formData.append("name", docName);
     formData.append("fileType", fileType);
-    createDoc({ formData, folderId });
-    setErrors({})
-    setHidden(!hidden)
+    const newDoc = await createDoc({ formData, folderId });
 
-    setTimeout(() => {
+    if (newDoc.data.id) {
       closeModal();
-    }, 3000)
+    };
+
+
   };
 
   if (isError) {

@@ -18,11 +18,7 @@ const Viewer = () => {
   // const {data:annotation} = useGetAllAnnotationsQuery({docId})
   const {data:annotations} = useGetAllAnnotationsQuery({docId})
   const [url, setUrl] = useState();
-  // const [highLightRef,setHighlightRef] = useState('')
-  // const [url,setUrl] = useState(documents.fileUrl)
-  // const [highlights, setHighlights] = useState(
-    //   TEST_HIGHLIGHTS[PRIMARY_PDF_URL] ?? []
-    // );
+
     const [highlights,setHighlights] = useState(annotations? annotations:[])
     const currentPdfIndexRef = useRef(0);
     const [contextMenu, setContextMenu] = useState(null);
@@ -30,7 +26,6 @@ const Viewer = () => {
     const [highlightPen, setHighlightPen] = useState(false);
     // Refs for PdfHighlighter utilities
     const highlighterUtilsRef = useRef();
-    console.log('this is highlights',highlights)
     useEffect(()=>{
       setHighlights(annotations)
     },[annotations])
@@ -38,11 +33,7 @@ const Viewer = () => {
     useEffect(()=>{
       setUrl(documents?.fileUrl)
     },[documents])
-    // useEffect for changing highlightRef
-    // (()=>{
-    //   document.location.hash = highLightRef
-    //   console.log('this is hash',document.location.hash)
-    // },[highLightRef])
+
 
   const toggleDocument = () => {
     const urls = [PRIMARY_PDF_URL, SECONDARY_PDF_URL];

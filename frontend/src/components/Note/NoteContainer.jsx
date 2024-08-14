@@ -60,8 +60,9 @@ const NoteContainer = ({ annotation }) => {
             <Flex justifyContent='center'>
                 <ButtonGroup
                     size='l'
+                    bgColor='white'
                 >
-                    <IconButton icon={<EditIcon boxSize={4} />} {...getEditButtonProps()} />
+                    <IconButton gbColor='white' icon={<EditIcon boxSize={4} />} {...getEditButtonProps()} />
                     <IconButton icon={<DeleteIcon boxSize={4} />} onClick={deleteComment} />
 
                 </ButtonGroup>
@@ -88,6 +89,7 @@ const NoteContainer = ({ annotation }) => {
                 overflowY="auto"
                 onClick={updateHash}
                 boxShadow='xs' p='6' rounded='md' bg='white'
+                minHeight = '40px'
                 >
             <EditablePreview
                 _hover={{

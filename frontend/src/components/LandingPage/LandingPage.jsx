@@ -10,7 +10,8 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  Container
+  Container,
+  Divider
 } from '@chakra-ui/react'
 import SignupFormModal from '../Modals/SignupFormModal/SignupForm'
 
@@ -54,31 +55,37 @@ export default function LandingPage() {
                 }}>
                 Log in
               </Button>}
-              modalComponent={<LoginFormModal/>}
+              modalComponent={<LoginFormModal />}
             />
             <ModalButton
               buttonContent={
                 <Button rounded={'full'}>Sign Up</Button>
               }
-              modalComponent={<SignupFormModal/>}
+              modalComponent={<SignupFormModal />}
             />
           </Stack>
         </Stack>
       </Flex>
 
-      <Flex minH={'70vh'} flex={1} flexDirection='column' justifyContent='center' align='center'>
-        <Container boxSize='sm' p={0}>
-          <Image borderRadius='5px' boxSize='500px' objectFit='contain' src="/images/logos/highlight-ss.png" alt="highlight example" />
-        </Container>
-        <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>Highlight text you want to send to Study Buddy and receive feedback within seconds!</Text>
-        <Container boxSize='sm'>
+      <Flex minH={'70vh'} w='100%' flex={1} flexDirection='column' justifyContent='center' align='center' borderLeft='2px solid var(--main-blue)'>
 
-        <Image
-          alt={'Login Image'}
-          objectFit={'contain'}
-          src="/images/logos/gemini-response.png"
+        <Container p={0} w='35rem' alignSelf='center'>
+          <Image borderRadius='8px' boxSize='500px' h='380px' w='100%' objectFit='contain' src="/images/logos/highlight-ss.png" alt="highlight example" border='1px dashed var(--main-blue)' />
+        </Container>
+
+        <Divider mt={1} />
+        <Text mt={1} mb={1} fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>Highlight text you want to send to Study Buddy and receive feedback within seconds!</Text>
+        <Divider mb={1} />
+
+        <Container w='35rem' align='center'>
+          <Image
+            alt={'Login Image'}
+            objectFit='contain'
+            src="/images/logos/gemini-response.png"
+            border='1px dashed var(--main-blue)'
+            borderRadius='8px'
           />
-          </Container>
+        </Container>
       </Flex>
     </Stack>
   )

@@ -137,6 +137,7 @@ const Viewer = () => {
               utilsRef={(_pdfHighlighterUtils) => {
                 highlighterUtilsRef.current = _pdfHighlighterUtils;
               }}
+              pdfScaleValue={pdfScaleValue} // zoom in/out 
               selectionTip={<ExpandableTip addHighlight={addHighlight} docId={docId} url={url}/>} // Component will render as a tip upon any selection
               highlights={highlights}
             >

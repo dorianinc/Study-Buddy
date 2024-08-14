@@ -1,67 +1,67 @@
-const fs = require('fs').promises;
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const saveToFile = (type, data) => {
-  // Ensure the request has data
-  return;
+const saveToFile = (data = null) => {
   if (!data) {
     console.error("Invalid data format. Expected an array of objects.");
     return;
   }
 
-  console.log(`❗❗❗ Creating entry for ${type} ❗❗❗`);
+  const types = ["annotation", "content", "highlightBoxes", "highlights"];
+  const annotationJSON = data[0].toJSON();
+  const contentJSON = data[1].toJSON();
+  const boundingRectJSON = data[2].toJSON();
+  const rectsJSON = data[3].map((rect) => rect.toJSON());
 
-  // Define the output directory and filename relative to this file
-  const directory = path.join(__dirname, '..', 'data');
-  const filename = `${type}.json`;
-  const filePath = path.join(directory, filename);
+  delete contentJSON.id;
+  delete boundingRectJSON.id;
+  rectsJSON.forEach((rect) => delete rect.id);
 
-  // Function to perform the actual file saving
-  const performSave = async () => {
-    console.log("========== in perform save --------")
-    try {
-      // Ensure the directory exists
-      await fs.mkdir(directory, { recursive: true });
+  data = [annotationJSON, contentJSON, boundingRectJSON, rectsJSON];
 
-      // Read existing data from the file if it exists
-      let existingData = [];
+  // // Define the output directory and filename relative to this file
+  const directory = path.join(__dirname, "data");
+  for (let i = 0; i < 4; i++) {
+    const type = types[i];
+    const filename = `${type}.json`;
+    const filePath = path.join(directory, filename);
+
+    // Ensure the directory exists
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory, { recursive: true });
+    }
+
+    // Read existing data from the file if it exists
+    let existingData = [];
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, "utf-8");
       try {
-        await fs.access(filePath); // Check if file exists
-        const fileContent = await fs.readFile(filePath, 'utf-8');
         existingData = JSON.parse(fileContent);
-        console.log("❗❗❗ console 1")
         if (!Array.isArray(existingData)) {
-        console.log("❗❗❗ console 2")
-
           existingData = [existingData]; // Ensure it's an array if it wasn't before
         }
       } catch (err) {
-
-        if (err.code !== 'ENOENT') { // File does not exist error
-          console.error("Error reading or parsing existing file content:", err);
-          return;
-        }
+        console.error("Error reading or parsing existing file content:", err);
+        return;
       }
-
-      // Merge new data with existing data
-      const newData = Array.isArray(data) ? data : [data];
-      const updatedData = existingData.concat(newData);
-
-      // Convert the updated data to JSON format with pretty printing
-      const jsonData = JSON.stringify(updatedData, null, 2);
-
-      // Write updated JSON data to the file
-      await fs.writeFile(filePath, jsonData);
-      console.log(`❗❗❗ File written successfully to ${filePath}`);
-
-    } catch (err) {
-      console.error("❗❗❗ Error during file operation:", err);
     }
-  };
 
-  // Start the file-saving process but don't wait for it to complete
-  performSave().catch(err => console.error("Unhandled error:", err));
+    // Merge new data with existing data
+    const newData = Array.isArray(data[i]) ? data[i] : [data[i]];
+    const updatedData = existingData.concat(newData);
+
+    // Convert the updated data to JSON format with pretty printing
+    const jsonData = JSON.stringify(updatedData, null, 2);
+
+    // Write updated JSON data to the file
+    fs.writeFile(filePath, jsonData, (err) => {
+      if (err) {
+        console.error("Error writing to file:", err);
+      } else {
+        console.log(`File written successfully to ${filePath}`);
+      }
+    });
+  }
 };
-
 
 module.exports = saveToFile;

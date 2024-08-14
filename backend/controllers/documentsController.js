@@ -33,8 +33,7 @@ const createDocument = async (req, res) => {
       authorId: user.id,
       folderId: folder.id,
     });
-    // leave line below commented out unless your trying to store this a seed data in a json file
-    saveToFile("document", newDoc.toJSON())
+
     res.status(201).json(newDoc);
   }
 };

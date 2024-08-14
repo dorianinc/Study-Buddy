@@ -4,23 +4,27 @@ import MyNotes from "../Note/MyNotes";
 import {
   Container,
   Flex,
-  Heading,Text,
+  Heading,
+  Text,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/react";
-import { useGetAllAnnotationsQuery, useGetOneDocQuery, useGetOneFolderQuery } from "../../store/features/api";
+import {
+  useGetAllAnnotationsQuery,
+  useGetOneDocQuery,
+  useGetOneFolderQuery,
+} from "../../store/features/api";
 import { useParams, Link as ReactRouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 
 function DisplayDoc() {
   const { folderId, docId } = useParams();
   const document = useSelector((state) => state.document.document[docId]);
   const { data: folder } = useGetOneFolderQuery(folderId);
 
-  const {data:documents,isLoading,error} = useGetOneDocQuery(docId)
-  if(error) return <h1>cant load document</h1>
+  const { data: documents, isLoading, error } = useGetOneDocQuery(docId);
+  if (error) return <h1>cant load document</h1>;
   return (
     <>
       <MyNotes docId={docId} />
@@ -46,25 +50,25 @@ function DisplayDoc() {
           <BreadcrumbLink>{document?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Flex
-      marginTop='15px'
-      w={"100vw"} h={"100vh"} bg={"gray.300"} px={150} gap={5}>
+      <Flex pt={10} w={"100vw"} h={"100vh"} bg={"gray.300"} ml={-5}>
         <Container minW={"60vw"} h={"75%"} borderRadius={10} centerContent>
           <Viewer />
         </Container>
 
         <Container
-            w={"50%"}
-            h={"75%"}
-            borderRadius={10}
-            bg={"white"}
-            border={'1px solid black'}
+          h={"75%"}
+          borderRadius={10}
+          bg={"white"}
+          border={"1px solid #2c517f"}
+          p={5}
+          marginRight={"200px"}
+          overflowY={"auto"}
+          minW={"20%"}
         >
-          <Heading>Short Summary</Heading>
+          <Heading fontWeight={600}>Document Summary</Heading>
           {isLoading && <h3>loading document</h3>}
-          <Text
-            padding='10px'
-            fontSize='l'>{documents?.summary}
+          <Text mt={1} p={5} fontSize="lg" color={"gray.600"}>
+            {documents?.summary}
           </Text>
         </Container>
       </Flex>

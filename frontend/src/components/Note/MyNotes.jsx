@@ -62,13 +62,14 @@ function MyNotes({docId}) {
         ref={btnRef}
         leftIcon={<ArrowLeftIcon />}
         color="blue.300"
+        bg={'white'}
         iconSpacing={1}
         variant="outline"
         borderRadius={50}
         aria-label="Open Notes"
         fontSize="20px"
         position="fixed"
-        right="50px"
+        right="20px"
         bottom={middleHeight}
         zIndex={2}
         onClick={onOpen}

@@ -128,8 +128,8 @@ export const api = createApi({
       query: ({user,docId})=>({
         url:`/annotations?docId=${docId}`,
         method:'GET',
-        providesTags:['Annotation']
       }),
+      providesTags:['Annotation']
     }),
     updateAnnotations : builder.mutation({
       query:({user,annotationId,commentText}) => ({

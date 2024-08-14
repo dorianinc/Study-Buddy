@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { api } from './api.js'
 
 const initialState = {
+  document: {},
   documents: {}
 }
 
@@ -14,13 +15,13 @@ const documentSlice = createSlice({
       api.endpoints.createDoc.matchFulfilled,
       (state, { payload }) => {
         //TODO: make sure to  update this once it's all connected
-        state.documents = state.documents
+        state.documents = payload
       }
     )
     builder.addMatcher(
       api.endpoints.getOneDoc.matchFulfilled,
       (state,{payload})=>{
-        state[payload.id] = payload
+        state.document[payload.id] = payload
       }
     )
   }

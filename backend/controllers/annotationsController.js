@@ -72,7 +72,8 @@ const createAnnotation = async (req, res) => {
     }
     newAnnotation.rects = newRects;
 
-    saveToFile([newAnnotation, newContent, newBoundingRect, newRects]);
+    // leave line below commented out unless you're planning on adding seeds to the .json files
+    // saveToFile([newAnnotation, newContent, newBoundingRect, newRects]);
 
     res.status(200).json(newAnnotation);
   } catch (error) {

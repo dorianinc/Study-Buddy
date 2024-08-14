@@ -15,8 +15,7 @@ const createFolder = async (req, res) => {
   }
 
   const newFolder = await Folder.create({ ...data });
-  // leave line below commented out unless your trying to store this a seed data in a json file
-  saveToFile("folder", newFolder.toJSON());
+
   res.status(201).json(newFolder);
 };
 

@@ -13,7 +13,7 @@ const createAnnotation = async (req, res) => {
     const { docId, docUrl, type, comment, content, position } = req.body;
     const highlightBox = position.boundingRect;
     const highlights = position.rects;
-    console.log("========>position",position)
+    console.log("========>position", position);
 
     // Create the annotation
     const newAnnotation = await Annotation.create({
@@ -43,7 +43,7 @@ const createAnnotation = async (req, res) => {
     //set boundingRects
     const newBoundingRect = await HighlightBox.create({
       annotationId: id,
-      x1: Number(highlightBox.x1),
+      x1: highlightBox.x1,
       y1: highlightBox.y1,
       x2: highlightBox.x2,
       y2: highlightBox.y2,
@@ -55,7 +55,7 @@ const createAnnotation = async (req, res) => {
     newAnnotation.position.boundingRect = newBoundingRect;
 
     // Set highlights
-    newAnnotation.rects = [];
+    const newRects = [];
     for (let i = 0; i < highlights.length; i++) {
       const highlight = highlights[i];
       const newRect = await Highlight.create({
@@ -68,22 +68,14 @@ const createAnnotation = async (req, res) => {
         height: highlight.height,
         pageNumber: highlight.pageNumber,
       });
-      // saveToFile("testhighligh", newRect)
-      newAnnotation.rects.push(newRect.toJSON());
+      newRects.push(newRect);
     }
-    // saveToFile("testannotation", newAnnotation)
-    // saveToFile("testcontent", newContent)
-    // saveToFile("testhighlightbox", newBoundingRect)
-    // console.log("🖥️  newAnnotation: ", newAnnotation.toJSON());
-    // console.log("🖥️  newContent: ", newContent.toJSON());
-    // console.log("🖥️  newBoundingRect: ", newBoundingRect.toJSON());
-    // console.log("🖥️  newRects : ", newAnnotation.rects);
+    newAnnotation.rects = newRects;
 
-
+    saveToFile([newAnnotation, newContent, newBoundingRect, newRects]);
 
     res.status(200).json(newAnnotation);
   } catch (error) {
-    console.log("🖥️  error: ", error);
     console.error(error);
     res.status(500).send({ message: "An error occurred" });
   }

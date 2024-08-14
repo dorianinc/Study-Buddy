@@ -1,4 +1,4 @@
-import { Button, Container, Textarea } from "@chakra-ui/react";
+import { Button, Container} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import Cookies from "js-cookie";
@@ -8,40 +8,26 @@ import { useCreateAnnotationMutation, useCreateNoteMutation, useGetAllAnnotation
 import { useSelector } from "react-redux";
 import { FcAssistant } from "react-icons/fc";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-  Portal,
   Stack,
   Input,
-  FocusLock,
-  useDisclosure,
   ButtonGroup,
-  FormControl,
-  FormLabel
+  Textarea
 } from '@chakra-ui/react'
 const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) => {
-  const { onOpen, onClose, isOpen } = useDisclosure()
+  // const { onOpen, onClose, isOpen } = useDisclosure()
   const user = useSelector(state => state.session.user)
-  const [comment, setComment] = useState("");
+  // const [comment, setComment] = useState("");
+  const [userInput,setUserInput] = useState("")
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
   const [AIFormErr, setAIFormErr] = useState(false)
   const [createAnnotation] = useCreateAnnotationMutation()
-  // const [prompt, setPrompt] = useState("")
-  const prompt = useRef()
   const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
   const position = selectedContent.current.position
-  console.log('selected content',position)
+
   // fetching response from gemini
   const AIGenerate = async () => {
-    if (!prompt.current) {
+    if (!userInput) {
       setAIFormErr(true)
       return
     }
@@ -52,50 +38,26 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
         'Content-Type': 'application/json',
         'XSRF-Token': `${Cookies.get('XSRF-TOKEN')}`
       },
-      body: JSON.stringify({ "prompt": prompt.current, "selectedText": selectedText })
+      body: JSON.stringify({ "prompt": userInput, "selectedText": selectedText })
     })
     const data = await response.json()
 
-    onClose()
     setIsLoadingAIRes(false)
-    setComment(data.AIResponse)
+    setUserInput(data.AIResponse)
     setAIFormErr(false)
-    prompt.current = ''
   }
 
-  const firstFieldRef = useRef(null)
-
-
-  // 2. Create the form
-  const Form = ({ firstFieldRef, onCancel, onSubmit }) => {
-    return (
-      <Stack spacing={4}>
-        <Input ref={firstFieldRef} placeHolder='How can I help you?' onChange={(e) => prompt.current = e.target.value}></Input>
-        {AIFormErr && <span style={{'color':'red'}}>Please provide more details</span>}
-        <ButtonGroup display='flex' justifyContent='flex-end'>
-          <Button
-            colorScheme='teal'
-            onClick={onSubmit}
-            type='submit'
-            isLoading={isLoadingAIRes}
-          >
-            Request
-          </Button>
-        </ButtonGroup>
-      </Stack>
-    )
-  }
   return (
     <form
       className="Tip__card"
       onSubmit={async (event) => {
         event.preventDefault();
-        onSubmit(comment);
+        onSubmit(userInput);
         const queryObject = {
           user,
           docId: parseInt(docId),
           docUrl,
-          comment,
+          comment : userInput,
           ...content,
           position
         }
@@ -104,44 +66,27 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
       }}
     >
       <div>
-
-        <textarea
-          placeholder={placeHolder}
+        <Textarea
+          placeholder='Add your note or ask Study Buddy for assistant!'
           autoFocus
           onChange={(event) => {
-            setComment(event.target.value);
+            setUserInput(event.target.value);
           }}
-          value={comment}
-        />
-      </div>
-      <Container
-        display='flex'
-        justifyContent='space-between'
-      >
-        <Popover
-          isOpen={isOpen}
-          initialFocusRef={firstFieldRef}
-          onOpen={onOpen}
-          onClose={onClose}
-          placement='right'
-          closeOnBlur={false}
+          value={userInput}
         >
-          <PopoverContent p={5}>
-            <FocusLock returnFocus persistentFocus={false}>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <Form
-                onSubmit={AIGenerate}
-                firstFieldRef={firstFieldRef}
-                onCancel={onClose} />
-            </FocusLock>
-          </PopoverContent>
-          <PopoverTrigger>
-            <Button size='sm' colorScheme="blue" ><FcAssistant /></Button>
-          </PopoverTrigger>
-        </Popover>
-        <Button size='sm' colorScheme = 'blue' type="submit">Save</Button>
-      </Container>
+        </Textarea>
+        {AIFormErr && <div style={{'color':'red'}}>Study Buddy needs more details</div>}
+        <ButtonGroup size='sm' colorScheme='blue' margin='10px'>
+          <Button
+            isLoading={isLoadingAIRes}
+            onClick={(e)=>{
+              e.preventDefault()
+              AIGenerate()
+            }}
+          >Ask Study Buddy</Button>
+          <Button isDisabled={isLoadingAIRes} type='submit'>Save</Button>
+        </ButtonGroup>
+      </div>
     </form>
   );
 };

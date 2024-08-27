@@ -50,7 +50,7 @@ function DisplayDoc() {
           <BreadcrumbLink>{document?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <Flex pt={10} w={"100vw"} h={"100vh"} bg={"gray.300"} ml={-5}>
+      <Flex pt={10} h={"100vh"} bg={"gray.300"} >
         <Container minW={"60vw"} h={"75%"} borderRadius={10} centerContent>
           <Viewer />
         </Container>

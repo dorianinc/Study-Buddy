@@ -1,0 +1,36 @@
+.app-container{
+  min-height: calc(100vh);
+}
+
+#footerBar {
+    background-color: var(--main-blue);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
+    height: 6rem;
+    align-content: center;
+}
+
+
+.footerTeamDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.membersContainer {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.footerLinksContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footerLinksContainer>a:hover{
+    color: var(--hover-blue);
+}

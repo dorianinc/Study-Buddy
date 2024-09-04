@@ -1,4 +1,4 @@
-import { Button, Container} from "@chakra-ui/react";
+import { Button, Container } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import Cookies from "js-cookie";
@@ -14,12 +14,11 @@ import {
   Textarea
 } from '@chakra-ui/react'
 const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) => {
-  // const { onOpen, onClose, isOpen } = useDisclosure()
   const user = useSelector(state => state.session.user)
-  // const [comment, setComment] = useState("");
-  const [userInput,setUserInput] = useState("")
+  const [userInput, setUserInput] = useState("")
   const [isLoadingAIRes, setIsLoadingAIRes] = useState(false)
   const [AIFormErr, setAIFormErr] = useState(false)
+  const [errors, setErrors] = useState({})
   const [createAnnotation] = useCreateAnnotationMutation()
   const content = selectedContent.current
   const selectedText = selectedContent.current.content.text
@@ -29,7 +28,8 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
   const AIGenerate = async () => {
     if (!userInput) {
       setAIFormErr(true)
-      return
+      setErrors({userInput: "Study Buddy needs more details."})
+      return errors
     }
     setIsLoadingAIRes(true)
     const response = await fetch('/api/gemini', {
@@ -57,7 +57,7 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
           user,
           docId: parseInt(docId),
           docUrl,
-          comment : userInput,
+          comment: userInput,
           ...content,
           position
         }
@@ -75,16 +75,18 @@ const CommentForm = ({ onSubmit, placeHolder, selectedContent, docId, docUrl }) 
           value={userInput}
         >
         </Textarea>
-        {AIFormErr && <div style={{'color':'red'}}>Study Buddy needs more details</div>}
+        <Container className='form-errors' mt={1}>
+          {errors.userInput}
+        </Container>
         <ButtonGroup size='sm' colorScheme='blue' margin='10px'>
           <Button
             isLoading={isLoadingAIRes}
-            onClick={(e)=>{
+            onClick={(e) => {
               e.preventDefault()
               AIGenerate()
             }}
           >Ask Study Buddy</Button>
-          <Button isDisabled={isLoadingAIRes} type='submit'>Save</Button>
+          <Button isDisabled={isLoadingAIRes || !userInput} type='submit'>Save</Button>
         </ButtonGroup>
       </div>
     </form>

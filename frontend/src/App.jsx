@@ -4,6 +4,7 @@ import MyDocuments from "./components/Document/MyDocuments";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import DisplayDoc from "./components/displayDoc/DisplayDoc";
+import Footer from "./components/Footer";
 
 const App = () => {
   const { data: user, isLoading } = useRestoreUserQuery();
@@ -24,6 +25,7 @@ const App = () => {
         </div>
       )}
       {isLoading && <div>Loading user data...</div>}
+      <Footer />
     </div>
   );
 };

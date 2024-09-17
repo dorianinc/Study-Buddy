@@ -67,7 +67,7 @@ export default function LandingPage() {
         </Stack>
       </Flex>
 
-      <Flex minH={'70vh'} w='100%' flex={1} flexDirection='column' justifyContent='center' align='center' borderLeft='2px solid var(--main-blue)'>
+      <Flex minH={'70vh'} w='100%' flex={1} flexDirection='column' justifyContent='center' align='center' borderLeft='2px solid var(--main-blue)' mb={'1rem'}>
 
         <Container p={0} w='35rem' alignSelf='center'>
           <Image borderRadius='8px' boxSize='500px' h='380px' w='100%' objectFit='contain' src="/images/logos/highlight-ss.png" alt="highlight example" border='1px dashed var(--main-blue)' />

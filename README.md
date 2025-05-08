@@ -1,9 +1,9 @@
 <h1 style="display: flex; align-items: center;">
   DB Buddy
   <picture style="margin-left: 10px;">
-    <source media="(prefers-color-scheme: dark)" srcset="/assets/markdown/white-paper-clip.svg">
-    <source media="(prefers-color-scheme: light)" srcset="/assets/markdown/black-paper-clip.svg">
-    <img src="/assets/images/db-white.png" alt="logo" height="30" width="30">
+    <source media="(prefers-color-scheme: dark)" srcset="/assets/white-paper-clip.svg">
+    <source media="(prefers-color-scheme: light)" srcset="/assets/black-paper-clip.svg">
+    <img src="/assets/white-paper-clip.svg" alt="logo" height="30" width="30">
   </picture>
 </h1>
 

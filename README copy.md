@@ -1,22 +1,15 @@
-<h1 style="display: flex; align-items: center;">
-  DB Buddy
-  <picture style="margin-left: 10px;">
-    <source media="(prefers-color-scheme: dark)" srcset="/assets/markdown/white-paper-clip.svg">
-    <source media="(prefers-color-scheme: light)" srcset="/assets/markdown/black-paper-clip.svg">
-    <img src="/assets/images/db-white.png" alt="logo" height="30" width="30">
-  </picture>
-</h1>
+# <img src="/backend/assets/lilypad.png" height="30" width="30"> Study Buddy
 
-Introduction of application
+Study Buddy is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
 
-**Live Site: [SiteName]([link-text](https://github.com/))**
+**Live Site: [Study Buddy]([https://lilypad.onrender.com/](https://lilypad.onrender.com/))**
 
 #### Please see below links to project Wiki:
-* [Feature List](https://github.com/)
-* [Database Schema](https://github.com/)
-* [Frontend Routes](https://github.com/)
-* [Backend Routes](https://github.com/)
-* [Redux Store State Shape](https://github.com/)
+* [Feature List](https://github.com/dorianinc/Study-Buddy/wiki/Features-List)
+* [Database Schema](https://github.com/dorianinc/01-AirBnB/wiki/Database-Schema)
+* [Frontend Routes](https://github.com/dorianinc/Study-Buddy/wiki/Front-End-Routes)
+* [Backend Routes](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
+* [Redux Store State Shape](https://github.com/dorianinc/01-AirBnB/wiki/Redux-Store-Shape)
 
 ## 💻 Tech Stack
 #### Frameworks, Platforms and Libraries:
@@ -52,6 +45,6 @@ Introduction of application
 ## Landing Page
 You can access the Login and Signup Modal here. Also, we have a demo user button for you to check the website.
 
-![imageName] 
+![homepage] 
 
-[imageName]: /backend/assets/react.jpg
+[homepage]: /backend/assets/frontend.png
